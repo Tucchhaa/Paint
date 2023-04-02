@@ -1,21 +1,30 @@
 import { isDefined } from "../../helpers";
 
 abstract class Module {
-    constructor(public moduleName: string, public component: Component) {
-        this.moduleName = moduleName;
+    constructor(public component: Component) {
         this.component = component;
     }
 
-    public abstract initialize(): void;
+    public initialize() {};
 
-    public getModel<T extends Model>(name: string): T {
-        return this.component.getModel<T>(name);
+    public getModelByName(name: string) {
+        return this.component.getModel(name);
     }
-    public getView<T extends View>(name: string): T {
-        return this.component.getView<T>(name);
+    public getViewByName(name: string) {
+        return this.component.getView(name);
     }
-    public getController<T extends  Controller>(name: string): T {
-        return this.component.getController<T>(name);
+    public getControllerByName(name: string) {
+        return this.component.getController(name);
+    }
+
+    public getModel(modelType: ModelContructor) {
+        return this.component.getModel(modelType.name);
+    }
+    public getView(viewType: ViewContructor) {
+        return this.component.getView(viewType.name);
+    }
+    public getController(controllerType: ControllerContructor) {
+        return this.component.getController(controllerType.name);
     }
 }
 
@@ -74,7 +83,11 @@ export class Component {
             moduleContructors.forEach(contructor => {
                 const module = new contructor(this);
 
-               modules[module.moduleName] = module;
+                if(isDefined(modules[contructor.name])) {
+                    throw new Error(`Module with name ${contructor.name} is already defined.`);
+                }
+
+                modules[contructor.name] = module;
             });
         }
     }
@@ -91,28 +104,28 @@ export class Component {
         }
     }
 
-    public getModel<T extends Model>(name: string): T {
+    public getModel(name: string) {
         const model = this.models[name];
 
         if(model === undefined)
             throw new Error('Invalid model name ' + name);
 
-        return model as T;
+        return model;
     }
-    public getView<T extends View>(name: string): T {
+    public getView(name: string) {
         const view = this.views[name];
 
         if(view === undefined)
             throw new Error('Invalid view name ' + name);
 
-        return view as T;
+        return view;
     }
-    public getController<T extends  Controller>(name: string): T {
+    public getController(name: string) {
         const controller = this.controllers[name];
 
         if(controller === undefined)
             throw new Error('Invalid controller name ' + name);
 
-        return controller as T;
+        return controller;
     }
 }
