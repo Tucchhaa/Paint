@@ -1,31 +1,61 @@
 import { Component } from "./core/component";
-import { Model, View, Controller } from "./core/module"
+import { View, Controller } from "./core/module"
+import { noop } from "../helpers";
+import { Model } from "./core/model";
 
-class ButtonModel extends Model {
+
+class ButtonOptions {
+    text: string = '';
+    onClick: (event: MouseEvent) => void = noop;
+}
+
+class ButtonModel extends Model<ButtonOptions> {
+    public get text() {
+        return this.options.text;
+    }
+    public get onClick() {
+        return this.options.onClick;
+    }
+
+    constructor(options?: ButtonOptions) {
+        super(options);
+    }
+
+    protected getDefaultOptions(): ButtonOptions {
+        return new ButtonOptions();
+    }
+}
+
+class ButtonController extends Controller<ButtonModel> {
 
 }
 
-class ButtonController extends Controller {
+class ButtonView extends View<ButtonModel> {
+    private _controller?: ButtonController;
+    private get controller() {
+        return this._controller!;
+    }
 
-}
-
-class ButtonView extends View {
     public initialize() {
         this.render(this.component.container);
-        const controller = this.getController(ButtonController);
+
+        this._controller = this.getController(ButtonController) as ButtonController;
     }
 
     private render(container: HTMLElement) {
         const button = document.createElement("button");
 
-        button.innerText = "button";
+        button.innerText = this.model.text;
+        button.addEventListener('click', this.model.onClick);
 
         container.appendChild(button);
     }
 }
 
-export class Button extends Component {
-    constructor(container?: HTMLElement | null) {
-        super("Button", container, ButtonModel, ButtonView, ButtonController);
+export class Button extends Component<ButtonModel> {
+    constructor(container: HTMLElement | null, options?: ButtonOptions) {
+        const model = new ButtonModel(options);
+
+        super("Button", container, model, ButtonView, ButtonController);
     }
 }
