@@ -1,3 +1,9 @@
-document.getElementById("clickme")!.onclick = () => {
-    alert("Hello World!")
-}
+import { Button } from "./components/index";
+
+window.addEventListener('load', () => {
+    console.log('loaded');
+
+    const buttonContainer = document.getElementById('button');
+
+    new Button(buttonContainer);
+});

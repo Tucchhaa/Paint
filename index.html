@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <script src="https://unpkg.com/systemjs/dist/s.js"></script>
+    <script src="https://unpkg.com/systemjs/dist/extras/named-register.js"></script>
+
+    <script src="build/bundle.js"></script>
+    <script type="module">
+        System.import('index').catch(err => console.error(err));
+    </script>
 </head>
 <body>
-    <button id='clickme'>Click</button>
-
-    <script src="build/index.js"></script>
+    <div id="button"></div>
 </body>
 </html>

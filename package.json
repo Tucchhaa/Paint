@@ -10,6 +10,8 @@
   "author": "Eldar Iusupzhanov <ferrarijed@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@types/systemjs": "^6.13.1",
+    "systemjs": "^6.14.1",
     "typescript": "^4.9.5"
   }
 }
