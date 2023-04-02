@@ -1,19 +1,20 @@
 import { isDefined } from "../../helpers";
-import { Module, ModuleContructor, Model, View, Controller, ModelContructor, ViewContructor, ControllerContructor } from "./module";
+import { Model } from "./model";
+import { Module, ModuleContructor, View, Controller, ViewContructor, ControllerContructor } from "./module";
 
-export class Component {
+export class Component<TModel extends Model> {
     public NAME: string;
     public container: HTMLElement;
-    private models: { [name: string]: Model } = {};
-    private views: { [name: string]: View } = {};
-    private controllers: { [name: string]: Controller } = {};
+    public model: Model;
+    private views: { [name: string]: View<TModel> } = {};
+    private controllers: { [name: string]: Controller<TModel> } = {};
 
     constructor(
         name: string,
-        container?: HTMLElement | null,
-        model?: ModelContructor | ModelContructor[],
-        view?: ViewContructor | ViewContructor[],
-        controller?: ControllerContructor | ControllerContructor[]
+        container: HTMLElement | null,
+        model: Model,
+        view?: ViewContructor<TModel> | ViewContructor<TModel>[],
+        controller?: ControllerContructor<TModel> | ControllerContructor<TModel>[]
     ) {
         this.NAME = name;
 
@@ -22,16 +23,16 @@ export class Component {
 
         this.container = container;
 
-        this.assingModule(this.models, model);
+        this.model = model;
         this.assingModule(this.views, view);
         this.assingModule(this.controllers, controller);
 
         this.initializeModules();
     }
 
-    private assingModule<T extends Module>(
+    private assingModule<T extends Module<TModel>>(
         modules: { [name: string]: T },
-        moduleContructors?: ModuleContructor<T> | ModuleContructor<T>[])
+        moduleContructors?: ModuleContructor<TModel, T> | ModuleContructor<TModel, T>[])
     {
         if(moduleContructors !== undefined) {
             moduleContructors = Array.isArray(moduleContructors) ? moduleContructors : [moduleContructors];
@@ -50,7 +51,6 @@ export class Component {
 
     private initializeModules() {
         const modules = [
-            ...Object.values(this.models),
             ...Object.values(this.views),
             ...Object.values(this.controllers)
         ];
@@ -60,14 +60,6 @@ export class Component {
         }
     }
 
-    public getModel(name: string) {
-        const model = this.models[name];
-
-        if(model === undefined)
-            throw new Error('Invalid model name ' + name);
-
-        return model;
-    }
     public getView(name: string) {
         const view = this.views[name];
 

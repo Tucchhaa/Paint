@@ -5,5 +5,8 @@ window.addEventListener('load', () => {
 
     const buttonContainer = document.getElementById('button');
 
-    new Button(buttonContainer);
+    new Button(buttonContainer, {
+        text: 'aboba',
+        onClick: () => alert('ABOBA!')
+    });
 });
