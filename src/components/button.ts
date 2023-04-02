@@ -1,12 +1,17 @@
-import { Component, View } from "../components/core/component";
+import { Component, Model, View, Controller } from "../components/core/component";
+
+class ButtonModel extends Model {
+
+}
+
+class ButtonController extends Controller {
+
+}
 
 class ButtonView extends View {
-    constructor(component: Component) {
-        super('baseView', component);
-    }
-
     public initialize() {
         this.render(this.component.container);
+        const controller = this.getController(ButtonController);
     }
 
     private render(container: HTMLElement) {
@@ -20,6 +25,6 @@ class ButtonView extends View {
 
 export class Button extends Component {
     constructor(container?: HTMLElement | null) {
-        super("Button", container, undefined, ButtonView);
+        super("Button", container, ButtonModel, ButtonView, ButtonController);
     }
 }
