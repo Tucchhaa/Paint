@@ -7,6 +7,16 @@ abstract class Module {
     }
 
     public abstract initialize(): void;
+
+    public getModel<T extends Model>(name: string): T {
+        return this.component.getModel<T>(name);
+    }
+    public getView<T extends View>(name: string): T {
+        return this.component.getView<T>(name);
+    }
+    public getController<T extends  Controller>(name: string): T {
+        return this.component.getController<T>(name);
+    }
 }
 
 export abstract class View extends Module {
