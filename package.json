@@ -1,0 +1,15 @@
+{
+  "name": "jet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "watch": "tsc --watch"
+  },
+  "author": "Eldar Iusupzhanov <ferrarijed@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
+}
