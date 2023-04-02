@@ -1,4 +1,5 @@
-import { Component, Model, View, Controller } from "../components/core/component";
+import { Component } from "./core/component";
+import { Model, View, Controller } from "./core/module"
 
 class ButtonModel extends Model {
 
