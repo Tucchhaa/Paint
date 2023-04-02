@@ -81,28 +81,28 @@ export class Component {
         }
     }
 
-    public getModel(name: string): Model {
+    public getModel<T extends Model>(name: string): T {
         const model = this.models[name];
 
         if(model === undefined)
             throw new Error('Invalid model name ' + name);
 
-        return model;
+        return model as T;
     }
-    public getView(name: string): View {
+    public getView<T extends View>(name: string): T {
         const view = this.views[name];
 
         if(view === undefined)
             throw new Error('Invalid view name ' + name);
 
-        return view;
+        return view as T;
     }
-    public getController(name: string): View {
+    public getController<T extends  Controller>(name: string): T {
         const controller = this.controllers[name];
 
         if(controller === undefined)
             throw new Error('Invalid controller name ' + name);
 
-        return controller;
+        return controller as T;
     }
 }
