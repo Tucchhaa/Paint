@@ -1,20 +1,39 @@
 import { Component } from "./core/component";
-import { View, Controller } from "./core/module"
-import { noop } from "../helpers";
+import { View, Controller } from "./core/module";
 import { Model } from "./core/model";
 
 
 class ButtonOptions {
-    text: string = '';
-    onClick: (event: MouseEvent) => void = noop;
+    height?: number;
+    width?: number;
+    disabled?: boolean = false;
+    onClick?: (event: MouseEvent) => void;
+    text?: string = '';
+    title?: string = '';
+    visible?: boolean = true;
 }
 
 class ButtonModel extends Model<ButtonOptions> {
-    public get text() {
-        return this.options.text;
+    public get height() {
+        return this.options.height;
+    }
+    public get width() {
+        return this.options.width;
+    }
+    public get disabled() {
+        return this.options.disabled!;
     }
     public get onClick() {
-        return this.options.onClick;
+        return this.options.onClick!;
+    }
+    public get text() {
+        return this.options.text!;
+    }
+    public get title() {
+        return this.options.title!;
+    }
+    public get visible() {
+        return this.options.visible!;
     }
 
     constructor(options?: ButtonOptions) {
@@ -27,7 +46,11 @@ class ButtonModel extends Model<ButtonOptions> {
 }
 
 class ButtonController extends Controller<ButtonModel> {
-
+    public onClick(event: MouseEvent) {
+        if(this.model.disabled === false) {
+            this.model.onClick(event);
+        }
+    }
 }
 
 class ButtonView extends View<ButtonModel> {
@@ -37,18 +60,30 @@ class ButtonView extends View<ButtonModel> {
     }
 
     public initialize() {
-        this.render(this.component.container);
-
         this._controller = this.getController(ButtonController) as ButtonController;
+
+        this.render(this.component.container);
     }
 
     private render(container: HTMLElement) {
-        const button = document.createElement("button");
+        if(this.model.visible) {
+            const button = document.createElement("button");
 
-        button.innerText = this.model.text;
-        button.addEventListener('click', this.model.onClick);
+            button.innerText = this.model.text;
+            button.disabled = this.model.disabled;
+            button.title = this.model.title;
 
-        container.appendChild(button);
+            if(this.model.width) {
+                button.style.width = this.model.width + 'px';
+            }
+            if(this.model.height) {
+                button.style.height = this.model.height + 'px';
+            }
+
+            button.addEventListener('click', this.controller.onClick.bind(this));
+
+            container.appendChild(button);
+        }
     }
 }
 

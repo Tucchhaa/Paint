@@ -3,7 +3,7 @@ import { Model } from "./model";
 import { Module, ModuleContructor, View, Controller, ViewContructor, ControllerContructor } from "./module";
 
 export class Component<TModel extends Model> {
-    public NAME: string;
+    public name: string;
     public container: HTMLElement;
     public model: Model;
     private views: { [name: string]: View<TModel> } = {};
@@ -16,7 +16,7 @@ export class Component<TModel extends Model> {
         view?: ViewContructor<TModel> | ViewContructor<TModel>[],
         controller?: ControllerContructor<TModel> | ControllerContructor<TModel>[]
     ) {
-        this.NAME = name;
+        this.name = name;
 
         if(container === undefined || container === null)
             throw new Error('container is undefined');
@@ -68,6 +68,7 @@ export class Component<TModel extends Model> {
 
         return view;
     }
+
     public getController(name: string) {
         const controller = this.controllers[name];
 
