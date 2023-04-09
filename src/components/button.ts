@@ -1,25 +1,16 @@
 import { Component } from "./core/component";
 import { View, Controller } from "./core/module";
-import { Model } from "./core/model";
+import { BaseOptions, Model } from "./core/model";
 
 
-class ButtonOptions {
-    height?: number;
-    width?: number;
+class ButtonOptions extends BaseOptions {
     disabled?: boolean = false;
     onClick?: (event: MouseEvent) => void;
     text?: string = '';
     title?: string = '';
-    visible?: boolean = true;
 }
 
 class ButtonModel extends Model<ButtonOptions> {
-    public get height() {
-        return this.options.height;
-    }
-    public get width() {
-        return this.options.width;
-    }
     public get disabled() {
         return this.options.disabled!;
     }
@@ -31,9 +22,6 @@ class ButtonModel extends Model<ButtonOptions> {
     }
     public get title() {
         return this.options.title!;
-    }
-    public get visible() {
-        return this.options.visible!;
     }
 
     constructor(options?: ButtonOptions) {
