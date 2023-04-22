@@ -1,4 +1,4 @@
-import { View } from "../core/view";
+import { View } from "../core";
 import { ButtonModel } from "./button.model";
 import { ButtonController } from "./button.controller";
 
@@ -7,11 +7,9 @@ export class ButtonView extends View<ButtonModel> {
 
     public initialize() {
         this.controller = this.getController(ButtonController) as ButtonController;
-
-        this.render(this.component.container);
     }
 
-    private render(container: HTMLElement) {
+    public render(container: HTMLElement) {
         if (this.model.visible) {
             const button = document.createElement("button");
 

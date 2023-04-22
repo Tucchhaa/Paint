@@ -1,10 +1,10 @@
-import { Component } from "./component";
+import { JetComponent } from "./jet-component";
 import { Model } from "./model";
 import { View } from './view';
 import { Controller } from './controller';
 
 export abstract class Module<TModel extends Model> {
-    constructor(public component: Component<TModel>) {
+    constructor(public component: JetComponent<TModel>) {
         this.component = component;
     }
 
@@ -28,7 +28,7 @@ export abstract class Module<TModel extends Model> {
     }
 }
 
-export type ModuleContructor<TModel extends Model, T> = new(component: Component<TModel>) => T
+export type ModuleContructor<TModel extends Model, T> = new(component: JetComponent<TModel>) => T
 
 export type ViewContructor<TModel extends Model> = ModuleContructor<TModel, View<TModel>>;
 export type ControllerContructor<TModel extends Model> = ModuleContructor<TModel, Controller<TModel>>;

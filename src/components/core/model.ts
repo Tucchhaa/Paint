@@ -1,4 +1,4 @@
-import { deepExtend } from "../../helpers";
+import { deepExtend } from "../../utils";
 
 export abstract class BaseOptions {
     height?: number;

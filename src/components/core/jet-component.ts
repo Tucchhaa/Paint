@@ -1,10 +1,10 @@
-import { isDefined } from "../../helpers";
+import { isDefined } from "../../utils";
 import { Model } from "./model";
 import { Module, ModuleContructor, ViewContructor, ControllerContructor } from "./module";
 import { View } from './view';
 import { Controller } from './controller';
 
-export class Component<TModel extends Model> {
+export class JetComponent<TModel extends Model> {
     public name: string;
     public container: HTMLElement;
     public model: Model;
@@ -30,23 +30,24 @@ export class Component<TModel extends Model> {
         this.registerModule(this.controllers, controller);
 
         this.initializeModules();
+        this.renderViews();
     }
 
     private registerModule<T extends Module<TModel>>(
         modules: { [name: string]: T },
-        moduleContructors?: ModuleContructor<TModel, T> | ModuleContructor<TModel, T>[])
+        moduleConstructors?: ModuleContructor<TModel, T> | ModuleContructor<TModel, T>[])
     {
-        if(moduleContructors !== undefined) {
-            moduleContructors = Array.isArray(moduleContructors) ? moduleContructors : [moduleContructors];
+        if(moduleConstructors !== undefined) {
+            moduleConstructors = Array.isArray(moduleConstructors) ? moduleConstructors : [moduleConstructors];
 
-            moduleContructors.forEach(contructor => {
-                const module = new contructor(this);
+            moduleConstructors.forEach(constructor => {
+                const module = new constructor(this);
 
-                if(isDefined(modules[contructor.name])) {
-                    throw new Error(`Module with name ${contructor.name} is already defined.`);
+                if(isDefined(modules[constructor.name])) {
+                    throw new Error(`Module with name ${constructor.name} is already defined.`);
                 }
 
-                modules[contructor.name] = module;
+                modules[constructor.name] = module;
             });
         }
     }
@@ -59,6 +60,14 @@ export class Component<TModel extends Model> {
 
         for(const module of modules) {
             module.initialize();
+        }
+    }
+
+    private renderViews() {
+        this.container.innerHTML = "";
+
+        for(const view of Object.values(this.views)) {
+            view.render(this.container);
         }
     }
 
