@@ -1,6 +1,8 @@
 import { isDefined } from "../../helpers";
 import { Model } from "./model";
-import { Module, ModuleContructor, View, Controller, ViewContructor, ControllerContructor } from "./module";
+import { Module, ModuleContructor, ViewContructor, ControllerContructor } from "./module";
+import { View } from './view';
+import { Controller } from './controller';
 
 export class Component<TModel extends Model> {
     public name: string;
@@ -24,13 +26,13 @@ export class Component<TModel extends Model> {
         this.container = container;
 
         this.model = model;
-        this.assingModule(this.views, view);
-        this.assingModule(this.controllers, controller);
+        this.registerModule(this.views, view);
+        this.registerModule(this.controllers, controller);
 
         this.initializeModules();
     }
 
-    private assingModule<T extends Module<TModel>>(
+    private registerModule<T extends Module<TModel>>(
         modules: { [name: string]: T },
         moduleContructors?: ModuleContructor<TModel, T> | ModuleContructor<TModel, T>[])
     {

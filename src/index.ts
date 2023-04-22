@@ -5,7 +5,6 @@ window.addEventListener('load', () => {
 
     const buttonContainer = document.getElementById('button');
 
-    // @ts-ignore
     new Button(buttonContainer, {
         text: 'aboba',
         onClick: () => alert('ABOBA!'),
