@@ -11,7 +11,6 @@
   "license": "ISC",
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
-    "html-webpack-plugin": "^5.5.1",
     "ts-loader": "^9.4.2",
     "ts-plugin-inferno": "^6.0.0",
     "typescript": "^4.9.5",
@@ -20,6 +19,7 @@
     "webpack-dev-server": "^4.13.3"
   },
   "dependencies": {
-    "inferno": "^8.1.1"
+    "inferno": "^8.1.1",
+    "inferno-create-element": "^8.1.1"
   }
 }
