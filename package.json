@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode=production",
-    "start": "webpack-dev-server --mode=development"
+    "dev": "webpack-dev-server --mode=development"
   },
   "author": "Eldar Iusupzhanov <ferrarijed@gmail.com>",
   "license": "ISC",
