@@ -1,5 +1,7 @@
 import { Component } from "./component";
 import { Model } from "./model";
+import { View } from './view';
+import { Controller } from './controller';
 
 export abstract class Module<TModel extends Model> {
     constructor(public component: Component<TModel>) {
@@ -24,14 +26,6 @@ export abstract class Module<TModel extends Model> {
     public getController(controllerType: ControllerContructor<TModel>) {
         return this.component.getController(controllerType.name);
     }
-}
-
-export abstract class View<TModel extends Model> extends Module<TModel> {
-
-}
-
-export abstract class Controller<TModel extends Model> extends Module<TModel> {
-
 }
 
 export type ModuleContructor<TModel extends Model, T> = new(component: Component<TModel>) => T
