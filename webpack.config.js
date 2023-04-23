@@ -1,12 +1,11 @@
 const path = require('path');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const infernoTsPlugin = require('ts-plugin-inferno').default
 
 module.exports = {
     mode: "none",
-    entry: "./src/index.ts", // Point to main file
+    entry: "./src/index.ts",
     output: {
         path: path.resolve(__dirname, "build"),
         filename: "bundle.js"
@@ -14,20 +13,17 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx']
     },
-    // performance: {
-    //     hints: false
-    // },
     module: {
         rules: [
-            // {
-            //     test: /\.tsx$/,
-            //     loader: 'ts-loader',
-            //     options: {
-            //         getCustomTransformers: () => ({
-            //             before: [infernoTsPlugin()],
-            //         }),
-            //     },
-            // },
+            {
+                test: /\.tsx$/,
+                loader: 'ts-loader',
+                options: {
+                    getCustomTransformers: () => ({
+                        before: [infernoTsPlugin()],
+                    }),
+                },
+            },
             {
                 test: /\.ts$/,
                 loader: 'ts-loader',
@@ -43,15 +39,9 @@ module.exports = {
             },
         ]
     },
-    // plugins: [
-    //     // new HtmlWebpackPlugin(
-    //     //     {
-    //     //         template: "./src/index.html",
-    //     //         inject: "body"
-    //     //     }
-    //     // ),
-    //     new CleanWebpackPlugin({
-    //         verbose: true
-    //     })
-    // ]
+    plugins: [
+        new CleanWebpackPlugin({
+            verbose: true
+        })
+    ]
 };

@@ -1,8 +1,6 @@
-import { Button } from "./components/index";
+import { Button } from "./components";
 
 window.addEventListener('load', () => {
-    console.log('loaded');
-
     const buttonContainer = document.getElementById('button');
 
     new Button(buttonContainer, {
@@ -13,3 +11,21 @@ window.addEventListener('load', () => {
         height: 80
     });
 });
+
+/*
+TODO настроить линтер
+TODO рассмотреть возможность билденжки компонента во все фреймворки
+TODO настроить CI/CD
+TODO написать jest тесты
+TODO настроить билдежку по темам
+TODO проанализировать какие плюсы дают подобная архитектура по сравнению обычного использования React или Vue
+- Inferno дает самый быстрый перфоманс
+- Возможность билдить только вьюхи, без интегрирования в них бизнес логики, что поможет использовать одинаковую
+логику на разных платформах
+-
+
+
+Какие компоненты можно создать?
+LoadingSkeleton
+List - для туду листа
+ */

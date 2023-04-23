@@ -14,9 +14,7 @@ export const extend = (...objects: object[]): object => {
     for(const iterator of objects) {
         for(const key in iterator) {
             // @ts-ignore
-            const value = iterator[key];
-
-            result[key] = value;
+            result[key] = iterator[key];
         }
     }
 
