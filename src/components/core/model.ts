@@ -8,7 +8,7 @@ export abstract class BaseOptions {
 
 export abstract class Model<TOptions extends BaseOptions = BaseOptions> {
     protected options: TOptions;
-    constructor(options?: TOptions) {
+    protected constructor(options?: TOptions) {
         this.options = deepExtend({}, this.getDefaultOptions(), options || {}) as TOptions;
     }
 

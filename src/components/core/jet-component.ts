@@ -1,10 +1,10 @@
 import { isDefined } from "../../utils";
 import { Model } from "./model";
-import { Module, ModuleContructor, ViewContructor, ControllerContructor } from "./module";
+import { Module, ModuleType, ViewType, ControllerType } from "./module";
 import { View } from './view';
 import { Controller } from './controller';
 
-export class JetComponent<TModel extends Model> {
+export class JetComponent<TModel extends Model = Model> {
     public name: string;
     public container: HTMLElement;
     public model: Model;
@@ -15,8 +15,8 @@ export class JetComponent<TModel extends Model> {
         name: string,
         container: HTMLElement | null,
         model: Model,
-        view?: ViewContructor<TModel> | ViewContructor<TModel>[],
-        controller?: ControllerContructor<TModel> | ControllerContructor<TModel>[]
+        view?: ViewType<TModel> | ViewType<TModel>[],
+        controller?: ControllerType<TModel> | ControllerType<TModel>[]
     ) {
         this.name = name;
 
@@ -35,7 +35,7 @@ export class JetComponent<TModel extends Model> {
 
     private registerModule<T extends Module<TModel>>(
         modules: { [name: string]: T },
-        moduleConstructors?: ModuleContructor<TModel, T> | ModuleContructor<TModel, T>[])
+        moduleConstructors?: ModuleType<TModel, T> | ModuleType<TModel, T>[])
     {
         if(moduleConstructors !== undefined) {
             moduleConstructors = Array.isArray(moduleConstructors) ? moduleConstructors : [moduleConstructors];
@@ -71,20 +71,24 @@ export class JetComponent<TModel extends Model> {
         }
     }
 
-    public getView(name: string) {
-        const view = this.views[name];
+    public getView(id: string | ViewType<TModel>) {
+        id = typeof id === 'string' ? id : id.name;
+
+        const view = this.views[id];
 
         if(view === undefined)
-            throw new Error('Invalid view name ' + name);
+            throw new Error('Invalid view name ' + id);
 
         return view;
     }
 
-    public getController(name: string) {
-        const controller = this.controllers[name];
+    public getController(id: string | ControllerType<TModel>) {
+        id = typeof id === 'string' ? id : id.name;
+
+        const controller = this.controllers[id];
 
         if(controller === undefined)
-            throw new Error('Invalid controller name ' + name);
+            throw new Error('Invalid controller name ' + id);
 
         return controller;
     }

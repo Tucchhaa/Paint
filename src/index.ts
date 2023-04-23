@@ -1,4 +1,4 @@
-import { Button } from "./components/index";
+import { Button } from "./components";
 
 window.addEventListener('load', () => {
     const buttonContainer = document.getElementById('button');
@@ -11,3 +11,12 @@ window.addEventListener('load', () => {
         height: 80
     });
 });
+
+/*
+TODO настроить линтер
+TODO рассмотреть возможность билденжки компонента во все фреймворки
+TODO настроить CI/CD
+TODO написать jest тесты
+TODO рассмотреть вариант полной поддержки Inferno вьюх
+TODO проанализировать какие плюсы дают подобная архитектура по сравнению обычного использования React или Vue
+ */
