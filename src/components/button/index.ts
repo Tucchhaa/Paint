@@ -1,11 +1,11 @@
 import { ButtonModel, ButtonOptions } from "./button.model";
 import { InfernoView, JetComponent } from "../core";
 import { ButtonController } from "./button.controller";
-import { ButtonInfernoView } from "./button.inferno.view";
+import { ButtonInfernoComponent } from "./buttonInfernoComponent";
 
 class ButtonView extends InfernoView<ButtonModel> {
     initialize() {
-        this.setView(ButtonInfernoView);
+        this.setView(ButtonInfernoComponent);
     }
 }
 
