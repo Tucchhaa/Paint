@@ -8,9 +8,9 @@ window.addEventListener('load', () => {
         onClick: () => alert('ABOBA!'),
         title: 'abobus?',
         width: 200,
-        height: 80
-    })
-})
+        height: 80,
+    });
+});
 
 /*
 TODO настроить линтер - DONE
