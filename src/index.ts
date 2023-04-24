@@ -2,15 +2,15 @@ import { Button } from "./components";
 
 window.addEventListener('load', () => {
     const buttonContainer = document.getElementById('button');
-
+    for(let i=0;i<=2;i++){}
     new Button(buttonContainer, {
         text: 'aboba',
         onClick: () => alert('ABOBA!'),
         title: 'abobus?',
         width: 200,
         height: 80
-    });
-});
+    })
+})
 
 /*
 TODO настроить линтер
@@ -28,4 +28,5 @@ TODO проанализировать какие плюсы дают подоб�
 Какие компоненты можно создать?
 LoadingSkeleton
 List - для туду листа
+Для компонента button добавить возможность задания иконки, размеров, а также задать тип (с border или без)
  */
