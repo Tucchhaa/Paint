@@ -1,10 +1,10 @@
 export const isDefined = (variable: any): boolean => {
     return variable !== undefined && variable !== null;
-}
+};
 
 export const isObject = (variable: any): boolean => {
     return typeof variable === 'object' && variable !== null;
-}
+};
 
 export const noop = () => {};
 
@@ -19,7 +19,7 @@ export const extend = (...objects: object[]): object => {
     }
 
     return result;
-}
+};
 
 export const deepExtend = (...objects: object[]): object => {
     let depth = 3;
@@ -33,7 +33,7 @@ export const deepExtend = (...objects: object[]): object => {
                 const value = iterator[key];
 
                 if(isObject(value) && depth > 0) {
-                    result[key] = deepExtend(value)
+                    result[key] = deepExtend(value);
                     depth--;
                 }
                 else {
@@ -43,7 +43,7 @@ export const deepExtend = (...objects: object[]): object => {
         }
 
         return result;
-    }
+    };
 
     return _deepExtend(...objects);
-}
+};

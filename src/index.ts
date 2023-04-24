@@ -8,12 +8,15 @@ window.addEventListener('load', () => {
         onClick: () => alert('ABOBA!'),
         title: 'abobus?',
         width: 200,
-        height: 80
-    })
-})
+        height: 80,
+    });
+});
 
 /*
-TODO настроить линтер
+TODO настроить линтер - DONE
+    настроить CI/CD для линтера
+    fix-lint
+
 TODO рассмотреть возможность билденжки компонента во все фреймворки
 TODO настроить CI/CD
 TODO написать jest тесты

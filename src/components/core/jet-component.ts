@@ -55,7 +55,7 @@ export class JetComponent<TModel extends Model = Model> {
     private initializeModules() {
         const modules = [
             ...Object.values(this.views),
-            ...Object.values(this.controllers)
+            ...Object.values(this.controllers),
         ];
 
         for(const module of modules) {
