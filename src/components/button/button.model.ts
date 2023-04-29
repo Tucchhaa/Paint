@@ -1,10 +1,13 @@
 import { BaseOptions, Model } from "../core/model";
 
+export type ButtonStyleMode = 'text' | 'contained' | 'outline';
+
 export class ButtonOptions extends BaseOptions {
     disabled?: boolean = false;
     onClick?: (event: MouseEvent) => void;
     text?: string = '';
     title?: string = '';
+    styleMode?: ButtonStyleMode = 'contained';
 }
 
 export class ButtonModel extends Model<ButtonOptions> {
@@ -22,6 +25,10 @@ export class ButtonModel extends Model<ButtonOptions> {
 
     public get title() {
         return this.options.title!;
+    }
+
+    public get styleMode() {
+        return this.options.styleMode!;
     }
 
     constructor(options?: ButtonOptions) {

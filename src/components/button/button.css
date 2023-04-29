@@ -1,0 +1,44 @@
+.jet-button {
+    cursor: pointer;
+    box-sizing: border-box;
+    text-transform: uppercase;
+
+    color: white;
+    border-radius: 4px;
+    padding: 8px 16px;
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+
+    transition: background-color .1s ease;
+}
+
+.jet-button-content {
+    width: 100%;
+    text-align: center;
+}
+
+.jet-button-text-mode {
+    color: #6200ee;
+}
+
+.jet-button-outline-mode {
+    background-color: transparent;
+
+    border: 1px solid #dfdfdf;
+    color: #6200ee;
+}
+
+.jet-button-outline-mode:hover,
+.jet-button-text-mode:hover {
+    background-color: #f5efff;
+}
+
+.jet-button-contained-mode {
+    background-color: #6200ee;
+}
+
+.jet-button-contained-mode:hover {
+    background-color: #7a2aeb;
+}
