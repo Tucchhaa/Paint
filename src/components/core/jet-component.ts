@@ -1,5 +1,5 @@
 import { isDefined } from "../../utils";
-import { Model } from "./model";
+import { Model, StateChange } from "./model";
 import { Module, ModuleType, ViewType, ControllerType } from "./module";
 import { View } from './view';
 import { Controller } from './controller';
@@ -7,14 +7,15 @@ import { Controller } from './controller';
 export class JetComponent<TModel extends Model = Model> {
     public name: string;
     public container: HTMLElement;
-    public model: Model;
+    public model: TModel;
     private views: { [name: string]: View<TModel> } = {};
     private controllers: { [name: string]: Controller<TModel> } = {};
+    private modules: Module<TModel>[];
 
     constructor(
         name: string,
         container: HTMLElement | null,
-        model: Model,
+        model: TModel,
         view?: ViewType<TModel> | ViewType<TModel>[],
         controller?: ControllerType<TModel> | ControllerType<TModel>[]
     ) {
@@ -29,6 +30,12 @@ export class JetComponent<TModel extends Model = Model> {
         this.registerModule(this.views, view);
         this.registerModule(this.controllers, controller);
 
+        this.modules = [
+            ...Object.values(this.views),
+            ...Object.values(this.controllers),
+        ];
+
+        this.initializeModel();
         this.initializeModules();
         this.renderViews();
     }
@@ -52,13 +59,11 @@ export class JetComponent<TModel extends Model = Model> {
         }
     }
 
+    private initializeModel() {
+        this.model.initialize((this as unknown) as JetComponent);
+    }
     private initializeModules() {
-        const modules = [
-            ...Object.values(this.views),
-            ...Object.values(this.controllers),
-        ];
-
-        for(const module of modules) {
+        for(const module of this.modules) {
             module.initialize();
         }
     }
@@ -70,6 +75,12 @@ export class JetComponent<TModel extends Model = Model> {
             view.render(this.container);
         }
     }
+
+    public stateChanged(change: StateChange) {
+        for(const module of this.modules) {
+            module.update(change);
+        }
+    };
 
     public getView(id: string | ViewType<TModel>) {
         id = typeof id === 'string' ? id : id.name;

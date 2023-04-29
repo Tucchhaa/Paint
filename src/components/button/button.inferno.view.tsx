@@ -1,5 +1,5 @@
-import { InfernoComponent, InfernoProps } from "../core/inferno";
-import {ButtonModel, ButtonStyleMode} from "./button.model";
+import { InfernoComponent, InfernoProps } from "../core/component-views/inferno";
+import { ButtonModel, ButtonStyleMode } from "./button.model";
 import { ButtonController } from "./button.controller";
 import { parseStyleSize } from "../../utils";
 
@@ -8,7 +8,7 @@ import "./button.css";
 
 const compileClassName = (styleMode: ButtonStyleMode) => {
     return `jet-component jet-button jet-no-select jet-button-${styleMode}-mode`;
-}
+};
 
 export class ButtonInfernoView extends InfernoComponent<InfernoProps<ButtonModel>> {
     render() {
