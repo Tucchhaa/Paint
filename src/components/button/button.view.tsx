@@ -1,7 +1,7 @@
-import {InfernoComponent} from "../core";
-import {ButtonModel} from "./button.model";
-import {ButtonController} from "./button.controller";
-import {InfernoProps} from "../core/view";
+import { InfernoComponent } from "../core";
+import { ButtonModel } from "./button.model";
+import { ButtonController } from "./button.controller";
+import { InfernoProps } from "../core/view";
 
 export class ButtonInfernoComponent extends InfernoComponent<InfernoProps<ButtonModel>> {
     render() {
