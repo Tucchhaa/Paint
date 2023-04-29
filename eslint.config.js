@@ -18,6 +18,7 @@ module.exports = [
 
             "block-spacing": "error",
             "arrow-spacing": "error",
+            "object-curly-spacing": ["error", "always"],
             "indent": ["error", 4],
 
             "comma-dangle": ["error", {
