@@ -1,26 +1,59 @@
 import { deepExtend } from "../../utils";
+import { JetComponent } from "./jet-component";
 
 export abstract class BaseOptions {
     height?: number | string = 'auto';
     width?: number | string = 'auto';
-    visible?: boolean = true;
+    disabled?: boolean = false;
 }
 
+export type StateChange = {
+    name: string;
+    value: any;
+    prevValue: any;
+};
+
 export abstract class Model<TOptions extends BaseOptions = BaseOptions> {
-    protected options: TOptions;
+    private component!: JetComponent;
+
     protected constructor(options?: TOptions) {
-        this.options = deepExtend({}, this.getDefaultOptions(), options || {}) as TOptions;
+        const processedOptions = deepExtend({}, this.getDefaultOptions(), options || {}) as TOptions;
+
+        this.defineGettersSetters(processedOptions);
+    }
+
+    public initialize(component: JetComponent) {
+        this.component = component;
     }
 
     protected abstract getDefaultOptions(): TOptions;
 
-    public get height() {
-        return this.options.height!;
+    private defineGettersSetters(options: BaseOptions) {
+        for(const key of Object.keys(options)) {
+            let value = (options as any)[key];
+
+            Object.defineProperty(this, key, {
+                enumerable: true,
+                configurable: true,
+
+                get() {
+                    return value;
+                },
+                set(newValue) {
+                    const prevValue = value;
+                    value = newValue;
+
+                    this.component.stateChanged({
+                        name: key,
+                        value: newValue,
+                        prevValue,
+                    });
+                },
+            });
+        }
     }
-    public get width() {
-        return this.options.width!;
-    }
-    public get visible() {
-        return this.options.visible!;
-    }
+
+    public height!: number;
+    public width!: number;
+    public disabled!: boolean;
 }
