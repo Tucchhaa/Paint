@@ -6,8 +6,6 @@ window.addEventListener('load', () => {
     new Button(buttonContainer, {
         text: 'aboba',
         onClick: () => alert('ABOBA!'),
-        title: 'abobus?',
-        width: 300,
-        height: 80,
+        styleMode: 'outline',
     });
 });

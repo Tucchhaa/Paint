@@ -1,7 +1,14 @@
 import { InfernoComponent, InfernoProps } from "../core/inferno";
-import { ButtonModel } from "./button.model";
+import {ButtonModel, ButtonStyleMode} from "./button.model";
 import { ButtonController } from "./button.controller";
 import { parseStyleSize } from "../../utils";
+
+import "styles/common.css";
+import "./button.css";
+
+const compileClassName = (styleMode: ButtonStyleMode) => {
+    return `jet-component jet-button jet-no-select jet-button-${styleMode}-mode`;
+}
 
 export class ButtonInfernoView extends InfernoComponent<InfernoProps<ButtonModel>> {
     render() {
@@ -11,14 +18,19 @@ export class ButtonInfernoView extends InfernoComponent<InfernoProps<ButtonModel
         const width = parseStyleSize(model.width);
         const height = parseStyleSize(model.height);
 
+        const className = compileClassName(model.styleMode);
+
         return (
             <div
                 role="button"
+                class={className}
                 title={ model.title }
                 style={{ height, width }}
                 onClick={ controller.onClick.bind(controller) }
             >
-                { model.text }
+                <div class="jet-button-content">
+                    <span class="jet-button-text">{ model.text }</span>
+                </div>
             </div>
         );
     }
