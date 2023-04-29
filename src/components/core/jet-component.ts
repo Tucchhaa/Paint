@@ -10,7 +10,7 @@ export class JetComponent<TModel extends Model = Model> {
     public model: TModel;
     private views: { [name: string]: View<TModel> } = {};
     private controllers: { [name: string]: Controller<TModel> } = {};
-    private modules: Module<TModel>[];
+    private readonly modules: Module<TModel>[];
 
     constructor(
         name: string,
