@@ -1,8 +1,8 @@
 import { deepExtend } from "../../utils";
 
 export abstract class BaseOptions {
-    height?: number;
-    width?: number;
+    height?: number | string = 'auto';
+    width?: number | string = 'auto';
     visible?: boolean = true;
 }
 
@@ -15,10 +15,10 @@ export abstract class Model<TOptions extends BaseOptions = BaseOptions> {
     protected abstract getDefaultOptions(): TOptions;
 
     public get height() {
-        return this.options.height;
+        return this.options.height!;
     }
     public get width() {
-        return this.options.width;
+        return this.options.width!;
     }
     public get visible() {
         return this.options.visible!;
