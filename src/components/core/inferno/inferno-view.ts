@@ -1,9 +1,9 @@
-import {Model} from "../model";
-import {JetComponent} from "../jet-component";
-import {createElement} from "inferno-create-element";
-import {View} from "../view";
-import {render} from "inferno";
-import {InfernoComponent} from "./index";
+import { Model } from "../model";
+import { JetComponent } from "../jet-component";
+import { createElement } from "inferno-create-element";
+import { View } from "../view";
+import { render } from "inferno";
+import { InfernoComponent } from "./index";
 
 export type InfernoProps<TModel extends Model> = {
     component: JetComponent<TModel>,
@@ -15,7 +15,7 @@ export type InfernoComponentType<TModel extends Model> = new(props: InfernoProps
 export function renderInfernoComponent<TModel extends Model>(container: HTMLElement, view: View<TModel>) {
     const props = {
         component: view.component,
-        model: view.model
+        model: view.model,
     };
 
     // @ts-ignore

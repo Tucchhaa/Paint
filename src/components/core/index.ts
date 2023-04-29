@@ -11,5 +11,5 @@ export {
 
     Model,
     View,
-    Controller
+    Controller,
 };

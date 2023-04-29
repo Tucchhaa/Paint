@@ -1,8 +1,8 @@
 import { Model } from "./model";
 import { Module } from "./module";
 
-import {InfernoComponent, InfernoComponentType, renderInfernoComponent} from "./inferno";
-import {isDefined} from "../../utils";
+import { InfernoComponent, InfernoComponentType, renderInfernoComponent } from "./inferno";
+import { isDefined } from "../../utils";
 
 type ViewType<TModel extends Model> = InfernoComponentType<TModel>;
 
