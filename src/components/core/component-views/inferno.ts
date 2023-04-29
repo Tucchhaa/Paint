@@ -41,22 +41,3 @@ export {
     InfernoProps,
     InfernoComponentType,
 };
-//
-// export function renderInfernoComponent<TModel extends Model>(container: HTMLElement, view: View<TModel>) {
-//     const props = {
-//         component: view.component,
-//         model: view.model,
-//     };
-//
-//     // @ts-ignore
-//     const element = createElement(view.componentView, props);
-//
-//     render(element, container);
-//
-//     setTimeout(() => {
-//         (view.model as any).text = 'gavno';
-//         element.props.model = view.model;
-//         render(element, container);
-//     }, 5000);
-// }
-//
