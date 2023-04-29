@@ -47,3 +47,11 @@ export const deepExtend = (...objects: object[]): object => {
 
     return _deepExtend(...objects);
 };
+
+export const parseStyleSize = (size: number | string): string => {
+    if(typeof size === 'number') {
+        return size + 'px';
+    }
+
+    return size;
+};
