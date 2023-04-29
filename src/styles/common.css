@@ -1,0 +1,9 @@
+.jet-component {
+    font-family: arial, serif;
+}
+
+.jet-no-select {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

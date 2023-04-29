@@ -11,7 +11,11 @@ module.exports = {
         filename: "bundle.js"
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx']
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        alias: {
+            styles: path.resolve("./src/styles"),
+            components: path.resolve("./src/components"),
+        },
     },
     module: {
         rules: [
@@ -27,6 +31,10 @@ module.exports = {
             {
                 test: /\.ts$/,
                 loader: 'ts-loader',
+            },
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
             },
         ]
     },
