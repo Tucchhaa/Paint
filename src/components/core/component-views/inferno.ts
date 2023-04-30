@@ -4,10 +4,12 @@ import { createElement } from "inferno-create-element";
 import { ComponentViewManager } from './manager';
 import { render, VNode } from "inferno";
 import { Component as InfernoComponent } from "inferno";
+import { DataSource } from "../data-source";
 
 type InfernoProps<TModel extends Model> = {
     component: JetComponent<TModel>,
     model: TModel,
+    dataSource: DataSource<any>
 };
 
 type InfernoComponentType<TModel extends Model> = new(props: InfernoProps<TModel>) => InfernoComponent<InfernoProps<TModel>>;
@@ -21,6 +23,7 @@ class InfernoViewManager<TModel extends Model> extends ComponentViewManager<TMod
         const props = {
             component: this.component,
             model: this.model,
+            dataSource: this.dataSource,
         };
 
         // @ts-ignore
