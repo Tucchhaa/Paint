@@ -10,14 +10,14 @@ export class ListDataSource<TItem> extends DataSource<TItem> {
         super(config);
     }
 
-    public isSelected(item: TItem) {
+    public isItemSelected(item: TItem) {
         const config = this.config as ListDataSourceConfig<TItem>;
 
         return isDefined(config.isSelected) ?
             config.isSelected!(item) : (item as any).selected;
     }
 
-    public text(item: TItem) {
+    public getItemText(item: TItem) {
         const config = this.config as ListDataSourceConfig<TItem>;
 
         return isDefined(config.text) ?
