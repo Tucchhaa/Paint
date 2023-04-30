@@ -23,7 +23,11 @@ export abstract class View<TModel extends Model> extends Module<TModel> {
         this.componentViewManager!.render(container);
     }
 
-    public update() {
+    public stateUpdated() {
+        this.componentViewManager!.update();
+    }
+
+    public dataUpdate() {
         this.componentViewManager!.update();
     }
 }

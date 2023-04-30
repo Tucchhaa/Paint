@@ -7,7 +7,7 @@ export abstract class BaseOptions {
     disabled?: boolean = false;
 }
 
-export type StateChange = {
+export type StateUpdate = {
     name: string;
     value: any;
     prevValue: any;
@@ -15,6 +15,9 @@ export type StateChange = {
 
 export abstract class Model<TOptions extends BaseOptions = BaseOptions> {
     private component!: JetComponent;
+    public setComponent(component: JetComponent) {
+        this.component = component;
+    }
 
     protected constructor(options?: TOptions) {
         const processedOptions = deepExtend({}, this.getDefaultOptions(), options || {}) as TOptions;
@@ -22,9 +25,6 @@ export abstract class Model<TOptions extends BaseOptions = BaseOptions> {
         this.defineGettersSetters(processedOptions);
     }
 
-    public initialize(component: JetComponent) {
-        this.component = component;
-    }
 
     protected abstract getDefaultOptions(): TOptions;
 
@@ -43,7 +43,7 @@ export abstract class Model<TOptions extends BaseOptions = BaseOptions> {
                     const prevValue = value;
                     value = newValue;
 
-                    this.component.stateChanged({
+                    this.component.stateUpdated({
                         name: key,
                         value: newValue,
                         prevValue,
