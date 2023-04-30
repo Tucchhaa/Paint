@@ -30,7 +30,8 @@ class InfernoViewManager<TModel extends Model> extends ComponentViewManager<TMod
     }
 
     update() {
-        render(this.element, this.container);
+        (this.element.children as any).forceUpdate();
+        // render(this.element, this.container);
     }
 }
 

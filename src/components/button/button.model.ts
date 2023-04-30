@@ -1,9 +1,10 @@
 import { BaseOptions, Model } from "../core/model";
+import { noop } from "../../utils";
 
 export type ButtonStyleMode = 'text' | 'contained' | 'outline';
 
 export class ButtonOptions extends BaseOptions {
-    onClick?: (event: MouseEvent) => void;
+    onClick?: (event: MouseEvent) => void = noop;
     text?: string = '';
     title?: string = '';
     styleMode?: ButtonStyleMode = 'contained';
