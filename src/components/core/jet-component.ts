@@ -1,17 +1,17 @@
 import { isDefined } from "../../utils";
-import { Model, StateChange } from "./model";
+import { Model, StateUpdate } from "./model";
 import { Module, ModuleType, ViewType, ControllerType } from "./module";
 import { View } from './view';
 import { Controller } from './controller';
-import { DataSource } from "./data-source";
+import { DataSource, DataSourceUpdate } from "./data-source";
 
 export class JetComponent<TModel extends Model = Model, TItem = any> {
-    public name: string;
-    public container: HTMLElement;
-    public model: TModel;
-    public dataSource!: DataSource<TItem>;
-    private views: { [name: string]: View<TModel> } = {};
-    private controllers: { [name: string]: Controller<TModel> } = {};
+    public readonly name: string;
+    public readonly container: HTMLElement;
+    public readonly model: TModel;
+    public readonly dataSource!: DataSource<TItem>;
+    private readonly views: { [name: string]: View<TModel> } = {};
+    private readonly controllers: { [name: string]: Controller<TModel> } = {};
     private readonly modules: Module<TModel>[];
 
     constructor(
@@ -29,9 +29,7 @@ export class JetComponent<TModel extends Model = Model, TItem = any> {
 
         this.container = container;
 
-        if(isDefined(dataSource)) {
-            this.dataSource = dataSource!;
-        }
+        // ===
 
         this.model = model;
         this.registerModule(this.views, view);
@@ -42,8 +40,17 @@ export class JetComponent<TModel extends Model = Model, TItem = any> {
             ...Object.values(this.controllers),
         ];
 
+        // ===
+
+        if(isDefined(dataSource)) {
+            this.dataSource = dataSource!;
+            this.initializeDataSource();
+        }
         this.initializeModel();
         this.initializeModules();
+
+        // ===
+
         this.renderViews();
     }
 
@@ -66,9 +73,14 @@ export class JetComponent<TModel extends Model = Model, TItem = any> {
         }
     }
 
-    private initializeModel() {
-        this.model.initialize((this as unknown) as JetComponent);
+    private initializeDataSource() {
+        this.dataSource!.setComponent((this as unknown) as JetComponent);
     }
+
+    private initializeModel() {
+        this.model.setComponent((this as unknown) as JetComponent);
+    }
+
     private initializeModules() {
         for(const module of this.modules) {
             module.initialize();
@@ -83,11 +95,17 @@ export class JetComponent<TModel extends Model = Model, TItem = any> {
         }
     }
 
-    public stateChanged(change: StateChange) {
+    public stateUpdated(update: StateUpdate) {
         for(const module of this.modules) {
-            module.update(change);
+            module.stateUpdated(update);
         }
-    };
+    }
+
+    public dataUpdated(update: DataSourceUpdate<any>) {
+        for(const module of this.modules) {
+            module.dataUpdate(update);
+        }
+    }
 
     public getView(id: string | ViewType<TModel>) {
         id = typeof id === 'string' ? id : id.name;
