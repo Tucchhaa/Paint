@@ -3,11 +3,13 @@ import { Model, StateChange } from "./model";
 import { Module, ModuleType, ViewType, ControllerType } from "./module";
 import { View } from './view';
 import { Controller } from './controller';
+import { DataSource } from "./data-source";
 
-export class JetComponent<TModel extends Model = Model> {
+export class JetComponent<TModel extends Model = Model, TItem = any> {
     public name: string;
     public container: HTMLElement;
     public model: TModel;
+    public dataSource!: DataSource<TItem>;
     private views: { [name: string]: View<TModel> } = {};
     private controllers: { [name: string]: Controller<TModel> } = {};
     private readonly modules: Module<TModel>[];
@@ -17,7 +19,8 @@ export class JetComponent<TModel extends Model = Model> {
         container: HTMLElement | null,
         model: TModel,
         view?: ViewType<TModel> | ViewType<TModel>[],
-        controller?: ControllerType<TModel> | ControllerType<TModel>[]
+        controller?: ControllerType<TModel> | ControllerType<TModel>[],
+        dataSource?: DataSource<TItem>
     ) {
         this.name = name;
 
@@ -25,6 +28,10 @@ export class JetComponent<TModel extends Model = Model> {
             throw new Error('container is undefined');
 
         this.container = container;
+
+        if(isDefined(dataSource)) {
+            this.dataSource = dataSource!;
+        }
 
         this.model = model;
         this.registerModule(this.views, view);
