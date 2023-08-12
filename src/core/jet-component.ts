@@ -26,8 +26,14 @@ export abstract class JetComponent<TModel extends Model = Model> {
      */
     public dataSource!: DataSource;
 
+    /**
+     * Component's views
+     */
     private readonly views: Record<string, View<TModel>> = {};
 
+    /**
+     * Component's controllers
+     */
     private readonly controllers: Record<string, Controller<TModel>> = {};
 
     /**
