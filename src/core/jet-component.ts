@@ -1,4 +1,4 @@
-import { isDefined } from "../../utils";
+import { isDefined } from "utils/helpers";
 import { Model, StateUpdate } from "./model";
 import { Module, ModuleType, ViewType, ControllerType } from "./module";
 import { View } from './view';

@@ -1,5 +1,5 @@
-import { BaseOptions, Model } from "../core/model";
-import { noop } from "../../utils";
+import { BaseOptions, Model } from "core/model";
+import { noop } from "utils/helpers";
 
 export type ButtonStyleMode = 'text' | 'contained' | 'outline';
 

@@ -1,7 +1,7 @@
-import { InfernoComponent, InfernoProps } from "../core/component-views/inferno";
+import { InfernoComponent, InfernoProps } from "core/views/inferno";
 import { ButtonModel, ButtonStyleMode } from "./button.model";
 import { ButtonController } from "./button.controller";
-import { parseStyleSize } from "../../utils";
+import { parseStyleSize } from "utils/helpers";
 
 import "styles/common.css";
 import "./button.css";

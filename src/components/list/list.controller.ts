@@ -1,4 +1,4 @@
-import { Controller } from "../core";
+import { Controller } from "core";
 import { ListModel } from "./list.model";
 import { ListDataSource } from "./list.data-source";
 
