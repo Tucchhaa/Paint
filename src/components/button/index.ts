@@ -10,7 +10,7 @@ class ButtonView extends View<ButtonModel> {
 }
 
 export class Button extends JetComponent<ButtonModel> {
-    constructor(container: HTMLElement | null, options?: ButtonOptions) {
+    constructor(container: HTMLElement, options?: ButtonOptions) {
         const model = new ButtonModel(options);
 
         super("Button", container, model, ButtonView, ButtonController);

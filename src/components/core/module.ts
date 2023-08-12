@@ -2,7 +2,7 @@ import { JetComponent } from "./jet-component";
 import { Model, StateUpdate } from "./model";
 import { View } from './view';
 import { Controller } from './controller';
-import { DataSourceUpdate } from "./data-source";
+import { DataSourceChange } from "./data-source";
 
 export abstract class Module<TModel extends Model> {
     constructor(public component: JetComponent<TModel>) {
@@ -12,7 +12,7 @@ export abstract class Module<TModel extends Model> {
     public initialize() {};
 
     public stateUpdated(update: StateUpdate) {};
-    public dataUpdate(update: DataSourceUpdate<any>) {};
+    public dataUpdate(update: DataSourceChange<any>) {};
 
     public get model() {
         return this.component.model as TModel;

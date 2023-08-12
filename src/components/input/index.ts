@@ -10,7 +10,7 @@ class InputView extends View<InputModel> {
 }
 
 export class Input extends JetComponent<InputModel> {
-    constructor(container: HTMLElement | null, options?: InputOptions) {
+    constructor(container: HTMLElement, options?: InputOptions) {
         const model = new InputModel(options);
 
         super("Input", container, model, InputView, InputController);
