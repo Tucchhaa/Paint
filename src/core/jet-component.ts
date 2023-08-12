@@ -1,7 +1,7 @@
 import { isDefined } from "utils/helpers";
 import { Model, StateUpdate } from "./model";
-import { Module, ModuleType, ViewType, ControllerType } from "./module";
-import { View } from './view';
+import { Module, ViewType, ControllerType } from "./module";
+import { View } from './views/view';
 import { Controller } from './controller';
 import { DataSource, DataSourceChange } from "./data-source";
 
@@ -57,7 +57,7 @@ export abstract class JetComponent<TModel extends Model = Model> {
         // === Initialize modules
         this.modules = [
             ...Object.values(this.views), 
-            ...Object.values(this.controllers)
+            ...Object.values(this.controllers),
         ];
 
         this.initializeModules();
@@ -124,7 +124,6 @@ export abstract class JetComponent<TModel extends Model = Model> {
     }
 
     public stateUpdatedHandler(update: StateUpdate) {
-        console.log(update);
         for(const module of this.modules) {
             module.onStateUpdate(update);
         }
@@ -150,7 +149,7 @@ export abstract class JetComponent<TModel extends Model = Model> {
         throw new Error('Invalid view name ' + id);
     }
 
-    public getController(id: string | ControllerType<TModel>) {
+    public getController(id: string | ControllerType<TModel>): Controller<TModel> {
         id = typeof id === 'string' ? id : id.name;
 
         const controller = this.controllers[id];

@@ -13,7 +13,7 @@ export type ButtonState = BaseState & Partial<{
     styleMode: ButtonStyleMode;
 }>;
 
-export class ButtonModel extends Model<ButtonState> {
+export class ButtonModel extends Model<ButtonState> implements ButtonState {
     @stateProperty
     public onClick: (event: MouseEvent) => void = noop;
     

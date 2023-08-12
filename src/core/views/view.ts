@@ -1,13 +1,13 @@
-import { Model } from "./model";
-import { Module } from "./module";
+import { Model } from "../model";
+import { Module } from "../module";
 
-import { InfernoComponent, InfernoViewManager } from "./views/inferno";
+import { InfernoComponent, InfernoViewManager } from "./inferno";
 import { isDefined } from "utils/helpers";
 
-import { ComponentViewManager, ComponentViewType } from "./views/manager";
+import { ComponentViewManager, ComponentViewType } from "./manager";
 
 export abstract class View<TModel extends Model> extends Module<TModel> {
-    private componentViewManager?: ComponentViewManager<TModel>;
+    private componentViewManager!: ComponentViewManager<TModel>;
 
     protected setView(view: ComponentViewType<TModel>) {
         if(view.prototype instanceof InfernoComponent) {
@@ -20,14 +20,14 @@ export abstract class View<TModel extends Model> extends Module<TModel> {
             throw new Error('View.componentView is undefined. Use setView in initialize() to define it');
         }
 
-        this.componentViewManager!.render(container);
+        this.componentViewManager.render(container);
     }
 
     public onStateUpdate() {
-        this.componentViewManager!.update();
+        this.componentViewManager.update();
     }
 
     public onDataChange() {
-        this.componentViewManager!.update();
+        this.componentViewManager.update();
     }
 }
