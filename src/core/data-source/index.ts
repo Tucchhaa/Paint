@@ -36,7 +36,7 @@ export class DataSource<TItem = any> {
 
     constructor(config: DataSourceConfigType<TItem>) {
         this.config = this.prepareDataSourceConfig(config);
-        console.log(config, this.config);
+
         this.processItems(this.config.items!);
 
         this.events.change.on(this.changeHandler.bind(this));
