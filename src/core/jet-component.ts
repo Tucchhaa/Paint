@@ -26,9 +26,9 @@ export abstract class JetComponent<TModel extends Model = Model> {
      */
     public dataSource!: DataSource;
 
-    private readonly views: { [name: string]: View<TModel> } = {};
+    private readonly views: Record<string, View<TModel>> = {};
 
-    private readonly controllers: { [name: string]: Controller<TModel> } = {};
+    private readonly controllers: Record<string, Controller<TModel>> = {};
 
     /**
      * All controllers and views, that will get notified on events
@@ -72,13 +72,13 @@ export abstract class JetComponent<TModel extends Model = Model> {
 
     protected abstract registerModules(): void;
 
-    protected setModel(model: TModel) {
+    private setModel(model: TModel) {
         this.model = model;
 
         this.model.events.update.on(this.stateUpdatedHandler.bind(this));
     }
 
-    protected setDataSource(dataSource: DataSource) {
+    private setDataSource(dataSource: DataSource) {
         this.dataSource = dataSource;
 
         this.dataSource.events.change.on(this.dataChangeHandler.bind(this));
@@ -124,6 +124,7 @@ export abstract class JetComponent<TModel extends Model = Model> {
     }
 
     public stateUpdatedHandler(update: StateUpdate) {
+        console.log(update);
         for(const module of this.modules) {
             module.onStateUpdate(update);
         }

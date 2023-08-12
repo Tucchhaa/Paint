@@ -1,4 +1,4 @@
-import { ListModel, ListOptions } from "./list.model";
+import { ListModel, ListState } from "./list.model";
 import { View, JetComponent } from "core";
 import { ListController } from "./list.controller";
 import { ListInfernoView } from "./list.inferno.view";
@@ -13,10 +13,10 @@ class ListView extends View<ListModel> {
 export class List<TItem> extends JetComponent<ListModel> {
     constructor(
         container: HTMLElement,
-        options: ListOptions,
+        state: ListState,
         dataSourceConfig: ListDataSourceConfig<TItem> | Array<TItem> = []
     ) {
-        const model = new ListModel(options);
+        const model = new ListModel(state);
 
         super("List", container, model, new ListDataSource(dataSourceConfig));
     }
