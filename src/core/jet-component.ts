@@ -77,7 +77,7 @@ export class JetComponent<TModel extends Model = Model> {
             for(const module of this.modules) {
                 module.dataUpdate(update);
             }
-        }
+        };
 
         this.dataSource.events.change.on(changeHandler);
     }

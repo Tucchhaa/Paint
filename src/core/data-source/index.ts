@@ -38,7 +38,7 @@ export class DataSource<TItem = any> {
         this.config = this.prepareDataSourceConfig(config);
 
         this.processItems(this.config.items!);
-        console.log(this.events);
+
         this.events.change.on(this.changeHandler.bind(this));
     }
 
@@ -56,16 +56,16 @@ export class DataSource<TItem = any> {
 
     private changeHandler(change: DataSourceChange<TItem>): void {
         switch(change.type) {
-            case 'add':
-                return this.events.add.emit(change);
-            case 'delete':
-                return this.events.delete.emit(change);
-            case 'update':
-                return this.events.update.emit(change);
-            case 'full':
-                return this.events.full.emit(change);
-            default:
-                return;
+        case 'add':
+            return this.events.add.emit(change);
+        case 'delete':
+            return this.events.delete.emit(change);
+        case 'update':
+            return this.events.update.emit(change);
+        case 'full':
+            return this.events.full.emit(change);
+        default:
+            return;
         }
     }
 
