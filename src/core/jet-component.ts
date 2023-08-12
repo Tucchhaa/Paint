@@ -5,7 +5,7 @@ import { View } from './view';
 import { Controller } from './controller';
 import { DataSource, DataSourceChange } from "./data-source";
 
-export class JetComponent<TModel extends Model = Model> {
+export abstract class JetComponent<TModel extends Model = Model> {
     /**
      * Component name
      */
@@ -39,66 +39,61 @@ export class JetComponent<TModel extends Model = Model> {
         name: string,
         container: HTMLElement,
         model: TModel,
-        view?: ViewType<TModel> | ViewType<TModel>[],
-        controller?: ControllerType<TModel> | ControllerType<TModel>[],
         dataSource?: DataSource
     ) {
+        // === Base fields
         this.name = name;
         this.container = container;
 
-        // ===
-
+        // === Register modules
         this.model = model;
-        this.registerModule(this.views, view);
-        this.registerModule(this.controllers, controller);
+
+        this.registerModules();
 
         this.modules = [
-            ...Object.values(this.views),
-            ...Object.values(this.controllers),
+            ...Object.values(this.views), 
+            ...Object.values(this.controllers)
         ];
 
-        // ===
-
+        // === Initialize modules
         if(isDefined(dataSource)) {
             this.setDataSource(dataSource);
         }
+
         this.initializeModel();
         this.initializeModules();
 
-        // ===
-
+        // === Render
         this.renderViews();
     }
+
+    // ===
+    // Initialization
+    // ===
+    protected abstract registerModules(): void;
 
     protected setDataSource(dataSource: DataSource) {
         this.dataSource = dataSource;
 
-        const changeHandler = (update: DataSourceChange) => {
-            for(const module of this.modules) {
-                module.dataUpdate(update);
-            }
-        };
-
-        this.dataSource.events.change.on(changeHandler);
+        this.dataSource.events.change.on(this.dataChangeHandler.bind(this));
     }
 
-    private registerModule<T extends Module<TModel>>(
-        modules: { [name: string]: T },
-        moduleConstructors?: ModuleType<TModel, T> | ModuleType<TModel, T>[])
-    {
-        if(moduleConstructors !== undefined) {
-            moduleConstructors = Array.isArray(moduleConstructors) ? moduleConstructors : [moduleConstructors];
+    protected registerController(controller: Controller<TModel>) {
+        const name = (controller as object).constructor.name;
 
-            moduleConstructors.forEach(constructor => {
-                const module = new constructor(this);
+        if(isDefined(this.controllers[name]))
+            throw new Error(`Controller with name ${name} is already defined.`);
 
-                if(isDefined(modules[constructor.name])) {
-                    throw new Error(`Module with name ${constructor.name} is already defined.`);
-                }
+        this.controllers[name] = controller;
+    }
 
-                modules[constructor.name] = module;
-            });
-        }
+    protected registerView(view: View<TModel>) {
+        const name = (view as object).constructor.name;
+
+        if(isDefined(this.views[name]))
+            throw new Error(`View with name ${name} is already defined.`);
+
+        this.views[name] = view;
     }
 
     private initializeModel() {
@@ -111,6 +106,13 @@ export class JetComponent<TModel extends Model = Model> {
         }
     }
 
+    // ===
+    // Life cycle methods
+    // ===
+
+    /**
+     * Renders all views
+     */
     private renderViews() {
         this.container.innerHTML = "";
 
@@ -125,15 +127,24 @@ export class JetComponent<TModel extends Model = Model> {
         }
     }
 
-    public getView(id: string | ViewType<TModel>) {
+    private dataChangeHandler(update: DataSourceChange) {
+        for(const module of this.modules)
+            module.dataUpdate(update);
+    };
+
+    // ===
+    // Getters
+    // ===
+
+    public getView(id: string | ViewType<TModel>): View<TModel> {
         id = typeof id === 'string' ? id : id.name;
 
-        const view = this.views[id];
+        const view: View<TModel> | undefined = this.views[id];
 
-        if(view === undefined)
-            throw new Error('Invalid view name ' + id);
+        if(isDefined(view))
+            return view;
 
-        return view;
+        throw new Error('Invalid view name ' + id);
     }
 
     public getController(id: string | ControllerType<TModel>) {
@@ -141,9 +152,9 @@ export class JetComponent<TModel extends Model = Model> {
 
         const controller = this.controllers[id];
 
-        if(controller === undefined)
-            throw new Error('Invalid controller name ' + id);
+        if(isDefined(controller))
+            return controller;
 
-        return controller;
+        throw new Error('Invalid controller name ' + id);
     }
 }
