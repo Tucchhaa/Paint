@@ -11,5 +11,5 @@ export const data = [
     { id: 9, text: 'ullamco laboris nisi ut aliquip ex ea commodo consequat.' },
     { id: 10, text: 'Duis aute irure dolor in reprehenderit in' },
     { id: 11, text: 'voluptate velit esse cillum dolore eu fugiat nulla pariatur.' },
-    { id: 12, text: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' }
+    { id: 12, text: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' },
 ];

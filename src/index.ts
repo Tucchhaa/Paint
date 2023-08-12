@@ -25,7 +25,7 @@ window.addEventListener('load', () => {
             input.model.value = "";
             list.container.scrollTo({
                 top: list.container.scrollHeight,
-                behavior: 'smooth'
+                behavior: 'smooth',
             });
         }
     }
