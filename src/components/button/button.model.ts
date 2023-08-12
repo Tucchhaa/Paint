@@ -1,26 +1,34 @@
-import { BaseOptions, Model } from "core/model";
+import { BaseState, Model, stateProperty } from "core/model";
 import { noop } from "utils/helpers";
 
 export type ButtonStyleMode = 'text' | 'contained' | 'outline';
 
-export class ButtonOptions extends BaseOptions {
-    onClick?: (event: MouseEvent) => void = noop;
-    text?: string = '';
-    title?: string = '';
-    styleMode?: ButtonStyleMode = 'contained';
-}
+export type ButtonState = BaseState & Partial<{
+    onClick: (event: MouseEvent) => void;
+    
+    text: string;
+    
+    title: string;
+    
+    styleMode: ButtonStyleMode;
+}>;
 
-export class ButtonModel extends Model<ButtonOptions> {
-    public onClick!: (event: MouseEvent) => void;
-    public text!: string;
-    public title!: string;
-    public styleMode!: ButtonStyleMode;
+export class ButtonModel extends Model<ButtonState> {
+    @stateProperty
+    public onClick: (event: MouseEvent) => void = noop;
+    
+    @stateProperty
+    public text: string = '';
+    
+    @stateProperty
+    public title: string = '';
+    
+    @stateProperty
+    public styleMode: ButtonStyleMode = 'contained';
 
-    constructor(options?: ButtonOptions) {
-        super(options);
-    }
+    constructor(state?: ButtonState) {
+        super(state);
 
-    protected getDefaultOptions(): ButtonOptions {
-        return new ButtonOptions();
+        this.assignState(state);
     }
 }

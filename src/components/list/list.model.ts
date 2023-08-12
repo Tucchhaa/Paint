@@ -1,17 +1,16 @@
-import { BaseOptions, Model } from "core/model";
+import { BaseState, Model, stateProperty } from "core/model";
 
-export class ListOptions extends BaseOptions {
-    selectionEnabled?: boolean = false;
-}
+export type ListState = BaseState & Partial<{
+    selectionEnabled: boolean;
+}>;
 
-export class ListModel extends Model<ListOptions> {
-    public selectionEnabled!: boolean;
+export class ListModel extends Model<ListState> implements ListState {
+    @stateProperty
+    public selectionEnabled: boolean = false;
 
-    constructor(options?: ListOptions) {
-        super(options);
-    }
+    constructor(state?: ListState) {
+        super(state);
 
-    protected getDefaultOptions(): ListOptions {
-        return new ListOptions();
+        this.assignState(state);
     }
 }
