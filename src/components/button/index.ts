@@ -1,4 +1,4 @@
-import { ButtonModel, ButtonOptions } from "./button.model";
+import { ButtonModel, ButtonState } from "./button.model";
 import { View, JetComponent } from "core";
 import { ButtonController } from "./button.controller";
 import { ButtonInfernoView } from "./button.inferno.view";
@@ -10,8 +10,8 @@ class ButtonView extends View<ButtonModel> {
 }
 
 export class Button extends JetComponent<ButtonModel> {
-    constructor(container: HTMLElement, options?: ButtonOptions) {
-        const model = new ButtonModel(options);
+    constructor(container: HTMLElement, state?: ButtonState) {
+        const model = new ButtonModel(state);
 
         super("Button", container, model);
     }

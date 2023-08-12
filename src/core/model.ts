@@ -1,18 +1,28 @@
-import { deepExtend } from "utils/helpers";
-import { JetComponent } from "./jet-component";
+import { deepExtend, isDefined } from "utils/helpers";
 import { JetEvent } from "./event";
 
-export abstract class BaseOptions {
-    height?: number | string = 'auto';
+export type BaseState = Partial<{
+    height: number | string;
 
-    width?: number | string = 'auto';
+    width: number | string;
 
-    disabled?: boolean = false;
-}
+    disabled: boolean;
+}>;
 
 export type StateUpdate<T = any> = {
+    /**
+     * Name of state property
+     */
     name: string;
+
+    /**
+     * Current value of state property
+     */
     value: T;
+
+    /**
+     * Previous value of state property
+     */
     prevValue: T;
 };
 
@@ -20,53 +30,73 @@ class ModelEvents {
     public update = new JetEvent<StateUpdate>();
 }
 
-export abstract class Model<TOptions extends BaseOptions = BaseOptions> {
+const useContext = (target: Model, propertyKey: string, descriptor: PropertyDescriptor) => {
+    const originalValue = descriptor.value;
+
+    descriptor.value = function(...args: any[]) {
+        return originalValue.apply(this, args);
+    }
+};
+
+export const stateProperty = (target: Model, propertyKey: string) => {
+    let value: any;
+
+    const getter = () => value;
+
+    const setter = function (newValue: any) {
+        const prevValue = value;
+        value = newValue;
+
+        // @ts-expect-error
+        (this as Model).onPropertyValueChanged(propertyKey, value, prevValue);
+    };
+
+    Object.defineProperty(target, propertyKey, {
+        enumerable: true,
+        configurable: true,
+
+        get: getter,
+        set: setter,
+    });
+};
+
+export abstract class Model<TState extends BaseState = BaseState> implements Required<BaseState> {
+    public readonly events: ModelEvents = new ModelEvents();
+
     // ===
-    // Default state fields
+    // Default field descriptors
     // ===
 
-    public height!: number;
+    @stateProperty
+    public height: number | string = 'auto';
 
-    public width!: number;
+    @stateProperty
+    public width: number | string = 'auto';
     
-    public disabled!: boolean;
+    @stateProperty
+    public disabled: boolean = false;
 
     // ===
 
-    public events = new ModelEvents();
-
-    protected constructor(options?: TOptions) {
-        const processedOptions = deepExtend({}, this.getDefaultOptions(), options || {}) as TOptions;
-
-        this.defineGettersSetters(processedOptions);
+    @useContext
+    onPropertyValueChanged(propertyKey: string, value: any, prevValue: any) {
+        this.events?.update.emit({
+            name: propertyKey,
+            value,
+            prevValue,
+        });
     }
 
-    protected abstract getDefaultOptions(): TOptions;
+    // ===
 
-    private defineGettersSetters(options: TOptions) {
-        for(const key of Object.keys(options)) {
-            let value = (options as any)[key];
+    constructor(state?: TState) { }
 
-            const getter = () => value;
-
-            const setter = (newValue: any) => {
-                const prevValue = value;
-                value = newValue;
-
-                this.events.update.emit({
-                    name: key,
-                    value: newValue,
-                    prevValue,
-                })
-            };
-
-            Object.defineProperty(this, key, {
-                enumerable: true,
-                configurable: true,
-
-                get: getter,
-                set: setter,
-            });
+    protected assignState(state?: TState) {
+        if(!isDefined(state))
+            return;
+        
+        for(const [key, value] of Object.entries(state)) {
+            (this as any)[key] = value;
         }
     }
 }
