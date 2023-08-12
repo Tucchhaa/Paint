@@ -19,7 +19,7 @@ export abstract class JetComponent<TModel extends Model = Model> {
     /**
      * Model stores the state of the component
      */
-    public readonly model: TModel;
+    public model!: TModel;
 
     /**
      * Data storage
@@ -46,21 +46,20 @@ export abstract class JetComponent<TModel extends Model = Model> {
         this.container = container;
 
         // === Register modules
-        this.model = model;
+        if(isDefined(dataSource)) {
+            this.setDataSource(dataSource);
+        }
+
+        this.setModel(model);
 
         this.registerModules();
 
+        // === Initialize modules
         this.modules = [
             ...Object.values(this.views), 
             ...Object.values(this.controllers)
         ];
 
-        // === Initialize modules
-        if(isDefined(dataSource)) {
-            this.setDataSource(dataSource);
-        }
-
-        this.initializeModel();
         this.initializeModules();
 
         // === Render
@@ -70,7 +69,14 @@ export abstract class JetComponent<TModel extends Model = Model> {
     // ===
     // Initialization
     // ===
+
     protected abstract registerModules(): void;
+
+    protected setModel(model: TModel) {
+        this.model = model;
+
+        this.model.events.update.on(this.stateUpdatedHandler.bind(this));
+    }
 
     protected setDataSource(dataSource: DataSource) {
         this.dataSource = dataSource;
@@ -96,10 +102,6 @@ export abstract class JetComponent<TModel extends Model = Model> {
         this.views[name] = view;
     }
 
-    private initializeModel() {
-        this.model.setComponent((this as unknown) as JetComponent);
-    }
-
     private initializeModules() {
         for(const module of this.modules) {
             module.initialize();
@@ -121,15 +123,15 @@ export abstract class JetComponent<TModel extends Model = Model> {
         }
     }
 
-    public stateUpdated(update: StateUpdate) {
+    public stateUpdatedHandler(update: StateUpdate) {
         for(const module of this.modules) {
-            module.stateUpdated(update);
+            module.onStateUpdate(update);
         }
     }
 
-    private dataChangeHandler(update: DataSourceChange) {
+    private dataChangeHandler(change: DataSourceChange) {
         for(const module of this.modules)
-            module.dataUpdate(update);
+            module.onDataChange(change);
     };
 
     // ===

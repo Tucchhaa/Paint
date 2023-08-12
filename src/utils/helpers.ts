@@ -2,7 +2,7 @@ export const isDefined = <T>(variable: T): variable is NonNullable<T> => {
     return variable !== undefined && variable !== null;
 };
 
-export const isObject = (variable: any): boolean => {
+export const isObject = (variable: any): variable is object => {
     return typeof variable === 'object' && variable !== null;
 };
 
@@ -21,15 +21,14 @@ export const extend = (...objects: object[]): object => {
     return result;
 };
 
-export const deepExtend = (...objects: object[]): object => {
+export const deepExtend = <T extends object>(...objects: T[]): T => {
     let depth = 3;
 
-    const _deepExtend = (...objects: object[]) => {
+    const _deepExtend = (...objects: T[]) => {
         const result: any = objects[0];
 
         for(const iterator of objects) {
             for(const key in iterator) {
-                // @ts-ignore
                 const value = iterator[key];
 
                 if(isObject(value) && depth > 0) {
