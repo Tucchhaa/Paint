@@ -1,4 +1,4 @@
-import { deepExtend } from "../../utils";
+import { deepExtend } from "utils/helpers";
 import { JetComponent } from "./jet-component";
 
 export abstract class BaseOptions {

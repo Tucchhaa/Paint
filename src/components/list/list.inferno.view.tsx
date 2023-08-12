@@ -1,5 +1,5 @@
-import { InfernoComponent, InfernoProps } from "../core/component-views/inferno";
-import { parseStyleSize } from "../../utils";
+import { InfernoComponent, InfernoProps } from "core/views/inferno";
+import { parseStyleSize } from "utils/helpers";
 
 import { ListModel } from "./list.model";
 import { ListDataSource } from "./list.data-source";

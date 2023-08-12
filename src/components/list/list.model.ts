@@ -1,4 +1,4 @@
-import { BaseOptions, Model } from "../core/model";
+import { BaseOptions, Model } from "core/model";
 
 export class ListOptions extends BaseOptions {
     selectionEnabled?: boolean = false;

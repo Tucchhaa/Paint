@@ -1,4 +1,4 @@
-import { Controller } from "../core";
+import { Controller } from "core";
 import { ButtonModel } from "./button.model";
 
 export class ButtonController extends Controller<ButtonModel> {

@@ -1,7 +1,7 @@
-import { InfernoComponent, InfernoProps } from "../core/component-views/inferno";
+import { InfernoComponent, InfernoProps } from "core/views/inferno";
 import { InputModel } from "./input.model";
 import { InputController } from "./input.controller";
-import { parseStyleSize } from "../../utils";
+import { parseStyleSize } from "utils/helpers";
 
 import "styles/common.css";
 import "./input.css";

@@ -1,5 +1,5 @@
-import { DataSource, DataSourceConfig } from "../core/data-source";
-import { isDefined } from "../../utils";
+import { DataSource, DataSourceConfig } from "core/data-source";
+import { isDefined } from "utils/helpers";
 
 export type ListDataSourceConfig<TItem> = DataSourceConfig<TItem> & {
     isSelected?: (item: TItem) => boolean;

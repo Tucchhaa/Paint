@@ -1,5 +1,5 @@
 import { ButtonModel, ButtonOptions } from "./button.model";
-import { View, JetComponent } from "../core";
+import { View, JetComponent } from "core";
 import { ButtonController } from "./button.controller";
 import { ButtonInfernoView } from "./button.inferno.view";
 

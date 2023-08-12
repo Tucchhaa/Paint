@@ -1,4 +1,4 @@
-import { isDefined } from "../../../utils";
+import { isDefined } from "utils/helpers";
 import { JetEvent } from "../event";
 
 export type DataSourceConfigType<TItem> = Array<TItem> | DataSourceConfig<TItem> | undefined;

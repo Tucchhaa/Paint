@@ -1,4 +1,4 @@
-import { Controller } from "../core";
+import { Controller } from "core";
 import { InputModel } from "./input.model";
 import { FormEvent } from "inferno";
 

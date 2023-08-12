@@ -1,5 +1,5 @@
 import { InputModel, InputOptions } from "./input.model";
-import { View, JetComponent } from "../core";
+import { View, JetComponent } from "core";
 import { InputController } from "./input.controller";
 import { InputInfernoView } from "./input.inferno.view";
 

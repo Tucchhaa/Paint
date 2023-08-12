@@ -1,10 +1,10 @@
 import { Model } from "./model";
 import { Module } from "./module";
 
-import { InfernoComponent, InfernoViewManager } from "./component-views/inferno";
-import { isDefined } from "../../utils";
+import { InfernoComponent, InfernoViewManager } from "./views/inferno";
+import { isDefined } from "utils/helpers";
 
-import { ComponentViewManager, ComponentViewType } from "./component-views/manager";
+import { ComponentViewManager, ComponentViewType } from "./views/manager";
 
 export abstract class View<TModel extends Model> extends Module<TModel> {
     private componentViewManager?: ComponentViewManager<TModel>;

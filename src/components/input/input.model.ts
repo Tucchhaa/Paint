@@ -1,6 +1,6 @@
-import { BaseOptions, Model } from "../core/model";
+import { BaseOptions, Model } from "core/model";
 import { FormEvent } from "inferno";
-import { noop } from "../../utils";
+import { noop } from "utils/helpers";
 
 export class InputOptions extends BaseOptions {
     label?: string = '';
