@@ -13,12 +13,16 @@ class ListView extends View<ListModel> {
 export class List<TItem> extends JetComponent<ListModel> {
     constructor(
         container: HTMLElement,
-        options?: ListOptions,
-        dataSourceConfig?: ListDataSourceConfig<TItem> | Array<TItem>
+        options: ListOptions,
+        dataSourceConfig: ListDataSourceConfig<TItem> | Array<TItem> = []
     ) {
         const model = new ListModel(options);
-        const dataSource = new ListDataSource(dataSourceConfig);
 
-        super("List", container, model, ListView, ListController, dataSource);
+        super("List", container, model, new ListDataSource(dataSourceConfig));
+    }
+
+    protected registerModules(): void {
+        this.registerView(new ListView(this));
+        this.registerController(new ListController(this));
     }
 }
