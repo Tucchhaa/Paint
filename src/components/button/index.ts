@@ -13,6 +13,11 @@ export class Button extends JetComponent<ButtonModel> {
     constructor(container: HTMLElement, options?: ButtonOptions) {
         const model = new ButtonModel(options);
 
-        super("Button", container, model, ButtonView, ButtonController);
+        super("Button", container, model);
+    }
+
+    protected registerModules(): void {
+        this.registerView(new ButtonView(this));
+        this.registerController(new ButtonController(this));
     }
 }
