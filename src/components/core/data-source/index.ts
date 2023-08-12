@@ -1,5 +1,5 @@
-import { isDefined } from "../../utils";
-import { JetComponent } from "./jet-component";
+import { isDefined } from "../../../utils";
+import { JetEvent } from "../event";
 
 export type DataSourceConfigType<TItem> = Array<TItem> | DataSourceConfig<TItem> | undefined;
 
@@ -11,16 +11,25 @@ export type DataSourceConfig<TItem> = {
     items?: Array<TItem>;
 }
 
-export type DataSourceUpdate<TItem> = {
+export type DataSourceChange<TItem = any> = {
     type: 'full' | 'add' | 'delete' | 'update';
     item?: TItem;
 };
 
-export class DataSource<TItem> {
-    private component!: JetComponent;
-    public setComponent(component: JetComponent) {
-        this.component = component;
-    }
+class DataSourceEvents<TArgs> {
+    public change = new JetEvent<TArgs>();
+
+    public add = new JetEvent<TArgs>();
+
+    public delete = new JetEvent<TArgs>();
+
+    public update = new JetEvent<TArgs>();
+
+    public full = new JetEvent<TArgs>();
+}
+
+export class DataSource<TItem = any> {
+    public events = new DataSourceEvents<DataSourceChange<TItem>>();
 
     protected config: DataSourceConfig<TItem>;
     private itemByKey: { [name: ItemKey]: TItem } = {};
@@ -29,6 +38,8 @@ export class DataSource<TItem> {
         this.config = this.prepareDataSourceConfig(config);
 
         this.processItems(this.config.items!);
+        console.log(this.events);
+        this.events.change.on(this.changeHandler.bind(this));
     }
 
     private prepareDataSourceConfig(config: DataSourceConfigType<TItem>): DataSourceConfig<TItem> {
@@ -41,6 +52,21 @@ export class DataSource<TItem> {
         }
 
         return config!;
+    }
+
+    private changeHandler(change: DataSourceChange<TItem>): void {
+        switch(change.type) {
+            case 'add':
+                return this.events.add.emit(change);
+            case 'delete':
+                return this.events.delete.emit(change);
+            case 'update':
+                return this.events.update.emit(change);
+            case 'full':
+                return this.events.full.emit(change);
+            default:
+                return;
+        }
     }
 
     // ===
@@ -110,7 +136,7 @@ export class DataSource<TItem> {
     public setItems(items: Array<TItem>) {
         this.processItems(items);
 
-        this.component.dataUpdated({
+        this.events.change.emit({
             type: 'full',
         });
     }
@@ -123,7 +149,7 @@ export class DataSource<TItem> {
 
         this.processItem(item);
 
-        this.component.dataUpdated({
+        this.events.change.emit({
             type: 'add', item,
         });
     }
@@ -134,7 +160,7 @@ export class DataSource<TItem> {
         const deletedItem = this.itemByKey[key];
         delete this.itemByKey[key];
 
-        this.component.dataUpdated({
+        this.events.change.emit({
             type: 'delete',
             item: deletedItem,
         });
@@ -142,8 +168,8 @@ export class DataSource<TItem> {
 
     public updateItem(key: ItemKey, item: TItem) {
         this.itemByKey[key] = item;
-
-        this.component.dataUpdated({
+        
+        this.events.change.emit({
             type: 'update', item,
         });
     }

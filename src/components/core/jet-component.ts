@@ -3,30 +3,47 @@ import { Model, StateUpdate } from "./model";
 import { Module, ModuleType, ViewType, ControllerType } from "./module";
 import { View } from './view';
 import { Controller } from './controller';
-import { DataSource, DataSourceUpdate } from "./data-source";
+import { DataSource, DataSourceChange } from "./data-source";
 
-export class JetComponent<TModel extends Model = Model, TItem = any> {
+export class JetComponent<TModel extends Model = Model> {
+    /**
+     * Component name
+     */
     public readonly name: string;
+
+    /**
+     * HTML element containing component
+     */
     public readonly container: HTMLElement;
+
+    /**
+     * Model stores the state of the component
+     */
     public readonly model: TModel;
-    public readonly dataSource!: DataSource<TItem>;
+
+    /**
+     * Data storage
+     */
+    public dataSource!: DataSource;
+
     private readonly views: { [name: string]: View<TModel> } = {};
+
     private readonly controllers: { [name: string]: Controller<TModel> } = {};
+
+    /**
+     * All controllers and views, that will get notified on events
+     */
     private readonly modules: Module<TModel>[];
 
     constructor(
         name: string,
-        container: HTMLElement | null,
+        container: HTMLElement,
         model: TModel,
         view?: ViewType<TModel> | ViewType<TModel>[],
         controller?: ControllerType<TModel> | ControllerType<TModel>[],
-        dataSource?: DataSource<TItem>
+        dataSource?: DataSource
     ) {
         this.name = name;
-
-        if(container === undefined || container === null)
-            throw new Error('container is undefined');
-
         this.container = container;
 
         // ===
@@ -43,8 +60,7 @@ export class JetComponent<TModel extends Model = Model, TItem = any> {
         // ===
 
         if(isDefined(dataSource)) {
-            this.dataSource = dataSource!;
-            this.initializeDataSource();
+            this.setDataSource(dataSource);
         }
         this.initializeModel();
         this.initializeModules();
@@ -52,6 +68,18 @@ export class JetComponent<TModel extends Model = Model, TItem = any> {
         // ===
 
         this.renderViews();
+    }
+
+    protected setDataSource(dataSource: DataSource) {
+        this.dataSource = dataSource;
+
+        const changeHandler = (update: DataSourceChange) => {
+            for(const module of this.modules) {
+                module.dataUpdate(update);
+            }
+        }
+
+        this.dataSource.events.change.on(changeHandler);
     }
 
     private registerModule<T extends Module<TModel>>(
@@ -71,10 +99,6 @@ export class JetComponent<TModel extends Model = Model, TItem = any> {
                 modules[constructor.name] = module;
             });
         }
-    }
-
-    private initializeDataSource() {
-        this.dataSource!.setComponent((this as unknown) as JetComponent);
     }
 
     private initializeModel() {
@@ -98,12 +122,6 @@ export class JetComponent<TModel extends Model = Model, TItem = any> {
     public stateUpdated(update: StateUpdate) {
         for(const module of this.modules) {
             module.stateUpdated(update);
-        }
-    }
-
-    public dataUpdated(update: DataSourceUpdate<any>) {
-        for(const module of this.modules) {
-            module.dataUpdate(update);
         }
     }
 

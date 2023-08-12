@@ -1,4 +1,4 @@
-export const isDefined = (variable: any): boolean => {
+export const isDefined = <T>(variable: T): variable is NonNullable<T> => {
     return variable !== undefined && variable !== null;
 };
 

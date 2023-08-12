@@ -10,9 +10,9 @@ class ListView extends View<ListModel> {
     }
 }
 
-export class List<TItem> extends JetComponent<ListModel, TItem> {
+export class List<TItem> extends JetComponent<ListModel> {
     constructor(
-        container: HTMLElement | null,
+        container: HTMLElement,
         options?: ListOptions,
         dataSourceConfig?: ListDataSourceConfig<TItem> | Array<TItem>
     ) {

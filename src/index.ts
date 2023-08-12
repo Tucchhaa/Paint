@@ -3,18 +3,18 @@ import { data } from "./data";
 
 window.addEventListener('load', () => {
     const list = new List<any>(
-        document.getElementById('list'),
+        document.getElementById('list')!,
         { selectionEnabled: true },
         data
     );
 
     // ===
 
-    const input = new Input(document.getElementById('input'));
+    const input = new Input(document.getElementById('input')!);
 
     // ===
 
-    new Button(document.getElementById('add-btn'), {
+    new Button(document.getElementById('add-btn')!, {
         text: 'add',
         onClick: () => createTask(),
     });
