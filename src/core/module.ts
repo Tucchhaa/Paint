@@ -11,8 +11,8 @@ export abstract class Module<TModel extends Model> {
 
     public initialize() {};
 
-    public stateUpdated(update: StateUpdate) {};
-    public dataUpdate(update: DataSourceChange<any>) {};
+    public onStateUpdate(update: StateUpdate) {};
+    public onDataChange(update: DataSourceChange<any>) {};
 
     public get model() {
         return this.component.model as TModel;
