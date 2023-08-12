@@ -1,31 +1,41 @@
 import { JetComponent } from "./jet-component";
 import { Model, StateUpdate } from "./model";
-import { View } from './view';
+import { View } from './views/view';
 import { Controller } from './controller';
 import { DataSourceChange } from "./data-source";
 
 export abstract class Module<TModel extends Model> {
+    public get model() {
+        return this.component.model as TModel;
+    }
+
     constructor(public component: JetComponent<TModel>) {
         this.component = component;
     }
+    
+    // ===
+    // Life cycle methods
+    // ===
 
     public initialize() {};
 
     public onStateUpdate(update: StateUpdate) {};
     public onDataChange(update: DataSourceChange<any>) {};
 
-    public get model() {
-        return this.component.model as TModel;
-    }
+    // ===
+    // Getters
+    // ===
+
     public getView(id: string | ViewType<TModel>) {
         return this.component.getView(id);
     }
+
     public getController(id: string | ControllerType<TModel>) {
         return this.component.getController(id);
     }
 }
 
-export type ModuleType<TModel extends Model, T> = new(component: JetComponent<TModel>) => T
+type ModuleType<TModel extends Model, T> = new(component: JetComponent<TModel>) => T;
 
 export type ViewType<TModel extends Model> = ModuleType<TModel, View<TModel>>;
 export type ControllerType<TModel extends Model> = ModuleType<TModel, Controller<TModel>>;

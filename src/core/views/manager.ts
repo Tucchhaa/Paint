@@ -7,16 +7,19 @@ export type ComponentViewType<TModel extends Model> = InfernoComponentType<TMode
 
 export abstract class ComponentViewManager<TModel extends Model> {
     protected container!: HTMLElement;
-    protected model: TModel;
-    protected dataSource: DataSource<any>;
+
+    protected get model() {
+        return this.component.model;
+    }
+
+    protected get dataSource() {
+        return this.component.dataSource;
+    }
 
     constructor(
-        protected componentView: ComponentViewType<TModel>,
+        protected componentView: ComponentViewType<TModel>, 
         protected component: JetComponent<TModel>
-    ) {
-        this.model = component.model;
-        this.dataSource = component.dataSource;
-    }
+    ) { }
 
     public render(container: HTMLElement) {
         this.container = container;

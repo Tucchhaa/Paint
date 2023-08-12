@@ -35,7 +35,7 @@ const useContext = (target: Model, propertyKey: string, descriptor: PropertyDesc
 
     descriptor.value = function(...args: any[]) {
         return originalValue.apply(this, args);
-    }
+    };
 };
 
 export const stateProperty = (target: Model, propertyKey: string) => {
