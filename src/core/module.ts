@@ -2,7 +2,7 @@ import { JetComponent } from "./jet-component";
 import { Model, StateUpdate } from "./model";
 import { View } from './views/view';
 import { Controller } from './controller';
-import { DataSourceChange } from "./data-source";
+import { DataSourceChange } from "./data-source/types";
 
 export abstract class Module<TModel extends Model> {
     public get model() {
@@ -20,6 +20,7 @@ export abstract class Module<TModel extends Model> {
     public initialize() {}
 
     public onStateUpdate(update: StateUpdate) {}
+
     public onDataChange(update: DataSourceChange<any>) {}
 
     // ===

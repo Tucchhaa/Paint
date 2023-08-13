@@ -1,12 +1,9 @@
-// const typescriptPlugin = require("@typescript-eslint/eslint-plugin");
-// const typescriptParser = require("@typescript-eslint/parser");
-
-// eslint-disable-next-line no-undef
 module.exports = {
     root: true,
     parser: '@typescript-eslint/parser',
     plugins: [
         '@typescript-eslint',
+        'unused-imports'
     ],
     env: {
         browser: true,
@@ -38,6 +35,10 @@ module.exports = {
                     "imports": "always-multiline",
                     "functions": "never",
                 }],
+
+                "@typescript-eslint/lines-between-class-members": "error",
+
+                "unused-imports/no-unused-imports": "error",
             },
         }
     ]
