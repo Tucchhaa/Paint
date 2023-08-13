@@ -17,10 +17,10 @@ export abstract class Module<TModel extends Model> {
     // Life cycle methods
     // ===
 
-    public initialize() {};
+    public initialize() {}
 
-    public onStateUpdate(update: StateUpdate) {};
-    public onDataChange(update: DataSourceChange<any>) {};
+    public onStateUpdate(update: StateUpdate) {}
+    public onDataChange(update: DataSourceChange<any>) {}
 
     // ===
     // Getters

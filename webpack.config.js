@@ -9,7 +9,7 @@ module.exports = {
     entry: "./src/index.ts",
     output: {
         path: path.resolve(__dirname, "build"),
-        filename: "jet.bundle.min.js"
+        filename: "jet.bundle.min.js",
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -40,26 +40,26 @@ module.exports = {
                 use: [
                     miniCss.loader,
                     'css-loader',
-                    'sass-loader'
-                ]
+                    'sass-loader',
+                ],
             },
-        ]
+        ],
     },
     devServer: {
         historyApiFallback: true,
         static: [
             {
                 directory: path.resolve(__dirname, 'playground'),
-                watch: true
+                watch: true,
             },
-        ]
+        ],
     },
     plugins: [
         new CleanWebpackPlugin({
-            verbose: true
+            verbose: true,
         }),
         new miniCss({
             filename: 'jet.styles.min.css',
-        })
-    ]
+        }),
+    ],
 };
