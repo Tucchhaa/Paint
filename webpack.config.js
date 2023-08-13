@@ -1,14 +1,15 @@
 const path = require('path');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
-const infernoTsPlugin = require('ts-plugin-inferno').default
+const infernoTsPlugin = require('ts-plugin-inferno').default;
+const miniCss = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: "none",
     entry: "./src/index.ts",
     output: {
         path: path.resolve(__dirname, "build"),
-        filename: "bundle.js"
+        filename: "jet.bundle.min.js"
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -35,8 +36,12 @@ module.exports = {
                 loader: 'ts-loader',
             },
             {
-                test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
+                test: /\.scss$/i,
+                use: [
+                    miniCss.loader,
+                    'css-loader',
+                    'sass-loader'
+                ]
             },
         ]
     },
@@ -52,6 +57,9 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin({
             verbose: true
+        }),
+        new miniCss({
+            filename: 'jet.styles.min.css',
         })
     ]
 };

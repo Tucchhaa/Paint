@@ -3,9 +3,6 @@ import { ButtonModel, ButtonStyleMode } from "./button.model";
 import { ButtonController } from "./button.controller";
 import { parseStyleSize } from "utils/helpers";
 
-import "styles/common.css";
-import "./button.css";
-
 const compileClassName = (styleMode: ButtonStyleMode) => {
     return `jet-component jet-button jet-no-select jet-button-${styleMode}-mode`;
 };
