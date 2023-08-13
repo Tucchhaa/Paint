@@ -1,3 +1,8 @@
+import { JetPublicComponent } from "./jet-component";
+
+/**
+ * Used to subscribe to events, that will be raised soon
+ */
 export class JetEvent<THandlerArg = any> {
     private handlers: any[] = [];
 
@@ -11,3 +16,8 @@ export class JetEvent<THandlerArg = any> {
         }
     }
 }
+
+/**
+ * Type of HTML event hadnler passed to state options
+ */
+export type EventHandler<TNativeEvent> = (event: TNativeEvent, component: JetPublicComponent) => void;

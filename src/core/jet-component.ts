@@ -6,6 +6,16 @@ import { Controller } from './controller';
 import { DataSource } from "./data-source";
 import { DataSourceChange } from "./data-source/types";
 
+export interface JetPublicComponent<TModel extends Model = Model> {
+    name: string;
+
+    container: HTMLElement;
+
+    model: TModel;
+
+    dataSource: DataSource;
+}
+
 export abstract class JetComponent<TModel extends Model = Model> {
     /**
      * Component name
@@ -130,7 +140,7 @@ export abstract class JetComponent<TModel extends Model = Model> {
         }
     }
 
-    public stateUpdatedHandler(update: StateUpdate) {
+    private stateUpdatedHandler(update: StateUpdate) {
         // console.log(update);
 
         for(const module of this.modules) {
