@@ -130,6 +130,8 @@ export abstract class JetComponent<TModel extends Model = Model> {
     }
 
     public stateUpdatedHandler(update: StateUpdate) {
+        console.log(update);
+
         for(const module of this.modules) {
             module.onStateUpdate(update);
         }

@@ -3,9 +3,6 @@ import { InputModel } from "./input.model";
 import { InputController } from "./input.controller";
 import { parseStyleSize } from "utils/helpers";
 
-import "styles/common.css";
-import "./input.css";
-
 const compileClassName = () => {
     return `jet-component jet-input`;
 };

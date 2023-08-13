@@ -5,10 +5,6 @@ import { ListModel } from "./list.model";
 import { ListDataSource } from "./list.data-source";
 import { ListController } from "./list.controller";
 
-import "styles/common.css";
-import "./list.css";
-
-
 const compileClassName = () => {
     return `jet-component jet-list`;
 };
