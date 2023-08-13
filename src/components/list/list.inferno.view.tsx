@@ -1,4 +1,5 @@
 import { InfernoComponent, InfernoProps } from "core/views/inferno";
+
 import { parseStyleSize } from "utils/helpers";
 
 import { ListModel } from "./list.model";
@@ -9,7 +10,25 @@ const compileClassName = () => {
     return `jet-component jet-list`;
 };
 
-export class ListInfernoView extends InfernoComponent<InfernoProps<ListModel>> {
+class State {
+    items: Array<any> = [];
+}
+
+export class ListInfernoView extends InfernoComponent<InfernoProps<ListModel>, State> {
+    constructor(props: InfernoProps<ListModel>) {
+        super(props);
+
+        this.state = {
+            items: [],
+        };
+    }
+
+    componentDidMount(): void {
+        this.props.dataSource.getItems().then(items => {
+            this.setState({ items });
+        });
+    }
+
     render() {
         const { component, model } = this.props;
         const dataSource = this.props.dataSource as ListDataSource<any>;
@@ -21,12 +40,10 @@ export class ListInfernoView extends InfernoComponent<InfernoProps<ListModel>> {
 
         const { selectionEnabled } = model;
 
-        const items = dataSource.getItems();
-
         return (
             <div class={className} style={{ width, height }}>
                 <ul>
-                    { items.map(item =>
+                    { this.state!.items.map(item =>
                         <li onClick={(event) => controller.onItemClick(event, item)}>
                             { selectionEnabled &&
                                 <div class="jet-list-item-checkbox">

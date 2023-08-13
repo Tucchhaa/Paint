@@ -1,7 +1,6 @@
 import { Model } from "../model";
 import { JetComponent } from "../jet-component";
 import { InfernoComponentType } from "./inferno";
-import { DataSource } from "../data-source";
 
 export type ComponentViewType<TModel extends Model> = InfernoComponentType<TModel>;
 

@@ -1,57 +1,36 @@
 import { isDefined } from "utils/helpers";
-import { JetEvent } from "../event";
+import { Store } from "./store";
+import { DataSourceFields, DataSourceEvents, DataSourceChange, ItemKey, DataSourceConfig } from "./types";
+import { isKey } from "./utils";
+import { ArrayStore } from "./array-store";
 
-export type DataSourceConfigType<TItem> = Array<TItem> | DataSourceConfig<TItem> | undefined;
+export class DataSource<TItem = any> implements DataSourceFields<TItem> {
+    // ===
+    // Config
+    // ===
 
-export type ItemKey = number | string;
+    public readonly keyExpr: string;
 
-export type DataSourceConfig<TItem> = {
-    keyExpr?: string;
-    generateKey?: () => ItemKey;
-    items?: Array<TItem>;
-}
+    private readonly store: Store<TItem>;
 
-export type DataSourceChange<TItem = any> = {
-    type: 'full' | 'add' | 'delete' | 'update';
-    item?: TItem;
-};
-
-class DataSourceEvents<TArgs> {
-    public change = new JetEvent<TArgs>();
-
-    public add = new JetEvent<TArgs>();
-
-    public delete = new JetEvent<TArgs>();
-
-    public update = new JetEvent<TArgs>();
-
-    public full = new JetEvent<TArgs>();
-}
-
-export class DataSource<TItem = any> {
+    // ===
+    // Properties
+    // ===
     public events = new DataSourceEvents<DataSourceChange<TItem>>();
 
-    protected config: DataSourceConfig<TItem>;
-    private itemByKey: { [name: ItemKey]: TItem } = {};
+    private customGenerateKey?: () => ItemKey;
 
-    constructor(config: DataSourceConfigType<TItem>) {
-        this.config = this.prepareDataSourceConfig(config);
+    // ===
+    // Initialization
+    // ===
 
-        this.processItems(this.config.items!);
+    constructor(config: DataSourceConfig<TItem>) {        
+        this.keyExpr = config.keyExpr;
+        this.customGenerateKey = config.generateKey;
+
+        this.store = this.createStore(config);
 
         this.events.change.on(this.changeHandler.bind(this));
-    }
-
-    private prepareDataSourceConfig(config: DataSourceConfigType<TItem>): DataSourceConfig<TItem> {
-        if(!isDefined(config)) {
-            return {};
-        }
-
-        if(config instanceof Array) {
-            return { items: config };
-        }
-
-        return config!;
     }
 
     private changeHandler(change: DataSourceChange<TItem>): void {
@@ -69,105 +48,78 @@ export class DataSource<TItem = any> {
         }
     }
 
-    // ===
+    private createStore(config: DataSourceConfig<TItem>): Store<TItem> {
+        const keyOf = this.keyOf.bind(this);
 
-    private processItems(items: Array<TItem>) {
-        this.itemByKey = {};
+        if(ArrayStore.isArrayStoreConfig(config.store))
+            return new ArrayStore<TItem>(keyOf, config.store);
 
-        for(const item of items) {
-            this.processItem(item);
-        }
-    }
-    private processItem(item: TItem) {
-        const key = this.getItemKey(item);
-
-        if(isDefined(this.itemByKey[key])) {
-            throw new Error(`Item with key ${key} already exists`);
-        }
-
-        this.itemByKey[key] = item;
+        throw new Error('Store type can not be determined');
     }
 
     // ===
+    // Public methods
+    // ===
 
-    protected normalizeItem(item: TItem | ItemKey): TItem {
-        if(typeof item === 'string' || typeof item === 'number') {
-            item = this.getItemByKey(item);
-        }
-
-        return item;
+    public generateKey(): ItemKey {
+        return isDefined(this.customGenerateKey)
+            ? this.customGenerateKey()
+            // TODO use GUID
+            : "JetID_" + Date.now() + Math.random() * 1000;;
     }
 
-    protected normalizeKey(item: TItem | ItemKey): ItemKey {
-        if(typeof item !== 'string' && typeof item !== 'number') {
-            item = this.getItemKey(item);
-        }
-
-        return item;
+    public keyOf(item: TItem): ItemKey {
+        return (item as any)[this.keyExpr];
     }
 
     // ===
-    private generateKey(): ItemKey {
-        if(isDefined(this.config.generateKey)) {
-            return this.config.generateKey!();
-        }
+    // CRUD methods
+    // ===
 
-        return "JetID_" + Date.now() + Math.random() * 1000;
+    public async getItem(key: ItemKey): Promise<TItem> {
+        return await this.store.get(key);
     }
 
-    private getKeyExpr(): string {
-        return this.config.keyExpr || 'id';
+    public async getItems(): Promise<Array<TItem>> {
+        return await this.store.getAll();
     }
 
-    public getItemKey(item: TItem): ItemKey {
-        const keyExpr = this.getKeyExpr();
+    public async addItem(item: TItem): Promise<void> {
+        const key = this.keyOf(item) || this.generateKey();
 
-        return (item as any)[keyExpr];
-    }
+        (item as any)[this.keyExpr] = key;
 
-    public getItemByKey(key: ItemKey) {
-        return this.itemByKey[key];
-    }
-
-    public getItems(): Array<TItem> {
-        return Object.values(this.itemByKey);
-    }
-
-    public setItems(items: Array<TItem>) {
-        this.processItems(items);
-
-        this.events.change.emit({
-            type: 'full',
-        });
-    }
-
-    public addItem(item: TItem) {
-        const keyExpr = this.getKeyExpr();
-        const key = this.getItemKey(item) || this.generateKey();
-
-        (item as any)[keyExpr] = key;
-
-        this.processItem(item);
+        await this.store.add(key, item);
 
         this.events.change.emit({
             type: 'add', item,
         });
     }
 
-    public deleteItem(item: TItem | ItemKey) {
-        const key = this.normalizeKey(item);
+    public async deleteItem(item: TItem | ItemKey): Promise<TItem> {
+        const key = isKey(item) ? item : this.keyOf(item);
 
-        const deletedItem = this.itemByKey[key];
-        delete this.itemByKey[key];
+        const deletedItem = await this.store.delete(key);
 
         this.events.change.emit({
             type: 'delete',
             item: deletedItem,
         });
+
+        return deletedItem;
     }
 
-    public updateItem(key: ItemKey, item: TItem) {
-        this.itemByKey[key] = item;
+    public async updateItem(item: TItem): Promise<void> {
+        const key = this.keyOf(item);
+
+        if(!isDefined(key))
+            throw new Error('updateItem key is undefined');
+
+        await this.updateItemByKey(key, item);
+    }
+
+    public async updateItemByKey(key: ItemKey, item: TItem): Promise<void> {
+        await this.store.update(key, item);
         
         this.events.change.emit({
             type: 'update', item,

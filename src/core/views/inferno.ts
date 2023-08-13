@@ -8,7 +8,9 @@ import { DataSource } from "../data-source";
 
 type InfernoProps<TModel extends Model> = {
     component: JetComponent<TModel>,
+
     model: TModel,
+
     dataSource: DataSource<any>
 };
 

@@ -2,7 +2,7 @@ import { ListModel, ListState } from "./list.model";
 import { View, JetComponent } from "core";
 import { ListController } from "./list.controller";
 import { ListInfernoView } from "./list.inferno.view";
-import { ListDataSource, ListDataSourceConfig } from "./list.data-source";
+import { ListDataSource } from "./list.data-source";
 
 class ListView extends View<ListModel> {
     initialize() {
@@ -14,11 +14,11 @@ export class List<TItem> extends JetComponent<ListModel> {
     constructor(
         container: HTMLElement,
         state: ListState,
-        dataSourceConfig: ListDataSourceConfig<TItem> | Array<TItem> = []
+        dataSource: ListDataSource<TItem>
     ) {
         const model = new ListModel(state);
 
-        super("List", container, model, new ListDataSource(dataSourceConfig));
+        super("List", container, model, dataSource);
     }
 
     protected registerModules(): void {

@@ -1,3 +1,4 @@
+import { ListDataSource } from "components/list/list.data-source";
 import { Button, Input, List } from "./components";
 import { data } from "./data";
 
@@ -5,7 +6,12 @@ window.addEventListener('load', () => {
     const list = new List<any>(
         document.getElementById('list')!,
         { selectionEnabled: true },
-        data
+        new ListDataSource({
+            keyExpr: 'id',
+            store: {
+                items: data,
+            },
+        })
     );
 
     // ===

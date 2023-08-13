@@ -20,6 +20,8 @@ module.exports = {
             utils: path.resolve('./src/utils'),
         },
     },
+    // TODO: disable when production build is enabled
+    devtool: 'source-map',
     module: {
         rules: [
             {
