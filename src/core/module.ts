@@ -1,4 +1,4 @@
-import { JetComponent } from "./jet-component";
+import { JetComponent, JetPublicComponent } from "./jet-component";
 import { Model, StateUpdate } from "./model";
 import { View } from './views/view';
 import { Controller } from './controller';
@@ -33,6 +33,10 @@ export abstract class Module<TModel extends Model> {
 
     public getController(id: string | ControllerType<TModel>) {
         return this.component.getController(id);
+    }
+
+    public getPublicComponent() {
+        return this.component as JetPublicComponent;
     }
 }
 

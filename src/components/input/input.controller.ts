@@ -7,7 +7,7 @@ export class InputController extends Controller<InputModel> {
         if (!this.model.disabled) {
             this.model.value = event.currentTarget.value;
             
-            this.model.onValueChange(event);
+            this.model.onValueChange(event, this.getPublicComponent());
         }
     }
 }
