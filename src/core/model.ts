@@ -1,4 +1,4 @@
-import { deepExtend, isDefined } from "utils/helpers";
+import { isDefined } from "utils/helpers";
 import { JetEvent } from "./event";
 
 export type BaseState = Partial<{
