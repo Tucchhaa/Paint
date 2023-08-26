@@ -3,8 +3,7 @@ import { Model, StateUpdate } from './model';
 import { Module, ViewType, ControllerType } from './module';
 import { View } from './views/view';
 import { Controller } from './controller';
-import { DataSource } from './data-source';
-import { DataSourceChange } from './data-source/types';
+import { DataSource, DataSourceChange } from './data_source';
 
 export type JetPublicComponent<
     TModel extends Model = Model, 

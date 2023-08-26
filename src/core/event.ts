@@ -1,4 +1,4 @@
-import { JetPublicComponent } from './jet-component';
+import { JetPublicComponent } from './jet_component';
 
 /**
  * Used to subscribe to events, that will be raised soon

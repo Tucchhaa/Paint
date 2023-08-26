@@ -1,7 +1,7 @@
 import { InputModel, InputState } from './input.model';
 import { View, JetComponent } from 'core';
 import { InputController } from './input.controller';
-import { InputInfernoView } from './input.inferno.view';
+import { InputInfernoView } from './input.inferno';
 
 class InputView extends View<InputModel> {
     initialize() {

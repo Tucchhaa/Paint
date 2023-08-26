@@ -2,7 +2,7 @@ import { isDefined } from 'utils/helpers';
 import { Store } from './store';
 import { DataSourceFields, DataSourceEvents, DataSourceChange, ItemKey, DataSourceConfig, Optional } from './types';
 import { isKey } from './utils';
-import { ArrayStore } from './array-store';
+import { ArrayStore } from './array_store';
 
 export class DataSource<TItem = any, TKey extends keyof TItem = any> implements DataSourceFields<TItem> {
     // ===

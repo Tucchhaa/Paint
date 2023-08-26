@@ -1,5 +1,5 @@
 import { JetEvent } from 'core/event';
-import { ArrayStoreConfig } from './array-store';
+import { ArrayStoreConfig } from './array_store';
 
 export type ItemKey = number | string;
 

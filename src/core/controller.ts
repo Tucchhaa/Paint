@@ -1,4 +1,4 @@
-import { DataSource } from './data-source';
+import { DataSource } from './data_source';
 import { Model } from './model';
 import { Module } from './module';
 
