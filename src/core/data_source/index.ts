@@ -1,3 +1,6 @@
 export { DataSource } from './data_source';
 
-export * from './types';
+export {
+    DataSourceConfig,
+    DataSourceChange,
+} from './types';

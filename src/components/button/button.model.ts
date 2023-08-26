@@ -1,5 +1,5 @@
 import { EventHandler } from 'core/event';
-import { BaseState, Model, stateProperty } from 'core/model';
+import { BaseState, Model, model, stateProperty } from 'core/model';
 import { noop } from 'utils/helpers';
 
 export type ButtonStyleMode = 'text' | 'contained' | 'outline';
@@ -14,6 +14,7 @@ export type ButtonState = BaseState & Partial<{
     styleMode: ButtonStyleMode;
 }>;
 
+@model
 export class ButtonModel extends Model<ButtonState> implements ButtonState {
     @stateProperty
     public onClick: EventHandler<MouseEvent> = noop;
