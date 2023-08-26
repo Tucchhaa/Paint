@@ -5,7 +5,7 @@ import { InfernoComponent, InfernoViewManager } from './inferno';
 import { isDefined } from 'utils/helpers';
 
 import { ComponentViewManager, ComponentViewType } from './manager';
-import { DataSource } from 'core/data-source';
+import { DataSource } from 'core/data_source';
 
 export abstract class View<TModel extends Model = any, TDataSource extends DataSource = any> extends Module<TModel, TDataSource> {
     private componentViewManager!: ComponentViewManager;

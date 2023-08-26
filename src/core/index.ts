@@ -1,4 +1,4 @@
-import { JetComponent } from './jet-component';
+import { JetComponent } from './jet_component';
 import { Module } from './module';
 
 import { View } from './views/view';

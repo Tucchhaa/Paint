@@ -1,9 +1,8 @@
-import { JetComponent, JetPublicComponent } from './jet-component';
+import { JetComponent, JetPublicComponent } from './jet_component';
 import { Model, StateUpdate } from './model';
 import { View } from './views/view';
 import { Controller } from './controller';
-import { DataSourceChange } from './data-source/types';
-import { DataSource } from './data-source';
+import { DataSource, DataSourceChange } from './data_source';
 
 export abstract class Module<TModel extends Model = any, TDataSource extends DataSource = any> {
     public get model() {

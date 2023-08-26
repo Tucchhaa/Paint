@@ -1,7 +1,7 @@
 import { ListModel, ListState } from './list.model';
 import { View, JetComponent } from 'core';
 import { ListController } from './list.controller';
-import { ListInfernoView } from './list.inferno.view';
+import { ListInfernoView } from './list.inferno';
 import { ListDataSource } from './list.data-source';
 
 class ListView extends View<ListModel> {

@@ -1,5 +1,5 @@
-import { DataSource } from 'core/data-source';
-import { JetComponent } from 'core/jet-component';
+import { DataSource } from 'core/data_source';
+import { JetComponent } from 'core';
 import { Model } from 'core/model';
 import { Component } from 'inferno';
 

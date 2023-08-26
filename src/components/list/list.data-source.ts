@@ -1,5 +1,4 @@
-import { DataSource } from 'core/data-source';
-import { DataSourceConfig } from 'core/data-source/types';
+import { DataSource, DataSourceConfig } from 'core/data_source';
 import { isDefined } from 'utils/helpers';
 
 export type ListDataSourceConfig<TItem> = DataSourceConfig<TItem> & {

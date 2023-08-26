@@ -1,4 +1,4 @@
-import { JetComponent } from '../jet-component';
+import { JetComponent } from 'core';
 import { InfernoComponent, InfernoProps } from './inferno';
 
 export type ComponentViewType = new(props: InfernoProps) => InfernoComponent;
