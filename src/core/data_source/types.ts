@@ -1,23 +1,13 @@
 import { JetEvent } from 'core/event';
 import { ArrayStoreConfig } from './array_store';
 
+// ===
+// Internal types
+// ===
+
 export type ItemKey = number | string;
 
-export type DataSourceConfig<TItem> = {
-    key: keyof TItem;
-
-    generateKey?: () => ItemKey;
-
-    store: ArrayStoreConfig<TItem>;
-};
-
 export type DataSourceFields<TItem> = Omit<DataSourceConfig<TItem>, 'store'>;
-
-export type DataSourceChange<TItem = any> = {
-    type: 'full' | 'add' | 'delete' | 'update';
-
-    item?: TItem;
-};
 
 export class DataSourceEvents<TArgs> {
     public change = new JetEvent<TArgs>();
@@ -32,3 +22,22 @@ export class DataSourceEvents<TArgs> {
 }
 
 export type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;
+
+// ===
+// Export types
+// ===
+
+export type DataSourceConfig<TItem> = {
+    key: keyof TItem;
+
+    generateKey?: () => ItemKey;
+
+    store: ArrayStoreConfig<TItem>;
+};
+
+
+export type DataSourceChange<TItem = any> = {
+    type: 'full' | 'add' | 'delete' | 'update';
+
+    item?: TItem;
+};

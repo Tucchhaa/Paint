@@ -1,5 +1,5 @@
 import { EventHandler as JetEventHandler } from 'core/event';
-import { BaseState, Model, stateProperty } from 'core/model';
+import { BaseState, Model, model, stateProperty } from 'core/model';
 import { FormEvent } from 'inferno';
 import { noop } from 'utils/helpers';
 
@@ -13,6 +13,7 @@ export type InputState = BaseState & Partial<{
     onValueChange: JetEventHandler<FormEvent<HTMLInputElement>>;
 }>;
 
+@model
 export class InputModel extends Model<InputState> implements InputState {
     @stateProperty
     public label: string = '';
