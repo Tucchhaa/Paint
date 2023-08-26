@@ -14,7 +14,7 @@ class State {
     items: Array<any> = [];
 }
 
-export class ListInfernoView extends InfernoComponent<InfernoProps<ListModel, ListDataSource>, State> {
+export class ListInfernoView extends InfernoComponent<ListModel, ListDataSource, State> {
     constructor(props: InfernoProps<ListModel>) {
         super(props);
 

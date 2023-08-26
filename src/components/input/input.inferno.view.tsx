@@ -1,4 +1,4 @@
-import { InfernoComponent, InfernoProps } from 'core/views/inferno';
+import { InfernoComponent } from 'core/views/inferno';
 import { InputModel } from './input.model';
 import { InputController } from './input.controller';
 import { parseStyleSize } from 'utils/helpers';
@@ -7,7 +7,7 @@ const compileClassName = () => {
     return 'jet-component jet-input';
 };
 
-export class InputInfernoView extends InfernoComponent<InfernoProps<InputModel>> {
+export class InputInfernoView extends InfernoComponent<InputModel> {
     render() {
         const { component, model } = this.props;
         const controller = component.getController(InputController) as InputController;

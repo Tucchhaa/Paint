@@ -11,7 +11,7 @@ export type JetPublicComponent<
     TDataSource extends DataSource = any
 > = Omit<JetComponent<TModel, TDataSource>, 'getController' | 'getView'>; 
 
-export abstract class JetComponent<TModel extends Model = Model, TDataSource extends DataSource = any> {
+export abstract class JetComponent<TModel extends Model = any, TDataSource extends DataSource = any> {
     /**
      * Component name
      */
@@ -152,7 +152,7 @@ export abstract class JetComponent<TModel extends Model = Model, TDataSource ext
     // Getters
     // ===
 
-    public getView(id: string | ViewType<TModel>): View<TModel> {
+    public getView(id: string | ViewType): View {
         id = typeof id === 'string' ? id : id.name;
 
         const view: View<TModel> | undefined = this.views[id];
@@ -163,7 +163,7 @@ export abstract class JetComponent<TModel extends Model = Model, TDataSource ext
         throw new Error('Invalid view name ' + id);
     }
 
-    public getController(id: string | ControllerType<TModel>): Controller<TModel> {
+    public getController(id: string | ControllerType): Controller {
         id = typeof id === 'string' ? id : id.name;
 
         const controller = this.controllers[id];
