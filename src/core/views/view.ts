@@ -5,11 +5,12 @@ import { InfernoComponent, InfernoViewManager } from './inferno';
 import { isDefined } from 'utils/helpers';
 
 import { ComponentViewManager, ComponentViewType } from './manager';
+import { DataSource } from 'core/data-source';
 
-export abstract class View<TModel extends Model> extends Module<TModel> {
-    private componentViewManager!: ComponentViewManager<TModel>;
+export abstract class View<TModel extends Model = any, TDataSource extends DataSource = any> extends Module<TModel, TDataSource> {
+    private componentViewManager!: ComponentViewManager;
 
-    protected setView(view: ComponentViewType<TModel>) {
+    protected setView(view: ComponentViewType) {
         if(view.prototype instanceof InfernoComponent) {
             this.componentViewManager = new InfernoViewManager(view, this.component);
         }

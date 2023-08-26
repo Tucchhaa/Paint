@@ -1,22 +1,8 @@
-import { Model } from '../model';
-import { JetComponent } from '../jet-component';
 import { createElement } from 'inferno-create-element';
-import { ComponentViewManager } from './manager';
+import { ComponentViewManager } from 'core/views/manager';
 import { render, VNode } from 'inferno';
-import { Component as InfernoComponent, Fragment } from 'inferno';
-import { DataSource } from '../data-source';
 
-type InfernoProps<TModel extends Model, TDataSource extends DataSource = any> = {
-    component: JetComponent<TModel>,
-
-    model: TModel,
-
-    dataSource: TDataSource
-};
-
-type InfernoComponentType<TModel extends Model> = new(props: InfernoProps<TModel>) => InfernoComponent<InfernoProps<TModel>>;
-
-class InfernoViewManager<TModel extends Model> extends ComponentViewManager<TModel> {
+export class InfernoViewManager extends ComponentViewManager {
     private element!: VNode;
 
     render(container: HTMLElement) {
@@ -34,21 +20,18 @@ class InfernoViewManager<TModel extends Model> extends ComponentViewManager<TMod
         render(this.element, this.container);
     }
 
+    /**
+     * Render updated elements of inferno component
+     */
     update() {
         (this.element.children as any).forceUpdate();
         // render(this.element, this.container);
     }
 
+    /**
+     * Calls 'onDataChange' method of inferno component
+     */
     public onDataChange(): void {
         (this.element.children as any).onDataChange?.();
     }
 }
-
-export {
-    InfernoComponent,
-    Fragment,
-
-    InfernoViewManager,
-    InfernoProps,
-    InfernoComponentType,
-};
