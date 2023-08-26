@@ -1,6 +1,6 @@
-import { isDefined } from "utils/helpers";
-import { Store } from "./store";
-import { ItemKey } from "./types";
+import { isDefined } from 'utils/helpers';
+import { Store } from './store';
+import { ItemKey } from './types';
 
 export type ArrayStoreConfig<TItem> = {
     items: Array<TItem>

@@ -1,7 +1,7 @@
-import { ButtonModel, ButtonState } from "./button.model";
-import { View, JetComponent } from "core";
-import { ButtonController } from "./button.controller";
-import { ButtonInfernoView } from "./button.inferno.view";
+import { ButtonModel, ButtonState } from './button.model';
+import { View, JetComponent } from 'core';
+import { ButtonController } from './button.controller';
+import { ButtonInfernoView } from './button.inferno.view';
 
 class ButtonView extends View<ButtonModel> {
     initialize() {
@@ -13,7 +13,7 @@ export class Button extends JetComponent<ButtonModel> {
     constructor(container: HTMLElement, state?: ButtonState) {
         const model = new ButtonModel(state);
 
-        super("Button", container, model);
+        super('Button', container, model);
     }
 
     protected registerModules(): void {

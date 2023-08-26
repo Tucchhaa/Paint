@@ -1,8 +1,8 @@
-import { isDefined } from "utils/helpers";
-import { Store } from "./store";
-import { DataSourceFields, DataSourceEvents, DataSourceChange, ItemKey, DataSourceConfig } from "./types";
-import { isKey } from "./utils";
-import { ArrayStore } from "./array-store";
+import { isDefined } from 'utils/helpers';
+import { Store } from './store';
+import { DataSourceFields, DataSourceEvents, DataSourceChange, ItemKey, DataSourceConfig } from './types';
+import { isKey } from './utils';
+import { ArrayStore } from './array-store';
 
 export class DataSource<TItem = any> implements DataSourceFields<TItem> {
     // ===
@@ -65,7 +65,7 @@ export class DataSource<TItem = any> implements DataSourceFields<TItem> {
         return isDefined(this.customGenerateKey)
             ? this.customGenerateKey()
             // TODO use GUID
-            : "JetID_" + Date.now() + Math.random() * 1000;;
+            : 'JetID_' + Date.now() + Math.random() * 1000;;
     }
 
     public keyOf(item: TItem): ItemKey {

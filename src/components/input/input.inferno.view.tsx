@@ -1,10 +1,10 @@
-import { InfernoComponent, InfernoProps } from "core/views/inferno";
-import { InputModel } from "./input.model";
-import { InputController } from "./input.controller";
-import { parseStyleSize } from "utils/helpers";
+import { InfernoComponent, InfernoProps } from 'core/views/inferno';
+import { InputModel } from './input.model';
+import { InputController } from './input.controller';
+import { parseStyleSize } from 'utils/helpers';
 
 const compileClassName = () => {
-    return `jet-component jet-input`;
+    return 'jet-component jet-input';
 };
 
 export class InputInfernoView extends InfernoComponent<InfernoProps<InputModel>> {
@@ -22,8 +22,8 @@ export class InputInfernoView extends InfernoComponent<InfernoProps<InputModel>>
         return (
             <div class={className} style={{ width, height }}>
                 <label>
-                    <span class="jet-input-label-text">{label}</span>
-                    <input type="text" name={name} value={value} onInput={controller.onValueChange.bind(controller)}/>
+                    <span class='jet-input-label-text'>{label}</span>
+                    <input type='text' name={name} value={value} onInput={controller.onValueChange.bind(controller)}/>
                 </label>
             </div>
         );

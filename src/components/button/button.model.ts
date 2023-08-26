@@ -1,6 +1,6 @@
-import { EventHandler } from "core/event";
-import { BaseState, Model, stateProperty } from "core/model";
-import { noop } from "utils/helpers";
+import { EventHandler } from 'core/event';
+import { BaseState, Model, stateProperty } from 'core/model';
+import { noop } from 'utils/helpers';
 
 export type ButtonStyleMode = 'text' | 'contained' | 'outline';
 

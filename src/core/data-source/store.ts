@@ -1,4 +1,4 @@
-import { ItemKey } from "./types";
+import { ItemKey } from './types';
 
 export abstract class Store<TItem = any> {
     public abstract add(key: ItemKey, item: TItem): Promise<void>;

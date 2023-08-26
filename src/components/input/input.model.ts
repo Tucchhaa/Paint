@@ -1,7 +1,7 @@
-import { EventHandler as JetEventHandler } from "core/event";
-import { BaseState, Model, stateProperty } from "core/model";
-import { FormEvent } from "inferno";
-import { noop } from "utils/helpers";
+import { EventHandler as JetEventHandler } from 'core/event';
+import { BaseState, Model, stateProperty } from 'core/model';
+import { FormEvent } from 'inferno';
+import { noop } from 'utils/helpers';
 
 export type InputState = BaseState & Partial<{
     label: string;

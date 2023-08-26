@@ -1,6 +1,6 @@
-import { ListDataSource } from "components/list/list.data-source";
-import { Button, Input, List } from "./components";
-import { data } from "./data";
+import { ListDataSource } from 'components/list/list.data-source';
+import { Button, Input, List } from './components';
+import { data } from './data';
 
 window.addEventListener('load', () => {
     const list = new List<any>(
@@ -28,7 +28,7 @@ window.addEventListener('load', () => {
     function createTask() {
         if(input.model.value.length) {
             list.dataSource.addItem({ text: input.model.value });
-            input.model.value = "";
+            input.model.value = '';
             list.container.scrollTo({
                 top: list.container.scrollHeight,
                 behavior: 'smooth',
