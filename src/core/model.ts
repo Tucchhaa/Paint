@@ -1,5 +1,5 @@
-import { isDefined } from "utils/helpers";
-import { JetEvent } from "./event";
+import { isDefined } from 'utils/helpers';
+import { JetEvent } from './event';
 
 export type BaseState = Partial<{
     height: number | string;

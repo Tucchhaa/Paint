@@ -1,4 +1,4 @@
-import { BaseState, Model, stateProperty } from "core/model";
+import { BaseState, Model, stateProperty } from 'core/model';
 
 export type ListState = BaseState & Partial<{
     selectionEnabled: boolean;

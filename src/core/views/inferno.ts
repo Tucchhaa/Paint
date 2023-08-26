@@ -1,10 +1,10 @@
-import { Model } from "../model";
-import { JetComponent } from "../jet-component";
-import { createElement } from "inferno-create-element";
+import { Model } from '../model';
+import { JetComponent } from '../jet-component';
+import { createElement } from 'inferno-create-element';
 import { ComponentViewManager } from './manager';
-import { render, VNode } from "inferno";
-import { Component as InfernoComponent, Fragment } from "inferno";
-import { DataSource } from "../data-source";
+import { render, VNode } from 'inferno';
+import { Component as InfernoComponent, Fragment } from 'inferno';
+import { DataSource } from '../data-source';
 
 type InfernoProps<TModel extends Model> = {
     component: JetComponent<TModel>,

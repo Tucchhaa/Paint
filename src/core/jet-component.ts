@@ -1,10 +1,10 @@
-import { isDefined } from "utils/helpers";
-import { Model, StateUpdate } from "./model";
-import { Module, ViewType, ControllerType } from "./module";
+import { isDefined } from 'utils/helpers';
+import { Model, StateUpdate } from './model';
+import { Module, ViewType, ControllerType } from './module';
 import { View } from './views/view';
 import { Controller } from './controller';
-import { DataSource } from "./data-source";
-import { DataSourceChange } from "./data-source/types";
+import { DataSource } from './data-source';
+import { DataSourceChange } from './data-source/types';
 
 export interface JetPublicComponent<TModel extends Model = Model> {
     name: string;
@@ -133,7 +133,7 @@ export abstract class JetComponent<TModel extends Model = Model> {
      * Renders all views
      */
     private renderViews() {
-        this.container.innerHTML = "";
+        this.container.innerHTML = '';
 
         for(const view of Object.values(this.views)) {
             view.render(this.container);

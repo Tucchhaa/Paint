@@ -1,8 +1,8 @@
-import { ListModel, ListState } from "./list.model";
-import { View, JetComponent } from "core";
-import { ListController } from "./list.controller";
-import { ListInfernoView } from "./list.inferno.view";
-import { ListDataSource } from "./list.data-source";
+import { ListModel, ListState } from './list.model';
+import { View, JetComponent } from 'core';
+import { ListController } from './list.controller';
+import { ListInfernoView } from './list.inferno.view';
+import { ListDataSource } from './list.data-source';
 
 class ListView extends View<ListModel> {
     initialize() {
@@ -18,7 +18,7 @@ export class List<TItem> extends JetComponent<ListModel> {
     ) {
         const model = new ListModel(state);
 
-        super("List", container, model, dataSource);
+        super('List', container, model, dataSource);
     }
 
     protected registerModules(): void {

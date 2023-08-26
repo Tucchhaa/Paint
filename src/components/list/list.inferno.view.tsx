@@ -1,13 +1,13 @@
-import { InfernoComponent, InfernoProps } from "core/views/inferno";
+import { InfernoComponent, InfernoProps } from 'core/views/inferno';
 
-import { parseStyleSize } from "utils/helpers";
+import { parseStyleSize } from 'utils/helpers';
 
-import { ListModel } from "./list.model";
-import { ListDataSource } from "./list.data-source";
-import { ListController } from "./list.controller";
+import { ListModel } from './list.model';
+import { ListDataSource } from './list.data-source';
+import { ListController } from './list.controller';
 
 const compileClassName = () => {
-    return `jet-component jet-list`;
+    return 'jet-component jet-list';
 };
 
 class State {
@@ -46,12 +46,12 @@ export class ListInfernoView extends InfernoComponent<InfernoProps<ListModel>, S
                     { this.state!.items.map(item =>
                         <li onClick={(event) => controller.onItemClick(event, item)}>
                             { selectionEnabled &&
-                                <div class="jet-list-item-checkbox">
-                                    <input type="checkbox" value={dataSource.isItemSelected(item)}/>
+                                <div class='jet-list-item-checkbox'>
+                                    <input type='checkbox' value={dataSource.isItemSelected(item)}/>
                                 </div>
                             }
 
-                            <div class="jet-list-item-content">{dataSource.getItemText(item)}</div>
+                            <div class='jet-list-item-content'>{dataSource.getItemText(item)}</div>
                         </li>
                     )}
                 </ul>

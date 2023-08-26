@@ -1,6 +1,6 @@
-import { Controller } from "core";
-import { ListModel } from "./list.model";
-import { ListDataSource } from "./list.data-source";
+import { Controller } from 'core';
+import { ListModel } from './list.model';
+import { ListDataSource } from './list.data-source';
 
 export class ListController extends Controller<ListModel> {
     dataSource!: ListDataSource<any>;

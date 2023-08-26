@@ -19,6 +19,8 @@ module.exports = {
                 "camelcase": "error",
                 "no-var": "error",
                 "eqeqeq": "error",
+                "quotes": ["error", "single"],
+                "jsx-quotes": ["error", 'prefer-single'],
 
                 "no-console": "error",
                 "no-debugger": "error",

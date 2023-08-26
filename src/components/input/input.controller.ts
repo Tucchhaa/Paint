@@ -1,6 +1,6 @@
-import { Controller } from "core";
-import { InputModel } from "./input.model";
-import { FormEvent } from "inferno";
+import { Controller } from 'core';
+import { InputModel } from './input.model';
+import { FormEvent } from 'inferno';
 
 export class InputController extends Controller<InputModel> {
     public onValueChange(event: FormEvent<HTMLInputElement>) {

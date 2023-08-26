@@ -1,6 +1,6 @@
-import { Model } from "../model";
-import { JetComponent } from "../jet-component";
-import { InfernoComponentType } from "./inferno";
+import { Model } from '../model';
+import { JetComponent } from '../jet-component';
+import { InfernoComponentType } from './inferno';
 
 export type ComponentViewType<TModel extends Model> = InfernoComponentType<TModel>;
 
