@@ -30,7 +30,9 @@ class ModelEvents {
     public update = new JetEvent<StateUpdate>();
 }
 
-// Need this decorator because Model.onPropertyValueChanged is called inside @stateProperty decorator
+/**
+ * Need this decorator because Model.onPropertyValueChanged is called inside 'stateProperty' decorator
+ */
 const useContext = (target: Model, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalValue = descriptor.value;
 
@@ -81,6 +83,7 @@ export abstract class Model<TState extends BaseState = BaseState> implements Req
 
     @useContext
     onPropertyValueChanged(propertyKey: string, value: any, prevValue: any) {
+        // this.events is undefined when setting declaring values of Model
         this.events?.update.emit({
             name: propertyKey,
             value,

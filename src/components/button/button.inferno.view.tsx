@@ -20,7 +20,7 @@ export class ButtonInfernoView extends InfernoComponent<InfernoProps<ButtonModel
         return (
             <div
                 role='button'
-                class={className}
+                class={ className }
                 title={ model.title }
                 style={{ height, width }}
                 onClick={ controller.onClick.bind(controller) }

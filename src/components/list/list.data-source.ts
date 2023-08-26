@@ -7,7 +7,7 @@ export type ListDataSourceConfig<TItem> = DataSourceConfig<TItem> & {
 
     text?: (item: TItem) => string;
 }
-export class ListDataSource<TItem> extends DataSource<TItem> {
+export class ListDataSource<TItem = any, TKey extends keyof TItem = any> extends DataSource<TItem, TKey> {
     private isSelected?: (item: TItem) => boolean;
 
     private text?: (item: TItem) => string;

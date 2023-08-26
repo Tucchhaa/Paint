@@ -1,15 +1,15 @@
 import { isDefined } from 'utils/helpers';
 import { Store } from './store';
-import { DataSourceFields, DataSourceEvents, DataSourceChange, ItemKey, DataSourceConfig } from './types';
+import { DataSourceFields, DataSourceEvents, DataSourceChange, ItemKey, DataSourceConfig, Optional } from './types';
 import { isKey } from './utils';
 import { ArrayStore } from './array-store';
 
-export class DataSource<TItem = any> implements DataSourceFields<TItem> {
+export class DataSource<TItem = any, TKey extends keyof TItem = any> implements DataSourceFields<TItem> {
     // ===
     // Config
     // ===
 
-    public readonly keyExpr: string;
+    public readonly key: keyof TItem;
 
     private readonly store: Store<TItem>;
 
@@ -25,7 +25,7 @@ export class DataSource<TItem = any> implements DataSourceFields<TItem> {
     // ===
 
     constructor(config: DataSourceConfig<TItem>) {        
-        this.keyExpr = config.keyExpr;
+        this.key = config.key;
         this.customGenerateKey = config.generateKey;
 
         this.store = this.createStore(config);
@@ -69,7 +69,7 @@ export class DataSource<TItem = any> implements DataSourceFields<TItem> {
     }
 
     public keyOf(item: TItem): ItemKey {
-        return (item as any)[this.keyExpr];
+        return (item as any)[this.key];
     }
 
     // ===
@@ -84,15 +84,15 @@ export class DataSource<TItem = any> implements DataSourceFields<TItem> {
         return await this.store.getAll();
     }
 
-    public async addItem(item: TItem): Promise<void> {
-        const key = this.keyOf(item) || this.generateKey();
+    public async addItem(item: Optional<TItem, TKey>): Promise<void> {
+        const key = this.keyOf(item as TItem) || this.generateKey();
 
-        (item as any)[this.keyExpr] = key;
+        const preparedItem = {  ...item, [this.key]: key } as TItem; 
 
-        await this.store.add(key, item);
+        await this.store.add(key, preparedItem);
 
         this.events.change.emit({
-            type: 'add', item,
+            type: 'add', item: preparedItem,
         });
     }
 

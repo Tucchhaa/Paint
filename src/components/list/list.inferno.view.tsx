@@ -14,7 +14,7 @@ class State {
     items: Array<any> = [];
 }
 
-export class ListInfernoView extends InfernoComponent<InfernoProps<ListModel>, State> {
+export class ListInfernoView extends InfernoComponent<InfernoProps<ListModel, ListDataSource>, State> {
     constructor(props: InfernoProps<ListModel>) {
         super(props);
 
@@ -29,9 +29,15 @@ export class ListInfernoView extends InfernoComponent<InfernoProps<ListModel>, S
         });
     }
 
+    onDataChange() {
+        this.props.dataSource.getItems().then(items => {
+            this.setState({ items });
+        });
+    }
+
     render() {
         const { component, model } = this.props;
-        const dataSource = this.props.dataSource as ListDataSource<any>;
+        const dataSource = this.props.dataSource;
         const controller = component.getController(ListController) as ListController;
 
         const width = parseStyleSize(model.width);
@@ -43,8 +49,8 @@ export class ListInfernoView extends InfernoComponent<InfernoProps<ListModel>, S
         return (
             <div class={className} style={{ width, height }}>
                 <ul>
-                    { this.state!.items.map(item =>
-                        <li onClick={(event) => controller.onItemClick(event, item)}>
+                    { this.state!.items.map((item, index) =>
+                        <li key={index} onClick={(event) => controller.onItemClick(event, item)}>
                             { selectionEnabled &&
                                 <div class='jet-list-item-checkbox'>
                                     <input type='checkbox' value={dataSource.isItemSelected(item)}/>

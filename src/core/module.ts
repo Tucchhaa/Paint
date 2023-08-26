@@ -21,7 +21,7 @@ export abstract class Module<TModel extends Model> {
 
     public onStateUpdate(update: StateUpdate) {}
 
-    public onDataChange(update: DataSourceChange<any>) {}
+    public onDataChange(update: DataSourceChange) {}
 
     // ===
     // Getters

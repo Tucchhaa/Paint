@@ -23,5 +23,8 @@ export abstract class ComponentViewManager<TModel extends Model> {
     public render(container: HTMLElement) {
         this.container = container;
     }
+
     public abstract update(): void;
+
+    public abstract onDataChange(): void;
 }
