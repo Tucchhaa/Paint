@@ -4,7 +4,7 @@ import { ArrayStoreConfig } from './array-store';
 export type ItemKey = number | string;
 
 export type DataSourceConfig<TItem> = {
-    keyExpr: string;
+    key: keyof TItem;
 
     generateKey?: () => ItemKey;
 
@@ -30,3 +30,5 @@ export class DataSourceEvents<TArgs> {
 
     public full = new JetEvent<TArgs>();
 }
+
+export type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;

@@ -28,6 +28,6 @@ export abstract class View<TModel extends Model> extends Module<TModel> {
     }
 
     public onDataChange() {
-        this.componentViewManager.update();
+        this.componentViewManager.onDataChange();
     }
 }

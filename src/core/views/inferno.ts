@@ -6,12 +6,12 @@ import { render, VNode } from 'inferno';
 import { Component as InfernoComponent, Fragment } from 'inferno';
 import { DataSource } from '../data-source';
 
-type InfernoProps<TModel extends Model> = {
+type InfernoProps<TModel extends Model, TDataSource extends DataSource = any> = {
     component: JetComponent<TModel>,
 
     model: TModel,
 
-    dataSource: DataSource<any>
+    dataSource: TDataSource
 };
 
 type InfernoComponentType<TModel extends Model> = new(props: InfernoProps<TModel>) => InfernoComponent<InfernoProps<TModel>>;
@@ -37,6 +37,10 @@ class InfernoViewManager<TModel extends Model> extends ComponentViewManager<TMod
     update() {
         (this.element.children as any).forceUpdate();
         // render(this.element, this.container);
+    }
+
+    public onDataChange(): void {
+        (this.element.children as any).onDataChange?.();
     }
 }
 

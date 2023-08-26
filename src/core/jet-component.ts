@@ -6,17 +6,12 @@ import { Controller } from './controller';
 import { DataSource } from './data-source';
 import { DataSourceChange } from './data-source/types';
 
-export interface JetPublicComponent<TModel extends Model = Model> {
-    name: string;
+export type JetPublicComponent<
+    TModel extends Model = Model, 
+    TDataSource extends DataSource = any
+> = Omit<JetComponent<TModel, TDataSource>, 'getController' | 'getView'>; 
 
-    container: HTMLElement;
-
-    model: TModel;
-
-    dataSource: DataSource;
-}
-
-export abstract class JetComponent<TModel extends Model = Model> {
+export abstract class JetComponent<TModel extends Model = Model, TDataSource extends DataSource = any> {
     /**
      * Component name
      */
@@ -35,7 +30,7 @@ export abstract class JetComponent<TModel extends Model = Model> {
     /**
      * Data storage
      */
-    public dataSource!: DataSource;
+    public dataSource!: TDataSource;
 
     /**
      * Component's views
@@ -56,7 +51,7 @@ export abstract class JetComponent<TModel extends Model = Model> {
         name: string,
         container: HTMLElement,
         model: TModel,
-        dataSource?: DataSource
+        dataSource?: TDataSource
     ) {
         // === Base fields
         this.name = name;
@@ -95,7 +90,7 @@ export abstract class JetComponent<TModel extends Model = Model> {
         this.model.events.update.on(this.stateUpdatedHandler.bind(this));
     }
 
-    private setDataSource(dataSource: DataSource) {
+    private setDataSource(dataSource: TDataSource) {
         this.dataSource = dataSource;
 
         this.dataSource.events.change.on(this.dataChangeHandler.bind(this));

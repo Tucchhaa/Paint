@@ -10,11 +10,11 @@ class ListView extends View<ListModel> {
     }
 }
 
-export class List<TItem> extends JetComponent<ListModel> {
+export class List<TItem = any, TKey extends keyof TItem = any> extends JetComponent<ListModel, ListDataSource<TItem, TKey>> {
     constructor(
         container: HTMLElement,
         state: ListState,
-        dataSource: ListDataSource<TItem>
+        dataSource: ListDataSource<TItem, TKey>
     ) {
         const model = new ListModel(state);
 

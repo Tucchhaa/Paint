@@ -1,13 +1,13 @@
 import { ListDataSource } from 'components/list/list.data-source';
 import { Button, Input, List } from './components';
-import { data } from './data';
+import { data, Task } from './data';
 
 window.addEventListener('load', () => {
-    const list = new List<any>(
+    const list = new List<Task, 'id'>(
         document.getElementById('list')!,
         { selectionEnabled: true },
-        new ListDataSource({
-            keyExpr: 'id',
+        new ListDataSource<Task, 'id'>({
+            key: 'id',
             store: {
                 items: data,
             },
@@ -22,12 +22,12 @@ window.addEventListener('load', () => {
 
     new Button(document.getElementById('add-btn')!, {
         text: 'add',
-        onClick: () => createTask(),
+        onClick: async () => await createTask(),
     });
 
-    function createTask() {
+    async function createTask() {
         if(input.model.value.length) {
-            list.dataSource.addItem({ text: input.model.value });
+            await list.dataSource.addItem({ text: input.model.value });
             input.model.value = '';
             list.container.scrollTo({
                 top: list.container.scrollHeight,
