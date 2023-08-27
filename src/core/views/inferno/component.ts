@@ -1,7 +1,7 @@
 import { JetComponent } from 'core';
 import { Model } from 'core/model';
 import { Component } from 'inferno';
-import { parseSizeToStyle } from 'utils/helpers';
+import { toPixels } from 'utils/helpers';
 
 const JET_CSS_CLASSES = ['component', 'no-select'];
 
@@ -21,9 +21,9 @@ export abstract class JetInfernoComponent<
 
     private readonly componentCssClass;
 
-    protected readonly width?: string;
+    protected width?: string;
 
-    protected readonly height?: string;
+    protected height?: string;
 
     constructor(props: InfernoProps<TModel>) {
         super(props);
@@ -32,8 +32,13 @@ export abstract class JetInfernoComponent<
         this.model = props.model;
 
         this.componentCssClass = this.component.name.toLowerCase();
-        this.width = parseSizeToStyle(this.model.width);
-        this.height = parseSizeToStyle(this.model.height);
+        this.width = toPixels(this.model.width);
+        this.height = toPixels(this.model.height);
+    }
+
+    componentDidUpdate(prevProps: Readonly<InfernoProps<TModel>>, prevState: Readonly<TState>): void {
+        this.width = toPixels(prevProps.model.width);
+        this.height = toPixels(prevProps.model.height);
     }
 
     // ===

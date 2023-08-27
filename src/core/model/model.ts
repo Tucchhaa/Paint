@@ -22,8 +22,7 @@ export abstract class Model<TState extends BaseState = BaseState> {
 
     @useContext
     private onPropertyValueChanged(propertyKey: string, value: any, prevValue: any) {
-        // this.events is undefined when setting declaring values of Model
-        this.events?.update.emit({
+        this.events.update.emit({
             name: propertyKey,
             value,
             prevValue,

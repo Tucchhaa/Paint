@@ -85,7 +85,7 @@ export abstract class JetComponent<TModel extends Model = any> {
     private setModel(model: TModel) {
         this.model = model;
 
-        this.model.events.update.on(this.stateUpdatedHandler.bind(this));
+        this.model.events.update.on(this.stateUpdateHandler.bind(this));
     }
 
     private setDataSource(dataSource: DataSource) {
@@ -133,9 +133,7 @@ export abstract class JetComponent<TModel extends Model = any> {
         }
     }
 
-    private stateUpdatedHandler(update: StateUpdate) {
-        // console.log(update);
-
+    private stateUpdateHandler(update: StateUpdate) {
         for(const module of this.modules) {
             module.onStateUpdate(update);
         }

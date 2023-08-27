@@ -14,7 +14,7 @@ export class ButtonInfernoView extends JetInfernoComponent<ButtonModel> {
     render() {
         const { model } = this.props;
 
-        const className = this.compileContainerCssClass(['no-select', `${model.styleMode}-mode`]);
+        const className = this.compileContainerCssClass(['no-select', `${model.style}`]);
 
         return (
             <div
