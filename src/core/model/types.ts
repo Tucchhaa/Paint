@@ -13,9 +13,9 @@ export class ModelEvents {
 // ===
 
 export type BaseState = Partial<{
-    height: number | string;
+    height: number | undefined;
 
-    width: number | string;
+    width: number | undefined;
 
     disabled: boolean;
 }>;

@@ -25,6 +25,7 @@ module.exports = {
                 "no-console": "error",
                 "no-debugger": "error",
 
+                "lines-between-class-members": ["error", "always"],
                 "block-spacing": "error",
                 "arrow-spacing": "error",
                 "object-curly-spacing": ["error", "always"],
@@ -37,6 +38,8 @@ module.exports = {
                     "imports": "always-multiline",
                     "functions": "never",
                 }],
+
+                "prefer-const": ["error"],
 
                 "@typescript-eslint/lines-between-class-members": "error",
 

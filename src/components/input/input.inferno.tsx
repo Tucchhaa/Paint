@@ -1,26 +1,21 @@
-import { InfernoComponent } from 'core/views/inferno';
+import { JetInfernoComponent } from 'core/views/inferno';
 import { InputModel } from './input.model';
 import { InputController } from './input.controller';
-import { parseStyleSize } from 'utils/helpers';
 
-const compileClassName = () => {
-    return 'jet-component jet-input';
-};
-
-export class InputInfernoView extends InfernoComponent<InputModel> {
+export class InputInfernoView extends JetInfernoComponent<InputModel> {
     render() {
         const { component, model } = this.props;
         const controller = component.getController(InputController) as InputController;
 
         const { label, value, name } = model;
 
-        const width = parseStyleSize(model.width);
-        const height = parseStyleSize(model.height);
-
-        const className = compileClassName();
+        const className = this.compileContainerCssClass();
 
         return (
-            <div class={className} style={{ width, height }}>
+            <div 
+                class={className} 
+                style={{ height: this.height, width: this.width }}
+            >
                 <label>
                     <span class='jet-input-label-text'>{label}</span>
                     <input type='text' name={name} value={value} onInput={controller.onValueChange.bind(controller)}/>

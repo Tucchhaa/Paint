@@ -5,7 +5,7 @@ export type ListState = BaseState & Partial<{
 }>;
 
 @model
-export class ListModel extends Model<ListState> implements ListState {
+export class ListModel extends Model<ListState> {
     @stateProperty
     public selectionEnabled: boolean = false;
 

@@ -1,7 +1,7 @@
 import { Model } from '../model';
 import { Module } from '../module';
 
-import { InfernoComponent, InfernoViewManager } from './inferno';
+import { JetInfernoComponent, InfernoViewManager } from './inferno';
 import { isDefined } from 'utils/helpers';
 
 import { ComponentViewManager, ComponentViewType } from './manager';
@@ -10,7 +10,7 @@ export abstract class View<TModel extends Model = any> extends Module<TModel> {
     private componentViewManager!: ComponentViewManager;
 
     protected setView(view: ComponentViewType) {
-        if(view.prototype instanceof InfernoComponent) {
+        if(view.prototype instanceof JetInfernoComponent) {
             this.componentViewManager = new InfernoViewManager(view, this.component);
         }
     }
