@@ -12,14 +12,19 @@ export const useContext = (target: Model, propertyKey: string, descriptor: Prope
 };
 
 export const stateProperty = (target: Model, propertyKey: string) => {
-    let value: any;
-    const getter = () => value;
+    const key = `_${propertyKey}`;
 
-    const setter = function (newValue: any) {
-        const prevValue = value;
-        value = newValue;
+    const getter = function(this: Model) {
+        return (this as any)[key];
+    };
+
+    // this is Model instance
+    const setter = function (this: Model, newValue: any) {
+        const prevValue = (this as any)[key];
+        (this as any)[key] = newValue;
+
         // @ts-expect-error
-        (this as Model).onPropertyValueChanged(propertyKey, value, prevValue);
+        this.onPropertyValueChanged(propertyKey, newValue, prevValue);
     };
 
     Object.defineProperty(target, propertyKey, {
