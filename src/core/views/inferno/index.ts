@@ -1,9 +1,9 @@
 import { Fragment } from 'inferno';
-import { InfernoComponent, InfernoProps } from './component';
+import { JetInfernoComponent, InfernoProps } from './component';
 import { InfernoViewManager } from './manager';
 
 export {
-    InfernoComponent,
+    JetInfernoComponent as InfernoComponent,
     Fragment,
 
     InfernoViewManager,

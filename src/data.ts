@@ -12,9 +12,11 @@ export const data = [
     { id: 10, text: 'Duis aute irure dolor in reprehenderit in' },
     { id: 11, text: 'voluptate velit esse cillum dolore eu fugiat nulla pariatur.' },
     { id: 12, text: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' },
+    { id: 13, text: 'gg', aboba: 'aboba' },
 ];
 
 export type Task = {
     id: number,
-    text: String,
+    text: string,
+    aboba?: string
 };

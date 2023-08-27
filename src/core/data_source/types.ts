@@ -7,18 +7,19 @@ import { ArrayStoreConfig } from './array_store';
 
 export type ItemKey = number | string;
 
-export type DataSourceFields<TItem> = Omit<DataSourceConfig<TItem>, 'store'>;
+/**
+ * User should be able to get all passed props directly from data source
+ */
+export class DataSourceEvents<TItem> {
+    public change = new JetEvent<DataChange<TItem>>();
 
-export class DataSourceEvents<TArgs> {
-    public change = new JetEvent<TArgs>();
+    public add = new JetEvent<DataChange<TItem>>();
 
-    public add = new JetEvent<TArgs>();
+    public delete = new JetEvent<DataChange<TItem>>();
 
-    public delete = new JetEvent<TArgs>();
+    public update = new JetEvent<DataChange<TItem>>();
 
-    public update = new JetEvent<TArgs>();
-
-    public full = new JetEvent<TArgs>();
+    public full = new JetEvent<DataChange<TItem>>();
 }
 
 export type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;
@@ -27,7 +28,7 @@ export type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;
 // Export types
 // ===
 
-export type DataSourceConfig<TItem> = {
+export type DataSourceConfig<TItem = any> = {
     key: keyof TItem;
 
     generateKey?: () => ItemKey;
@@ -36,7 +37,7 @@ export type DataSourceConfig<TItem> = {
 };
 
 
-export type DataSourceChange<TItem = any> = {
+export type DataChange<TItem = any> = {
     type: 'full' | 'add' | 'delete' | 'update';
 
     item?: TItem;

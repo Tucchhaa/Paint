@@ -2,5 +2,5 @@ export { DataSource } from './data_source';
 
 export {
     DataSourceConfig,
-    DataSourceChange,
+    DataChange as DataSourceChange,
 } from './types';
