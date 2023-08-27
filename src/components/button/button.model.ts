@@ -2,7 +2,7 @@ import { EventHandler } from 'core/event';
 import { BaseState, Model, model, stateProperty } from 'core/model';
 import { noop } from 'utils/helpers';
 
-export type ButtonStyleMode = 'text' | 'contained' | 'outline';
+export type ButtonStyle = 'text' | 'contained' | 'outline';
 
 export type ButtonState = BaseState & Partial<{
     onClick: EventHandler<MouseEvent>;
@@ -11,7 +11,7 @@ export type ButtonState = BaseState & Partial<{
     
     title: string;
     
-    styleMode: ButtonStyleMode;
+    style: ButtonStyle;
 }>;
 
 @model
@@ -26,11 +26,5 @@ export class ButtonModel extends Model<ButtonState> {
     public title: string = '';
     
     @stateProperty
-    public styleMode: ButtonStyleMode = 'contained';
-
-    constructor(state?: ButtonState) {
-        super(state);
-
-        this.assignState(state);
-    }
+    public style: ButtonStyle = 'contained';
 }

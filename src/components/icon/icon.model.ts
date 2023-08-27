@@ -1,4 +1,4 @@
-import { BaseState, Model, model } from 'core/model';
+import { BaseState, Model, model, stateProperty } from 'core/model';
 
 export type IconStyle = 'outlined' | 'rounded' | 'sharp';
 
@@ -13,6 +13,8 @@ export type IconState = Omit<BaseState, 'disabled'> & {
      * Name of icon from Google Material Icons website
      */
     icon: string;
+
+    size?: number;
 
     style?: IconStyle;
 
@@ -30,21 +32,24 @@ export class IconModel extends Model<IconState> {
     /**
      * Name of icon from Google Material Icons website
      */
-    icon = '';
+    @stateProperty
+    public icon = '';
+
+    @stateProperty
+    public size: number = 24;
     
-    style: IconStyle = 'outlined';
+    @stateProperty
+    public style: IconStyle = 'outlined';
 
-    fill = false;
+    @stateProperty
+    public fill = false;
 
-    weight: IconWeight = 400;
+    @stateProperty
+    public weight: IconWeight = 400;
 
-    grade: IconGrade = 0;
+    @stateProperty
+    public grade: IconGrade = 0;
 
-    opticalSize: OpticalSize = 24;
-
-    constructor(state?: IconState) {
-        super(state);
-
-        this.assignState(state);
-    }
+    @stateProperty
+    public opticalSize: OpticalSize = 24;
 }

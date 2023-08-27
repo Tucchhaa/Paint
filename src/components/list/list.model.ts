@@ -8,10 +8,4 @@ export type ListState = BaseState & Partial<{
 export class ListModel extends Model<ListState> {
     @stateProperty
     public selectionEnabled: boolean = false;
-
-    constructor(state?: ListState) {
-        super(state);
-
-        this.assignState(state);
-    }
 }

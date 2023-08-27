@@ -19,26 +19,26 @@
     text-align: center;
 }
 
-.jet-button-text-mode {
+.jet-button-text {
     color: #6200ee;
 }
 
-.jet-button-outline-mode {
+.jet-button-outline {
     background-color: transparent;
 
     border: 1px solid #dfdfdf;
     color: #6200ee;
 }
 
-.jet-button-outline-mode:hover,
-.jet-button-text-mode:hover {
+.jet-button-outline:hover,
+.jet-button-text:hover {
     background-color: #f5efff;
 }
 
-.jet-button-contained-mode {
+.jet-button-contained {
     background-color: #6200ee;
 }
 
-.jet-button-contained-mode:hover {
+.jet-button-contained:hover {
     background-color: #7a2aeb;
 }

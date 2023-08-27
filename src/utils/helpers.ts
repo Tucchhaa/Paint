@@ -47,7 +47,7 @@ export const deepExtend = <T extends object>(...objects: T[]): T => {
     return _deepExtend(...objects);
 };
 
-export const parseSizeToStyle = (size: number | undefined): string | undefined => {
+export const toPixels = (size: number | undefined): string | undefined => {
     if(isDefined(size)) {
         return size + 'px';
     }

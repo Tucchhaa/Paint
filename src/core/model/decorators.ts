@@ -13,15 +13,13 @@ export const useContext = (target: Model, propertyKey: string, descriptor: Prope
 
 export const stateProperty = (target: Model, propertyKey: string) => {
     let value: any;
-
     const getter = () => value;
 
     const setter = function (newValue: any) {
         const prevValue = value;
         value = newValue;
-
         // @ts-expect-error
-        (this as any).onPropertyValueChanged(propertyKey, value, prevValue);
+        (this as Model).onPropertyValueChanged(propertyKey, value, prevValue);
     };
 
     Object.defineProperty(target, propertyKey, {

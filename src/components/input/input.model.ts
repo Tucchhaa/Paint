@@ -26,10 +26,4 @@ export class InputModel extends Model<InputState> {
 
     @stateProperty
     public onValueChange: JetEventHandler<FormEvent<HTMLInputElement>> = noop;
-
-    constructor(options?: InputState) {
-        super(options);
-
-        this.assignState(options);
-    }
 }

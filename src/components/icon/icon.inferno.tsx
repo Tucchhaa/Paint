@@ -1,5 +1,6 @@
 import { JetInfernoComponent } from 'core/views/inferno';
 import { IconModel } from './icon.model';
+import { toPixels } from 'utils/helpers';
 
 export class IconInfernoView extends JetInfernoComponent<IconModel> {
     render() {
@@ -14,6 +15,7 @@ export class IconInfernoView extends JetInfernoComponent<IconModel> {
                         height: this.height, 
                         width: this.width,
                         'line-height': this.height,
+                        'font-size': toPixels(model.size),
                     }}
                     class={ `material-icons-${model.style}` }
                 >
