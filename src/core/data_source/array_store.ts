@@ -66,6 +66,8 @@ export class ArrayStore<TItem = any> extends Store<TItem> {
 
         this.itemByKey[key] = item;
 
+        this.dataChange.emit({ type: 'add', item });
+
         return Promise.resolve();
     }
 
@@ -73,11 +75,15 @@ export class ArrayStore<TItem = any> extends Store<TItem> {
         const deletedItem = this.itemByKey[key];
         delete this.itemByKey[key];
 
+        this.dataChange.emit({ type: 'delete', item: deletedItem });
+
         return Promise.resolve(deletedItem);
     }
 
     public update(key: ItemKey, item: TItem): Promise<void> {
         this.itemByKey[key] = item;
+
+        this.dataChange.emit({ type: 'update', item });
 
         return Promise.resolve();
     }

@@ -11,7 +11,6 @@ export class InfernoViewManager extends ComponentViewManager {
         const props = {
             component: this.component,
             model: this.model,
-            dataSource: this.dataSource,
         };
 
         // @ts-ignore
@@ -23,7 +22,7 @@ export class InfernoViewManager extends ComponentViewManager {
     /**
      * Render updated elements of inferno component
      */
-    update() {
+    public onStateUpdate() {
         (this.element.children as any).forceUpdate();
         // render(this.element, this.container);
     }

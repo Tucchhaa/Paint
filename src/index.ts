@@ -1,15 +1,24 @@
-import { ListDataSource } from 'components/list/list.data-source';
+import { DataSource } from 'core/data_source';
 import { Button, Input, List } from './components';
 import { data, Task } from './data';
 
 window.addEventListener('load', () => {
-    const list = new List<Task, 'id'>(
+    const dataSource = DataSource.create<Task, 'id'>({
+        key: 'id',
+        store: {
+            items: data,
+        },
+    });
+
+    const list = new List(
         document.getElementById('list')!,
         { selectionEnabled: true },
-        new ListDataSource<Task, 'id'>({
-            key: 'id',
-            store: {
-                items: data,
+        dataSource.forList({
+            text(item: Task): string {
+                if(item.id === 13)
+                    return item.aboba!;
+                
+                return item.text;
             },
         })
     );
@@ -27,7 +36,7 @@ window.addEventListener('load', () => {
 
     async function createTask() {
         if(input.model.value.length) {
-            await list.dataSource.addItem({ text: input.model.value });
+            await dataSource.addItem({ text: input.model.value });
             input.model.value = '';
             list.container.scrollTo({
                 top: list.container.scrollHeight,
@@ -35,6 +44,5 @@ window.addEventListener('load', () => {
             });
         }
     }
-    (window as any).input = input;
 });
 

@@ -1,6 +1,9 @@
-import { ItemKey } from './types';
+import { JetEvent } from 'core/event';
+import { DataChange, ItemKey } from './types';
 
 export abstract class Store<TItem = any> {
+    public dataChange = new JetEvent<DataChange<TItem>>();
+
     public abstract add(key: ItemKey, item: TItem): Promise<void>;
 
     public abstract get(key: ItemKey): Promise<TItem>;

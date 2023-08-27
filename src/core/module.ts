@@ -2,9 +2,9 @@ import { JetComponent, JetPublicComponent } from './jet_component';
 import { Model, StateUpdate } from './model';
 import { View } from './views/view';
 import { Controller } from './controller';
-import { DataSource, DataSourceChange } from './data_source';
+import { DataSourceChange } from './data_source';
 
-export abstract class Module<TModel extends Model = any, TDataSource extends DataSource = any> {
+export abstract class Module<TModel extends Model = any> {
     public get model() {
         return this.component.model;
     }
@@ -13,12 +13,15 @@ export abstract class Module<TModel extends Model = any, TDataSource extends Dat
         return this.component.dataSource;
     }
 
-    constructor(public component: JetComponent<TModel, TDataSource>) { }
+    constructor(public component: JetComponent<TModel>) { }
     
     // ===
     // Life cycle methods
     // ===
 
+    /**
+     * It is the best place to get dependencies (controllers and views)
+     */
     public initialize() {}
 
     public onStateUpdate(update: StateUpdate) {}
@@ -29,11 +32,11 @@ export abstract class Module<TModel extends Model = any, TDataSource extends Dat
     // Getters
     // ===
 
-    public getView(id: string | ViewType) {
+    public getView<T extends View<TModel>>(id: string | (new(...args: any[]) => T)): T {
         return this.component.getView(id);
     }
 
-    public getController(id: string | ControllerType) {
+    public getController<T extends Controller<TModel>>(id: string | (new(...args: any[]) => T)): T {
         return this.component.getController(id);
     }
 

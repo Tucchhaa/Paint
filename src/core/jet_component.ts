@@ -1,16 +1,15 @@
 import { isDefined } from 'utils/helpers';
 import { Model, StateUpdate } from './model';
-import { Module, ViewType, ControllerType } from './module';
+import { Module } from './module';
 import { View } from './views/view';
 import { Controller } from './controller';
 import { DataSource, DataSourceChange } from './data_source';
 
 export type JetPublicComponent<
-    TModel extends Model = Model, 
-    TDataSource extends DataSource = any
-> = Omit<JetComponent<TModel, TDataSource>, 'getController' | 'getView'>; 
+    TModel extends Model = Model,
+> = Omit<JetComponent<TModel>, 'getController' | 'getView'>; 
 
-export abstract class JetComponent<TModel extends Model = any, TDataSource extends DataSource = any> {
+export abstract class JetComponent<TModel extends Model = any> {
     /**
      * Component name
      */
@@ -29,7 +28,7 @@ export abstract class JetComponent<TModel extends Model = any, TDataSource exten
     /**
      * Data storage
      */
-    public dataSource!: TDataSource;
+    public dataSource!: DataSource;
 
     /**
      * Component's views
@@ -50,7 +49,7 @@ export abstract class JetComponent<TModel extends Model = any, TDataSource exten
         name: string,
         container: HTMLElement,
         model: TModel,
-        dataSource?: TDataSource
+        dataSource?: DataSource
     ) {
         // === Base fields
         this.name = name;
@@ -89,7 +88,7 @@ export abstract class JetComponent<TModel extends Model = any, TDataSource exten
         this.model.events.update.on(this.stateUpdatedHandler.bind(this));
     }
 
-    private setDataSource(dataSource: TDataSource) {
+    private setDataSource(dataSource: DataSource) {
         this.dataSource = dataSource;
 
         this.dataSource.events.change.on(this.dataChangeHandler.bind(this));
@@ -151,24 +150,24 @@ export abstract class JetComponent<TModel extends Model = any, TDataSource exten
     // Getters
     // ===
 
-    public getView(id: string | ViewType): View {
+    public getView<T extends View<TModel>>(id: string | (new(...args: any[]) => T)): T {
         id = typeof id === 'string' ? id : id.name;
 
         const view: View<TModel> | undefined = this.views[id];
 
         if(isDefined(view))
-            return view;
+            return view as T;
 
         throw new Error('Invalid view name ' + id);
     }
 
-    public getController(id: string | ControllerType): Controller {
+    public getController<T extends Controller<TModel>>(id: string | (new(...args: any[]) => T)): T {
         id = typeof id === 'string' ? id : id.name;
 
-        const controller = this.controllers[id];
+        const controller: Controller<TModel> | undefined = this.controllers[id];
 
         if(isDefined(controller))
-            return controller;
+            return controller as T;
 
         throw new Error('Invalid controller name ' + id);
     }

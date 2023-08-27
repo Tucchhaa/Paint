@@ -5,9 +5,8 @@ import { InfernoComponent, InfernoViewManager } from './inferno';
 import { isDefined } from 'utils/helpers';
 
 import { ComponentViewManager, ComponentViewType } from './manager';
-import { DataSource } from 'core/data_source';
 
-export abstract class View<TModel extends Model = any, TDataSource extends DataSource = any> extends Module<TModel, TDataSource> {
+export abstract class View<TModel extends Model = any> extends Module<TModel> {
     private componentViewManager!: ComponentViewManager;
 
     protected setView(view: ComponentViewType) {
@@ -25,7 +24,7 @@ export abstract class View<TModel extends Model = any, TDataSource extends DataS
     }
 
     public onStateUpdate() {
-        this.componentViewManager.update();
+        this.componentViewManager.onStateUpdate();
     }
 
     public onDataChange() {

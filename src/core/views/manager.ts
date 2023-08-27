@@ -10,10 +10,6 @@ export abstract class ComponentViewManager {
         return this.component.model;
     }
 
-    protected get dataSource() {
-        return this.component.dataSource;
-    }
-
     constructor(
         protected componentView: ComponentViewType, 
         protected component: JetComponent
@@ -23,7 +19,7 @@ export abstract class ComponentViewManager {
         this.container = container;
     }
 
-    public abstract update(): void;
+    public abstract onStateUpdate(): void;
 
     public abstract onDataChange(): void;
 }

@@ -1,31 +1,25 @@
-import { DataSource } from 'core/data_source';
 import { JetComponent } from 'core';
 import { Model } from 'core/model';
 import { Component } from 'inferno';
 
-export type InfernoProps<TModel extends Model = any, TDataSource extends DataSource = any> = {
-    component: JetComponent<TModel, TDataSource>,
+export type InfernoProps<TModel extends Model = any> = {
+    component: JetComponent<TModel>,
 
     model: TModel,
-
-    dataSource: TDataSource,
 };
 
-export abstract class InfernoComponent<
-    TModel extends Model = any, TDataSource extends DataSource = any, TState = {}
-> extends Component<InfernoProps<TModel, TDataSource>, TState> {
+export abstract class JetInfernoComponent<
+    TModel extends Model = any, TState = {}
+> extends Component<InfernoProps<TModel>, TState> {
 
-    protected readonly component: JetComponent<TModel, TDataSource>;
+    protected readonly component: JetComponent<TModel>;
 
     protected readonly model: TModel;
 
-    protected readonly dataSource: TDataSource;
-
-    constructor(props: InfernoProps<TModel, TDataSource>) {
+    constructor(props: InfernoProps<TModel>) {
         super(props);
 
         this.component = props.component;
         this.model = props.model;
-        this.dataSource = props.dataSource;
     }
 }
