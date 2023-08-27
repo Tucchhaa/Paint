@@ -12,7 +12,6 @@
   "author": "Eldar Iusupzhanov <ferrarijed@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^6.4.2",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
     "clean-webpack-plugin": "^4.0.0",
@@ -32,6 +31,7 @@
   },
   "dependencies": {
     "inferno": "^8.1.1",
-    "inferno-create-element": "^8.1.1"
+    "inferno-create-element": "^8.1.1",
+    "material-icons": "^1.13.10"
   }
 }
