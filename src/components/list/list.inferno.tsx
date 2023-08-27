@@ -1,20 +1,14 @@
-import { InfernoComponent, InfernoProps } from 'core/views/inferno';
-
-import { parseStyleSize } from 'utils/helpers';
+import { JetInfernoComponent, InfernoProps } from 'core/views/inferno';
 
 import { ListModel } from './list.model';
 import { ListController } from './list.controller';
 import { ListDataController } from './list.data_controller';
 
-const compileClassName = () => {
-    return 'jet-component jet-list';
-};
-
 class State {
     items: Array<any> = [];
 }
 
-export class ListInfernoView extends InfernoComponent<ListModel, State> {
+export class ListInfernoView extends JetInfernoComponent<ListModel, State> {
     private readonly listController: ListController;
 
     private readonly dataController: ListDataController;
@@ -46,14 +40,15 @@ export class ListInfernoView extends InfernoComponent<ListModel, State> {
     render() {
         const { model } = this.props;
 
-        const width = parseStyleSize(model.width);
-        const height = parseStyleSize(model.height);
-        const className = compileClassName();
+        const className = this.compileContainerCssClass();
 
         const { selectionEnabled } = model;
 
         return (
-            <div class={className} style={{ width, height }}>
+            <div 
+                class={className} 
+                style={{ height: this.height, width: this.width }}
+            >
                 <ul>
                     { this.state!.items.map((item, index) =>
                         <li key={index} onClick={(event) => this.listController.onItemClick(event, item)}>

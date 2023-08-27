@@ -21,7 +21,7 @@ export const stateProperty = (target: Model, propertyKey: string) => {
         value = newValue;
 
         // @ts-expect-error
-        (this as Model).onPropertyValueChanged(propertyKey, value, prevValue);
+        (this as any).onPropertyValueChanged(propertyKey, value, prevValue);
     };
 
     Object.defineProperty(target, propertyKey, {

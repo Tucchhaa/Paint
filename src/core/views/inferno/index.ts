@@ -3,7 +3,7 @@ import { JetInfernoComponent, InfernoProps } from './component';
 import { InfernoViewManager } from './manager';
 
 export {
-    JetInfernoComponent as InfernoComponent,
+    JetInfernoComponent,
     Fragment,
 
     InfernoViewManager,

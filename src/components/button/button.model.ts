@@ -15,7 +15,7 @@ export type ButtonState = BaseState & Partial<{
 }>;
 
 @model
-export class ButtonModel extends Model<ButtonState> implements ButtonState {
+export class ButtonModel extends Model<ButtonState> {
     @stateProperty
     public onClick: EventHandler<MouseEvent> = noop;
     

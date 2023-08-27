@@ -1,7 +1,7 @@
 import { JetComponent } from 'core';
-import { InfernoComponent, InfernoProps } from './inferno';
+import { JetInfernoComponent, InfernoProps } from './inferno';
 
-export type ComponentViewType = new(props: InfernoProps) => InfernoComponent;
+export type ComponentViewType = new(props: InfernoProps) => JetInfernoComponent;
 
 export abstract class ComponentViewManager {
     protected container!: HTMLElement;

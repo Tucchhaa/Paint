@@ -2,7 +2,7 @@ import { isDefined } from 'utils/helpers';
 import { BaseState, ModelEvents } from './types';
 import { stateProperty, useContext } from './decorators';
 
-export abstract class Model<TState extends BaseState = BaseState> implements Required<BaseState> {
+export abstract class Model<TState extends BaseState = BaseState> {
     public readonly events: ModelEvents = new ModelEvents();
 
     // ===
@@ -10,10 +10,10 @@ export abstract class Model<TState extends BaseState = BaseState> implements Req
     // ===
 
     @stateProperty
-    public height: number | string = 'auto';
+    public height?: number;
 
     @stateProperty
-    public width: number | string = 'auto';
+    public width?: number;
     
     @stateProperty
     public disabled: boolean = false;
@@ -21,7 +21,7 @@ export abstract class Model<TState extends BaseState = BaseState> implements Req
     // ===
 
     @useContext
-    onPropertyValueChanged(propertyKey: string, value: any, prevValue: any) {
+    private onPropertyValueChanged(propertyKey: string, value: any, prevValue: any) {
         // this.events is undefined when setting declaring values of Model
         this.events?.update.emit({
             name: propertyKey,

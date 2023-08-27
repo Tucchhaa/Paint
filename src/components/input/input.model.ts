@@ -14,7 +14,7 @@ export type InputState = BaseState & Partial<{
 }>;
 
 @model
-export class InputModel extends Model<InputState> implements InputState {
+export class InputModel extends Model<InputState> {
     @stateProperty
     public label: string = '';
 
