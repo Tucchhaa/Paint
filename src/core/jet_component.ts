@@ -13,12 +13,12 @@ export abstract class JetComponent<TModel extends Model = any> {
     /**
      * Component name
      */
-    public readonly name: string;
+    public static readonly componentName: string = 'Jet';
 
     /**
      * HTML element containing component
      */
-    public readonly container: HTMLElement;
+    public container!: HTMLElement;
 
     /**
      * Model stores the state of the component
@@ -45,16 +45,7 @@ export abstract class JetComponent<TModel extends Model = any> {
      */
     private readonly modules: Module<TModel>[];
 
-    constructor(
-        name: string,
-        container: HTMLElement,
-        model: TModel,
-        dataSource?: DataSource
-    ) {
-        // === Base fields
-        this.name = name;
-        this.container = container;
-
+    constructor(model: TModel, dataSource?: DataSource) {
         // === Register modules
         if(isDefined(dataSource)) {
             this.setDataSource(dataSource);
@@ -71,9 +62,6 @@ export abstract class JetComponent<TModel extends Model = any> {
         ];
 
         this.initializeModules();
-
-        // === Render
-        this.renderViews();
     }
 
     // ===
@@ -123,13 +111,19 @@ export abstract class JetComponent<TModel extends Model = any> {
     // ===
 
     /**
-     * Renders all views
+     * Rendering and state update
      */
-    private renderViews() {
+    public static render(container: HTMLElement): void {
+        /* Each component should implement this static method */
+        throw new Error('Not implemented');
+    }
+
+    public render(container: HTMLElement) {
+        this.container = container;
         this.container.innerHTML = '';
 
         for(const view of Object.values(this.views)) {
-            view.render(this.container);
+            view.render(container);
         }
     }
 

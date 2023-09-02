@@ -11,7 +11,6 @@ window.addEventListener('load', () => {
     });
 
     const list = new List(
-        document.getElementById('list')!,
         { selectionEnabled: true },
         dataSource.forList({
             text(item: Task): string {
@@ -23,13 +22,24 @@ window.addEventListener('load', () => {
         })
     );
 
-    // ===
-
-    const input = new Input(document.getElementById('input')!);
+    list.render(document.getElementById('list')!);
 
     // ===
 
-    new Button(document.getElementById('add-btn')!, {
+    const input = new Input({});
+    input.render(document.getElementById('input')!);
+
+    // ===
+
+    // const button = new Button({
+    //     text: 'add',
+    //     onClick: async () => await createTask(),
+    //     // icon: new Icon(iconOptions)
+    //     // icon: Icon.create(iconOptions)
+    // });
+    // button.render(document.getElementById('add-btn')!);
+
+    Button.render(document.getElementById('add-btn')!, {
         text: 'add',
         onClick: async () => await createTask(),
     });
@@ -45,3 +55,13 @@ window.addEventListener('load', () => {
         }
     }
 });
+
+/*
+я хочу разделить рендеринг на:
+1)
+const button = new Button(options)
+button.render(container)
+
+2)
+Button.render(container, state, dataSource)
+*/

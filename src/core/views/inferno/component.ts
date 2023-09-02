@@ -19,7 +19,7 @@ export abstract class JetInfernoComponent<
 
     protected readonly model: TModel;
 
-    private readonly componentCssClass;
+    private readonly componentName;
 
     protected width?: string;
 
@@ -31,7 +31,8 @@ export abstract class JetInfernoComponent<
         this.component = props.component;
         this.model = props.model;
 
-        this.componentCssClass = this.component.name.toLowerCase();
+        this.componentName = Object.getPrototypeOf(this.component).constructor.componentName.toLowerCase();
+        
         this.width = toPixels(this.model.width);
         this.height = toPixels(this.model.height);
     }
@@ -50,10 +51,10 @@ export abstract class JetInfernoComponent<
      * @param cssClass list of classes without prefix
      * @returns concatenated classes with prefixes
      */
-    protected compileContainerCssClass(cssClass: string | string[] = []) {
-        const classList = ['component', this.componentCssClass].concat(cssClass);
+    protected containerCssClass(cssClass: string | string[] = []) {
+        const classList = ['component', this.componentName].concat(cssClass);
 
-        return this.compileCssClass(classList);
+        return this.cssClass(classList);
     }
 
     /**
@@ -61,7 +62,7 @@ export abstract class JetInfernoComponent<
      * @param cssClass list of classes without prefix
      * @returns concatenated classes with prefixes
      */
-    protected compileCssClass(cssClass: string | string[] = []) {
+    protected cssClass(cssClass: string | string[] = []) {
         const flatClassList = Array.isArray(cssClass) ? cssClass : [cssClass];
 
         const jetClassList = flatClassList
@@ -70,12 +71,12 @@ export abstract class JetInfernoComponent<
 
         const componentClassList = flatClassList
             .filter(cssClass => !this.isJetClass(cssClass))
-            .map(cssClass => `jet-${this.componentCssClass}-${cssClass}`);
+            .map(cssClass => `jet-${this.componentName}-${cssClass}`);
 
         return componentClassList.concat(jetClassList).join(' ');
     }
 
     private isJetClass(cssClass: string): boolean {
-        return JET_CSS_CLASSES.includes(cssClass) || cssClass === this.componentCssClass;
+        return JET_CSS_CLASSES.includes(cssClass) || cssClass === this.componentName;
     }
 }

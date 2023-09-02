@@ -12,14 +12,12 @@ class ListView extends View<ListModel> {
 }
 
 export class List extends JetComponent<ListModel> {
-    constructor(
-        container: HTMLElement,
-        state: ListState,
-        dataSource: DataSource
-    ) {
+    public static readonly componentName: string = 'List';
+
+    constructor(state?: ListState, dataSource?: DataSource) {
         const model = new ListModel(state);
 
-        super('List', container, model, dataSource);
+        super(model, dataSource);
     }
 
     protected registerModules(): void {
@@ -27,5 +25,9 @@ export class List extends JetComponent<ListModel> {
 
         this.registerController(new ListController(this));
         this.registerController(new ListDataController(this));
+    }
+
+    public static render(container: HTMLElement, state?: ListState, dataSource?: DataSource): void {
+        (new List(state, dataSource)).render(container);
     }
 }

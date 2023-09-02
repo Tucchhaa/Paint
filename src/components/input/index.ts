@@ -10,14 +10,18 @@ class InputView extends View<InputModel> {
 }
 
 export class Input extends JetComponent<InputModel> {
-    constructor(container: HTMLElement, state?: InputState) {
-        const model = new InputModel(state);
+    public static readonly componentName: string = 'Input';
 
-        super('Input', container, model);
+    constructor(state?: InputState) {
+        super(new InputModel(state));
     }
 
     protected registerModules(): void {
         this.registerView(new InputView(this));
         this.registerController(new InputController(this));
+    }
+
+    public static render(container: HTMLElement, state?: InputState): void {
+        (new Input(state)).render(container);
     }
 }

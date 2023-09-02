@@ -6,14 +6,12 @@ export class IconInfernoView extends JetInfernoComponent<IconModel> {
     render() {
         const { model } = this.props;
 
-        const className = this.compileContainerCssClass('no-select');
-
         return (
-            <span class={ className }>
+            <span class={ this.containerCssClass('no-select') }>
                 <span 
                     style={{ 
-                        height: this.height, 
-                        width: this.width,
+                        'height': this.height, 
+                        'width': this.width,
                         'line-height': this.height,
                         'font-size': toPixels(model.size),
                     }}
