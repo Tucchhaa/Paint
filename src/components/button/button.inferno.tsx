@@ -30,6 +30,24 @@ export class ButtonInfernoView extends JetInfernoComponent<ButtonModel> {
         }
     }
 
+    protected containerCssClass(): string {
+        const classList = ['no-select', `${this.model.style}`];
+
+        if (this.hasIcon) {
+            classList.push('with-icon');
+        }
+
+        if (this.model.elevated) {
+            classList.push('elevated');
+        }
+
+        if (this.model.disabled) {
+            classList.push('disabled');
+        }
+
+        return super.containerCssClass(classList);
+    }
+
     render() {
         return (
             <div
@@ -38,24 +56,19 @@ export class ButtonInfernoView extends JetInfernoComponent<ButtonModel> {
                 role='button'
                 tabIndex={0}
 
-                class={ this.containerCssClass(['no-select', `${this.model.style}`]) }
+                class={ this.containerCssClass() }
                 style={{ 
                     height: this.height, width: this.width, 
                     'font-size': toPixels(this.model.fontSize), 
                 }}
 
                 onClick={ this.eventHandler(this.buttonController.onClick) }
-                // onMouseEnter={ this.eventHandler(this.buttonController.onMouseEnter) }
-                // onMouseOut={ this.buttonController.onMouseOut }
-                // onFocus={ this.buttonController.onFocus }
-                // onBlur={ this.buttonController.onBlur }
-                // onMouseDown={  }
             >
                 { this.hasIcon && 
                     <span class={ this.cssClass('icon') } ref={ this.iconContainerRef }></span>
                 }
 
-                <span class={ this.cssClass('text') }>{ this.model.text }</span>
+                <span class={ this.cssClass('text-content') }>{ this.model.text }</span>
             </div>
         );
     }

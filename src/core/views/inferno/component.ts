@@ -41,9 +41,9 @@ export abstract class JetInfernoComponent<
         this.height = toPixels(this.model.height);
     }
 
-    componentDidUpdate(prevProps: Readonly<InfernoProps<TModel>>, prevState: Readonly<TState>): void {
-        this.width = toPixels(prevProps.model.width);
-        this.height = toPixels(prevProps.model.height);
+    componentWillUpdate(prevProps: Readonly<InfernoProps<TModel>>, prevState: Readonly<TState>): void {
+        this.width = toPixels(this.model.width);
+        this.height = toPixels(this.model.height);
     }
 
     // ===
@@ -90,16 +90,19 @@ export abstract class JetInfernoComponent<
 
     protected setStateEventListeners(ref: RefObject<HTMLElement>, classPrefix: string) {
         const element = ref.current!;
-        const { classList } = element;
 
-        element.addEventListener('focus', () => classList.add(`${classPrefix}-focused`));
-        element.addEventListener('blur', () => classList.remove(`${classPrefix}-focused`));
+        const addPrefix = (tokens: string[]) => tokens.map(token => `${classPrefix}-${token}`);
+        const add = (...tokens: string[]) => element.classList.add(...addPrefix(tokens));
+        const remove = (...tokens: string[]) => element.classList.remove(...addPrefix(tokens));
 
-        element.addEventListener('mouseenter', () => classList.add(`${classPrefix}-hovered`));
-        element.addEventListener('mouseout', () => classList.remove(`${classPrefix}-hovered`, `${classPrefix}-clicked`));
+        element.addEventListener('focus', () => add('focused'));
+        element.addEventListener('blur', () => remove('focused'));
 
-        element.addEventListener('mousedown', () => classList.add(`${classPrefix}-clicked`));
-        element.addEventListener('mouseup', () => classList.remove(`${classPrefix}-clicked`));
+        element.addEventListener('mouseenter', () => add('hovered'));
+        element.addEventListener('mouseout', () => remove('hovered', 'clicked', 'focused'));
+
+        element.addEventListener('mousedown', () => add('clicked'));
+        element.addEventListener('mouseup', () => remove('clicked', 'focused'));
     }
 
     protected eventHandler<TEvent>(handler: (event: TEvent, root: HTMLElement) => void) {
