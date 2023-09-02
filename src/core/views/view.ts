@@ -1,4 +1,4 @@
-import { Model } from '../model';
+import { Model, StateUpdate } from '../model';
 import { Module } from '../module';
 
 import { JetInfernoComponent, InfernoViewManager } from './inferno';
@@ -23,7 +23,7 @@ export abstract class View<TModel extends Model = any> extends Module<TModel> {
         this.componentViewManager.render(container);
     }
 
-    public onStateUpdate() {
+    public onStateUpdate(update: StateUpdate) {
         this.componentViewManager.onStateUpdate();
     }
 

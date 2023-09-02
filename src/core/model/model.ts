@@ -1,8 +1,8 @@
 import { isDefined } from 'utils/helpers';
-import { BaseState, ModelEvents } from './types';
+import { ModelEvents } from './types';
 import { stateProperty, useContext } from './decorators';
 
-export abstract class Model<TState extends BaseState = BaseState> {
+export abstract class Model<TState = any> {
     public readonly events: ModelEvents = new ModelEvents();
 
     // ===

@@ -1,6 +1,6 @@
 import { JetComponent } from 'core';
 import { Model } from 'core/model';
-import { Component } from 'inferno';
+import { Component, RefObject, createRef } from 'inferno';
 import { toPixels } from 'utils/helpers';
 
 const JET_CSS_CLASSES = ['component', 'no-select'];
@@ -14,16 +14,20 @@ export type InfernoProps<TModel extends Model = any> = {
 export abstract class JetInfernoComponent<
     TModel extends Model = any, TState = {}
 > extends Component<InfernoProps<TModel>, TState> {
-
     protected readonly component: JetComponent<TModel>;
 
     protected readonly model: TModel;
 
-    private readonly componentName;
+    protected readonly componentName;
 
     protected width?: string;
 
     protected height?: string;
+
+    /**
+     * Ref to root element of Inferno component. Passes to event handlers as second parameter
+     */
+    protected rootRef = createRef<any>();
 
     constructor(props: InfernoProps<TModel>) {
         super(props);
@@ -78,5 +82,29 @@ export abstract class JetInfernoComponent<
 
     private isJetClass(cssClass: string): boolean {
         return JET_CSS_CLASSES.includes(cssClass) || cssClass === this.componentName;
+    }
+
+    // ===
+    // DOM events
+    // ===
+
+    protected setStateEventListeners(ref: RefObject<HTMLElement>, classPrefix: string) {
+        const element = ref.current!;
+        const { classList } = element;
+
+        element.addEventListener('focus', () => classList.add(`${classPrefix}-focused`));
+        element.addEventListener('blur', () => classList.remove(`${classPrefix}-focused`));
+
+        element.addEventListener('mouseenter', () => classList.add(`${classPrefix}-hovered`));
+        element.addEventListener('mouseout', () => classList.remove(`${classPrefix}-hovered`, `${classPrefix}-clicked`));
+
+        element.addEventListener('mousedown', () => classList.add(`${classPrefix}-clicked`));
+        element.addEventListener('mouseup', () => classList.remove(`${classPrefix}-clicked`));
+    }
+
+    protected eventHandler<TEvent>(handler: (event: TEvent, root: HTMLElement) => void) {
+        return (event: TEvent) => {
+            handler(event, this.rootRef.current!);
+        };
     }
 }
