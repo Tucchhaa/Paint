@@ -10,14 +10,18 @@ class ButtonView extends View<ButtonModel> {
 }
 
 export class Button extends JetComponent<ButtonModel> {
-    constructor(container: HTMLElement, state?: ButtonState) {
-        const model = new ButtonModel(state);
+    public static readonly componentName: string = 'Button';
 
-        super('Button', container, model);
+    constructor(state?: ButtonState) {
+        super(new ButtonModel(state));
     }
 
     protected registerModules(): void {
         this.registerView(new ButtonView(this));
         this.registerController(new ButtonController(this));
+    }
+
+    public static render(container: HTMLElement, state?: ButtonState): void {
+        (new Button(state)).render(container);
     }
 }

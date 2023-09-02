@@ -9,13 +9,17 @@ class IconView extends View<IconModel> {
 }
 
 export class Icon extends JetComponent<IconModel> {
-    constructor(container: HTMLElement, state?: IconState) {
-        const model = new IconModel(state);
+    public static readonly componentName: string = 'Icon';
 
-        super('Icon', container, model);
+    constructor(state?: IconState) {
+        super(new IconModel(state));
     }
 
     protected registerModules(): void {
         this.registerView(new IconView(this));
+    }
+
+    public static render(container: HTMLElement, state?: IconState): void {
+        (new Icon(state)).render(container);
     }
 }

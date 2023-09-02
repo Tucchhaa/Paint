@@ -9,7 +9,7 @@ export class InputInfernoView extends JetInfernoComponent<InputModel> {
 
         const { label, value, name } = model;
 
-        const className = this.compileContainerCssClass();
+        const className = this.containerCssClass();
 
         return (
             <div 

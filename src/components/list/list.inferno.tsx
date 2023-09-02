@@ -40,7 +40,7 @@ export class ListInfernoView extends JetInfernoComponent<ListModel, State> {
     render() {
         const { model } = this.props;
 
-        const className = this.compileContainerCssClass();
+        const className = this.containerCssClass();
 
         const { selectionEnabled } = model;
 
