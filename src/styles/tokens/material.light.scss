@@ -8,7 +8,12 @@ $on-primary: #FFFFFF;
 $secondary: #625B71;
 $on-secondary: #FFFFFF;
 
+$outline: #79747E;
+
 $on-surface: #1C1B1F;
+$on-surface-opacity-012: rgba(29, 27, 32, 0.12);
+$on-surface-opacity-038: rgba(29, 27, 32, 0.38);
+
 
 // ===
 // Other tokens
@@ -16,11 +21,20 @@ $on-surface: #1C1B1F;
 
 $hover-state-layer-opacity: 0.08;
 $focus-state-layer-opacity: 0.12;
+$clicked-state-layer-opacity: 0.12;
 
 // ===
 // Styles
 // ===
 
+%shadow-level0 {
+    box-shadow: none;
+}
+
 %shadow-level1 {
     box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+}
+
+%shadow-level2 {
+    box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30);
 }

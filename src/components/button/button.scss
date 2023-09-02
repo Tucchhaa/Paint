@@ -1,15 +1,18 @@
-.jet-button {
-    border-radius: 20px;
-    padding: 0 24px 0 16px;
-    cursor: pointer;
+$button: jet-button;
 
-    background-color: $primary;
-    color: $on-primary;
+.#{$button} {
+    border-radius: 100px;
+    padding: 0 24px 0 16px;
+    box-sizing: border-box;
+    
+    cursor: pointer;
     outline: none;
+    letter-spacing: 0.1px;
 
     position: relative;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
 
     &::before {
         display: block;
@@ -17,9 +20,9 @@
 
         width: 100%;
         height: 100%;
+        border-radius: 100px;
 
         opacity: 0;
-        background-color: $on-primary;
 
         position: absolute;
         top: 0;
@@ -28,29 +31,132 @@
         right: 0;
     }
 
-    // state
-    &-hovered::before {
-        opacity: $hover-state-layer-opacity;
-    }
-
-    &-focused::before {
-        opacity: $focus-state-layer-opacity;
-    }
-
-    &-hovered {
-        @extend %shadow-level1;
-    }
-
-    &-clicked {
-        box-shadow: none;
-    }
-
     // content
     &-icon {
         margin-bottom: -2px;
     }
 
-    &-text {
+    &-text-content {
         margin-left: 8px;
+    }
+
+    // state
+    &-hovered:not(&-disabled)::before {
+        opacity: $hover-state-layer-opacity;
+    }
+
+    &-focused:not(&-disabled)::before {
+        opacity: $focus-state-layer-opacity;
+    }
+
+    &-clicked:not(&-disabled)::before {
+        opacity: $clicked-state-layer-opacity;
+    }
+}
+
+// ===
+// Filled style
+// ===
+
+.#{$button}-filled {
+    background-color: $primary;
+    color: $on-primary;
+
+    &::before {
+        background-color: $on-primary;
+    }
+
+    &.#{$button}-hovered {
+        @extend %shadow-level1;
+    }
+
+    &.#{$button}-clicked {
+        box-shadow: none;
+    }
+}
+
+// ===
+// Outlined style
+// ===
+
+.#{$button}-outlined {
+    border: 1px solid $outline;
+
+    color: $primary;
+
+    &::before {
+        background-color: $primary;
+    }
+
+    &.#{$button}-focused {
+        border-color: $primary;
+    }
+
+    &.#{$button}-clicked {
+        border-color: $outline;
+    }
+}
+
+// ===
+// Text style
+// ===
+.#{$button}-text {
+    padding-left: 8px;
+    padding-right: 8px;
+
+    color: $primary;
+
+    &::before {
+        background-color: $primary;
+    }
+
+    .#{$button}-text-content {
+        margin-left: 0px;
+    }
+
+    &.#{$button}-with-icon {
+        padding-left: 12px;
+        padding-right: 16px;
+
+        .#{$button}-text-content {
+            margin-left: 8px;
+        }
+    }
+}
+
+// ===
+// Elevated style
+// ===
+
+.#{$button}-elevated {
+    @extend %shadow-level1;
+
+    // one more selector to increase style priority
+    &.#{$button}.#{$button}-clicked {
+        @extend %shadow-level1;
+    }
+
+    &.#{$button}-hovered {
+        @extend %shadow-level2;
+    }
+}
+
+// ===
+// Disabled style
+// ===
+
+.#{$button}-disabled {
+    cursor: default;
+
+    background-color: $on-surface-opacity-012;
+    color: $on-surface-opacity-038;
+}
+
+// more selectors to increase style priority
+.jet-component.#{$button}.#{$button}-disabled {
+    @extend %shadow-level0;
+
+    &.#{$button}-hovered {
+        @extend %shadow-level0;
     }
 }
