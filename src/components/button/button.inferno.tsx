@@ -1,32 +1,61 @@
 import { JetInfernoComponent, InfernoProps } from 'core/views/inferno';
 import { ButtonModel } from './button.model';
 import { ButtonController } from './button.controller';
+import { createRef } from 'inferno';
+import { isDefined, toPixels } from 'utils/helpers';
 
 export class ButtonInfernoView extends JetInfernoComponent<ButtonModel> {
-    buttonController: ButtonController;
+    // ===
+    // Icon
+    // ===
+    hasIcon = isDefined(this.props.model.icon);
+
+    iconContainerRef = createRef<HTMLElement>();
+
+    // ===
+
+    buttonController: ButtonController = this.component.getController(ButtonController);
 
     constructor(props: InfernoProps<ButtonModel>) {
         super(props);
+    }
 
-        this.buttonController = this.component.getController(ButtonController);
+    componentDidMount(): void {
+        this.setStateEventListeners(this.rootRef, this.cssClass(this.componentName));
+
+        if (this.hasIcon) {
+            const { icon } = this.model;
+
+            icon!.render(this.iconContainerRef.current!);
+        }
     }
 
     render() {
-        const { model } = this.props;
-
-        const className = this.compileContainerCssClass(['no-select', `${model.style}`]);
-
         return (
             <div
+                ref={ this.rootRef }
+
                 role='button'
-                class={ className }
-                title={ model.title }
-                style={{ height: this.height, width: this.width }}
-                onClick={ (event) => this.buttonController.onClick(event) }
+                tabIndex={0}
+
+                class={ this.containerCssClass(['no-select', `${this.model.style}`]) }
+                style={{ 
+                    height: this.height, width: this.width, 
+                    'font-size': toPixels(this.model.fontSize), 
+                }}
+
+                onClick={ this.eventHandler(this.buttonController.onClick) }
+                // onMouseEnter={ this.eventHandler(this.buttonController.onMouseEnter) }
+                // onMouseOut={ this.buttonController.onMouseOut }
+                // onFocus={ this.buttonController.onFocus }
+                // onBlur={ this.buttonController.onBlur }
+                // onMouseDown={  }
             >
-                <div class='jet-button-content'>
-                    <span class='jet-button-text'>{ model.text }</span>
-                </div>
+                { this.hasIcon && 
+                    <span class={ this.cssClass('icon') } ref={ this.iconContainerRef }></span>
+                }
+
+                <span class={ this.cssClass('text') }>{ this.model.text }</span>
             </div>
         );
     }

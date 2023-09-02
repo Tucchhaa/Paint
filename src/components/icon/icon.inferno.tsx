@@ -3,22 +3,19 @@ import { IconModel } from './icon.model';
 import { toPixels } from 'utils/helpers';
 
 export class IconInfernoView extends JetInfernoComponent<IconModel> {
-    render() {
-        const { model } = this.props;
+    iconCssClass = `material-icons-${this.model.style} ${this.cssClass('no-select')}`;
 
+    size = toPixels(this.model.size);
+
+    render() {
         return (
-            <span class={ this.containerCssClass('no-select') }>
-                <span 
-                    style={{ 
-                        'height': this.height, 
-                        'width': this.width,
-                        'line-height': this.height,
-                        'font-size': toPixels(model.size),
-                    }}
-                    class={ `material-icons-${model.style}` }
-                >
-                    { model.icon }
-                </span>
+            <span 
+                style={{
+                    'font-size': this.size,
+                }}
+                class={ this.iconCssClass }
+            >
+                { this.model.icon }
             </span>
         );
     }
