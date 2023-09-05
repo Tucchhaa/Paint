@@ -10,10 +10,10 @@ export abstract class Model<TState = any> {
     // ===
 
     @stateProperty
-    public height?: number;
+    public height: number | 'auto' = 'auto';
 
     @stateProperty
-    public width?: number;
+    public width: number | 'auto' = 'auto';
     
     @stateProperty
     public disabled: boolean = false;
