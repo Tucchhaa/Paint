@@ -160,3 +160,15 @@ $button: jet-button;
         @extend %shadow-level0;
     }
 }
+
+// ===
+// Only icon style
+// ===
+.jet-component.#{$button}-only-icon {
+    padding: 0;
+
+    & .#{$button}-icon {
+        padding: 8px 9px;
+    }
+}
+

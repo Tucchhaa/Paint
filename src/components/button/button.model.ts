@@ -1,7 +1,7 @@
 import { Icon } from 'components/icon';
 import { EventHandler } from 'core/event';
 import { BaseState, Model, model, stateProperty } from 'core/model';
-import { noop } from 'utils/helpers';
+import { isDefined, noop } from 'utils/helpers';
 
 export type ButtonStyle = 'filled' | 'outlined' | 'text';
 
@@ -21,8 +21,11 @@ export type ButtonState = BaseState & Partial<{
 
 @model
 export class ButtonModel extends Model<ButtonState> {
+    /**
+     * @default if button has text default value is 40, if not it is 'auto'
+     */
     @stateProperty
-    public height: number = 40;
+    public height: number | 'auto';
 
     @stateProperty
     public fontSize: number = 14;
@@ -31,7 +34,7 @@ export class ButtonModel extends Model<ButtonState> {
     public onClick: EventHandler<MouseEvent> = noop;
     
     @stateProperty
-    public text: string = '';
+    public text?: string;
     
     @stateProperty
     public style: ButtonStyle = 'filled';
@@ -41,4 +44,10 @@ export class ButtonModel extends Model<ButtonState> {
 
     @stateProperty
     public icon?: Icon;
+
+    constructor(state?: ButtonState) {
+        super(state);
+
+        this.height = isDefined(state?.text) ? 40 : 'auto';
+    }
 }

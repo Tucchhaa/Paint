@@ -8,9 +8,13 @@ export class ButtonInfernoView extends JetInfernoComponent<ButtonModel> {
     // ===
     // Icon
     // ===
-    hasIcon = isDefined(this.props.model.icon);
+    get hasIcon() { return isDefined(this.model.icon); }
 
     iconContainerRef = createRef<HTMLElement>();
+
+    // ===
+
+    get hasText() { return isDefined(this.model.text); }
 
     // ===
 
@@ -34,7 +38,7 @@ export class ButtonInfernoView extends JetInfernoComponent<ButtonModel> {
         const classList = ['no-select', `${this.model.style}`];
 
         if (this.hasIcon) {
-            classList.push('with-icon');
+            classList.push(this.hasText ? 'with-icon' : 'only-icon');
         }
 
         if (this.model.elevated) {
@@ -58,8 +62,8 @@ export class ButtonInfernoView extends JetInfernoComponent<ButtonModel> {
 
                 class={ this.containerCssClass() }
                 style={{ 
-                    height: this.height, width: this.width, 
-                    'font-size': toPixels(this.model.fontSize), 
+                    height: this.height, 
+                    width: this.width,
                 }}
 
                 onClick={ this.eventHandler(this.buttonController.onClick) }
@@ -67,8 +71,15 @@ export class ButtonInfernoView extends JetInfernoComponent<ButtonModel> {
                 { this.hasIcon && 
                     <span class={ this.cssClass('icon') } ref={ this.iconContainerRef }></span>
                 }
-
-                <span class={ this.cssClass('text-content') }>{ this.model.text }</span>
+                
+                { this.hasText &&
+                    <span 
+                        class={ this.cssClass('text-content') } 
+                        style={{ 'font-size': toPixels(this.model.fontSize) }}
+                    >
+                        { this.model.text }
+                    </span>
+                }
             </div>
         );
     }
