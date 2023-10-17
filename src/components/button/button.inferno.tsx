@@ -2,7 +2,7 @@ import { JetInfernoComponent } from 'core/views/inferno';
 import { ButtonModel } from './button.model';
 import { ButtonController } from './button.controller';
 import { createRef } from 'inferno';
-import { isDefined, toPixels } from 'utils/helpers';
+import { isDefined } from 'utils/helpers';
 import { ButtonView } from '.';
 
 export class ButtonInfernoView extends JetInfernoComponent<ButtonView, ButtonModel> {
@@ -64,8 +64,7 @@ export class ButtonInfernoView extends JetInfernoComponent<ButtonView, ButtonMod
                 
                 { this.hasText &&
                     <span 
-                        class={ this.cssClass('text-content') } 
-                        style={{ 'font-size': toPixels(this.model.fontSize) }}
+                        class={ this.cssClass('text-content') }
                     >
                         { this.model.text }
                     </span>

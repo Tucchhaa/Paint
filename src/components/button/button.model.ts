@@ -10,9 +10,6 @@ export type ButtonState = State<ButtonModel>;
 @model
 export class ButtonModel extends Model {
     @stateProperty
-    public fontSize: number = 14;
-
-    @stateProperty
     public onClick: EventHandler<MouseEvent> = noop;
     
     @stateProperty
