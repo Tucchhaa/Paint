@@ -1,11 +1,9 @@
-import { BaseState, Model, model, stateProperty } from 'core/model';
+import { Model, State, model, stateProperty } from 'core/model';
 
-export type ListState = BaseState & Partial<{
-    selectionEnabled: boolean;
-}>;
+export type ListState = State<ListModel>;
 
 @model
-export class ListModel extends Model<ListState> {
+export class ListModel extends Model {
     @stateProperty
     public selectionEnabled: boolean = false;
 }

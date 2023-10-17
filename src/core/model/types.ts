@@ -1,4 +1,5 @@
 import { JetEvent } from 'core/event';
+import { Model } from './model';
 
 // ===
 // Internal types
@@ -12,13 +13,7 @@ export class ModelEvents {
 // Export types
 // ===
 
-export type BaseState = Partial<{
-    height: number | undefined;
-
-    width: number | undefined;
-
-    disabled: boolean;
-}>;
+export type State<T extends Model> = Omit<Partial<T>, 'events' | 'assignState' | 'onPropertyValueChanged'>; 
 
 export type StateUpdate<T = any> = {
     /**

@@ -1,22 +1,9 @@
 import { isDefined } from 'utils/helpers';
 import { ModelEvents } from './types';
-import { stateProperty, useContext } from './decorators';
+import { useContext } from './decorators';
 
-export abstract class Model<TState = any> {
+export abstract class Model {
     public readonly events: ModelEvents = new ModelEvents();
-
-    // ===
-    // Default field descriptors
-    // ===
-
-    @stateProperty
-    public height: number | 'auto' = 'auto';
-
-    @stateProperty
-    public width: number | 'auto' = 'auto';
-    
-    @stateProperty
-    public disabled: boolean = false;
 
     // ===
 
@@ -31,9 +18,9 @@ export abstract class Model<TState = any> {
 
     // ===
 
-    constructor(state?: TState) { }
+    constructor(state?: any) { }
 
-    public assignState(state?: TState) {
+    public assignState(state?: any) {
         if(!isDefined(state))
             return;
         

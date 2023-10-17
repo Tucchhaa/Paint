@@ -1,4 +1,4 @@
-import { Model, model, stateProperty } from 'core/model';
+import { Model, State, model, stateProperty } from 'core/model';
 
 export type IconStyle = 'outlined' | 'rounded' | 'sharp';
 
@@ -8,27 +8,10 @@ export type IconGrade = -25 | 0 | 200;
 
 export type OpticalSize = 20 | 24 | 40 | 48;
 
-export type IconState = {
-    /**
-     * Name of icon from Google Material Icons website
-     */
-    icon: string;
-
-    size?: number;
-
-    style?: IconStyle;
-
-    fill?: boolean;
-
-    weight?: IconWeight;
-
-    grade?: IconGrade;
-
-    opticalSize?: OpticalSize;
-};
+export type IconState = State<IconModel>;
 
 @model
-export class IconModel extends Model<IconState> {
+export class IconModel extends Model {
     /**
      * Name of icon from Google Material Icons website
      */

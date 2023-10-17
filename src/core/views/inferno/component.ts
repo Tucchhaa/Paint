@@ -1,7 +1,6 @@
 import { JetComponent } from 'core';
 import { Model } from 'core/model';
 import { Component, RefObject, createRef } from 'inferno';
-import { toPixels } from 'utils/helpers';
 
 const JET_CSS_CLASSES = ['component', 'no-select'];
 
@@ -19,14 +18,6 @@ export abstract class JetInfernoComponent<
     protected readonly model: TModel;
 
     protected readonly componentName;
-
-    protected get width(): string | undefined {
-        return toPixels(this.model.width);
-    }
-
-    protected get height(): string | undefined {
-        return toPixels(this.model.height);
-    }
 
     /**
      * Ref to root element of Inferno component. Passes to event handlers as second parameter

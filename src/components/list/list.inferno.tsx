@@ -46,8 +46,7 @@ export class ListInfernoView extends JetInfernoComponent<ListModel, State> {
 
         return (
             <div 
-                class={className} 
-                style={{ height: this.height, width: this.width }}
+                class={className}
             >
                 <ul>
                     { this.state!.items.map((item, index) =>
