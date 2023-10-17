@@ -14,7 +14,9 @@ export class ArrayStore<TItem = any> extends Store<TItem> {
     /**
      * Items by their keys
      */
-    private itemByKey: Record<ItemKey, TItem> = {};
+    private itemIdByKey: Record<ItemKey, number> = {};
+
+    private items: TItem[] = [];
     
     /**
      * Return key of item
@@ -38,42 +40,54 @@ export class ArrayStore<TItem = any> extends Store<TItem> {
     // ===
 
     public setItems(items: Array<TItem>): void {
-        this.itemByKey = {};
+        this.itemIdByKey = {};
+        this.items = [];
 
-        for(const item of items) {
+        for(let index=0; index < items.length; index++) {
+            const item = items[index];
             const key = this.keyOf(item);
 
-            if(isDefined(this.itemByKey[key])) {
+            if(isDefined(this.itemIdByKey[key])) {
                 throw new Error(`Item with key ${key} already exists`);
             }
     
-            this.itemByKey[key] = item;
+            this.items.push(item);
+            this.itemIdByKey[key] = index;
         }
     }
 
     public get(key: ItemKey): Promise<TItem> {
-        return Promise.resolve(this.itemByKey[key]);
+        const index = this.itemIdByKey[key];
+        const item = this.items[index];
+
+        return Promise.resolve(item);
     }
 
     public getAll(): Promise<Array<TItem>> {
-        return Promise.resolve(Object.values(this.itemByKey));
+        return Promise.resolve(this.items);
     }
 
-    public add(key: ItemKey, item: TItem): Promise<void> {
-        if(isDefined(this.itemByKey[key])) {
+    public insert(key: ItemKey, item: TItem, atIndex?: number): Promise<void> {
+        if(isDefined(this.itemIdByKey[key])) {
             throw new Error(`Item with key ${key} already exists`);
         }
 
-        this.itemByKey[key] = item;
+        const insertAt = isDefined(atIndex) ? atIndex : this.items.length;
 
-        this.dataChange.emit({ type: 'add', item });
+        this.itemIdByKey[key] = insertAt;
+        this.items.splice(insertAt, 0, item);
+
+        this.dataChange.emit({ type: 'insert', item });
 
         return Promise.resolve();
     }
 
     public delete(key: ItemKey): Promise<TItem> {
-        const deletedItem = this.itemByKey[key];
-        delete this.itemByKey[key];
+        const index = this.itemIdByKey[key];
+        const deletedItem = this.items[index];
+
+        delete this.itemIdByKey[key];
+        this.items.splice(index, 1);
 
         this.dataChange.emit({ type: 'delete', item: deletedItem });
 
@@ -81,7 +95,9 @@ export class ArrayStore<TItem = any> extends Store<TItem> {
     }
 
     public update(key: ItemKey, item: TItem): Promise<void> {
-        this.itemByKey[key] = item;
+        const index = this.itemIdByKey[key];
+
+        this.items[index] = item;
 
         this.dataChange.emit({ type: 'update', item });
 
