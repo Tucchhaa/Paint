@@ -19,7 +19,7 @@ export class Icon extends JetComponent<IconModel> {
         this.registerView(new IconView(this));
     }
 
-    public static render(container: HTMLElement, state?: IconState): void {
-        (new Icon(state)).render(container);
+    public static render(container: HTMLElement, state?: IconState) {
+        return (new Icon(state)).render(container);
     }
 }

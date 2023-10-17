@@ -113,7 +113,7 @@ export abstract class JetComponent<TModel extends Model = any> {
     /**
      * Rendering and state update
      */
-    public static render(container: HTMLElement): void {
+    public static render(container: HTMLElement): JetComponent {
         /* Each component should implement this static method */
         throw new Error('Not implemented');
     }
@@ -125,6 +125,8 @@ export abstract class JetComponent<TModel extends Model = any> {
         for(const view of Object.values(this.views)) {
             view.render(container);
         }
+
+        return this;
     }
 
     private stateUpdateHandler(update: StateUpdate) {

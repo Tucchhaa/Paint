@@ -21,7 +21,7 @@ export class Button extends JetComponent<ButtonModel> {
         this.registerController(new ButtonController(this));
     }
 
-    public static render(container: HTMLElement, state?: ButtonState): void {
-        (new Button(state)).render(container);
+    public static render(container: HTMLElement, state?: ButtonState) {
+        return (new Button(state)).render(container);
     }
 }

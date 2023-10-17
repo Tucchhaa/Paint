@@ -23,7 +23,7 @@ export class Input extends JetComponent<InputModel> {
         this.registerController(new InputController(this));
     }
 
-    public static render(container: HTMLElement, state?: InputState): void {
-        (new Input(state)).render(container);
+    public static render(container: HTMLElement, state?: InputState) {
+        return (new Input(state)).render(container);
     }
 }
