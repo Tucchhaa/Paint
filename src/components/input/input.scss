@@ -3,7 +3,7 @@
 
     position: relative;
 
-    &-label {
+    label {
         font-size: 12px;
         color: $on-surface-variant;
 
@@ -52,7 +52,7 @@
         border-radius: 4px 4px 0 0;
         border-bottom: 1px solid $on-surface-variant;
 
-        .jet-input-label {
+        label {
             left: 16px;
             top: 8px;
         }
@@ -61,7 +61,7 @@
             padding: 25px 16px 11px;
         }
 
-        &:hover {
+        &:hover:not(.jet-input-disabled) {
             &:not(.jet-input-focused) {
                 border-bottom-color: $on-surface;
             }
@@ -84,6 +84,15 @@
         }
     }
 
+    &-filled.jet-input-disabled {
+        border-color: $on-surface-opacity-038;
+        background-color: $on-surface-opacity-004;
+
+        label, input {
+            color: $on-surface-opacity-038;
+        }
+    }
+
     /*
     Outlined design
     */
@@ -91,7 +100,7 @@
         border: 1px solid $outline;
         border-radius: 4px;
 
-        .jet-input-label {
+        label {
             left: 16px;
             top: -8px;
             background-color: $surface;
@@ -103,7 +112,7 @@
         }
 
         &:hover {
-            &:not(.jet-input-focused) {
+            &:not(.jet-input-focused, .jet-input-disabled) {
                 border-color: $on-surface;
             }
         }
@@ -112,7 +121,7 @@
     &-outlined.jet-input-focused {
         border: 2px solid $primary;
 
-        & .jet-input-label {
+        & label {
             color: $primary;
             left: 15px;
             top: -9px;
@@ -120,6 +129,14 @@
 
         & input {
             padding: 19px 15px 15px;
+        }
+    }
+
+    &-outlined.jet-input-disabled {
+        border-color: $on-surface-opacity-012;
+
+        label, input {
+            color: $on-surface-opacity-038;
         }
     }
 }
