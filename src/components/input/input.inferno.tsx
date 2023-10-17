@@ -30,11 +30,13 @@ export class InputInfernoView extends JetInfernoComponent<InputView, InputModel>
                 ref={this.rootRef}
                 class={ this.containerCssClass(style) }
             >
-                <label 
-                    class={ this.cssClass('label') }
-                    for={name}
-                >{ label }</label>
-
+                {
+                    label &&
+                    <label 
+                        class={ this.cssClass(['label', 'no-select']) }
+                        for={name}
+                    >{ label }</label>
+                }
                 <input 
                     type='text' 
                     name={name} 

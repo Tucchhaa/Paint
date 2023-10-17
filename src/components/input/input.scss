@@ -1,9 +1,5 @@
 .jet-input {
-    border-radius: 4px 4px 0 0;
-    border-bottom: 1px solid $on-surface-variant;
-
     cursor: text;
-    background-color: $surface-variant;
 
     position: relative;
 
@@ -12,8 +8,6 @@
         color: $on-surface-variant;
 
         position: absolute;
-        left: 16px;
-        top: 8px;
     }
 
     input {
@@ -24,10 +18,8 @@
 
         box-sizing: border-box;
         width: 100%;
-        padding: 20px 16px 6px;
         display: block;
-        
-        line-height: 29px;
+
         font-size: 16px;
         position: relative;
         z-index: 2;
@@ -40,6 +32,7 @@
         display: block;
         width: 100%;
         height: 100%;
+        border-radius: 4px 4px 0 0;
 
         opacity: 0;
 
@@ -50,11 +43,36 @@
         right: 0;
     }
 
-    &:hover::before {
-        opacity: 0.08;
+    /*
+    Filled design
+    */
+    &-filled {
+        background-color: $surface-variant;
+
+        border-radius: 4px 4px 0 0;
+        border-bottom: 1px solid $on-surface-variant;
+
+        .jet-input-label {
+            left: 16px;
+            top: 8px;
+        }
+
+        input {
+            padding: 25px 16px 11px;
+        }
+
+        &:hover {
+            &:not(.jet-input-focused) {
+                border-bottom-color: $on-surface;
+            }
+    
+            &::before {
+                opacity: $hover-state-layer-opacity;
+            }
+        }
     }
 
-    &-focused {
+    &-filled.jet-input-focused {
         border-bottom: 2px solid $primary;
 
         & .jet-input-label {
@@ -62,7 +80,46 @@
         }
 
         & input {
-            padding-bottom: 5px;
+            padding-bottom: 10px;
+        }
+    }
+
+    /*
+    Outlined design
+    */
+    &-outlined {
+        border: 1px solid $outline;
+        border-radius: 4px;
+
+        .jet-input-label {
+            left: 16px;
+            top: -8px;
+            background-color: $surface;
+            padding: 0 5px;
+        }
+
+        input {
+            padding: 20px 16px 16px;
+        }
+
+        &:hover {
+            &:not(.jet-input-focused) {
+                border-color: $on-surface;
+            }
+        }
+    }
+
+    &-outlined.jet-input-focused {
+        border: 2px solid $primary;
+
+        & .jet-input-label {
+            color: $primary;
+            left: 15px;
+            top: -9px;
+        }
+
+        & input {
+            padding: 19px 15px 15px;
         }
     }
 }
