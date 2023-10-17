@@ -2,7 +2,7 @@ import { View, JetComponent } from 'core';
 import { IconModel, IconState } from './icon.model';
 import { IconInfernoView } from './icon.inferno';
 
-class IconView extends View<IconModel> {
+export class IconView extends View<IconModel> {
     initialize() {
         this.setView(IconInfernoView);
     }

@@ -1,9 +1,11 @@
-import { JetComponent } from 'core';
+import { JetComponent, View } from 'core';
 import { JetInfernoComponent, InfernoProps } from './inferno';
 
 export type ComponentViewType = new(props: InfernoProps) => JetInfernoComponent;
 
 export abstract class ComponentViewManager {
+    protected component: JetComponent;
+
     protected container!: HTMLElement;
 
     protected get model() {
@@ -11,9 +13,11 @@ export abstract class ComponentViewManager {
     }
 
     constructor(
-        protected componentView: ComponentViewType, 
-        protected component: JetComponent
-    ) { }
+        protected view: View,
+        protected componentView: ComponentViewType
+    ) {
+        this.component = view.component;
+    }
 
     public render(container: HTMLElement) {
         this.container = container;

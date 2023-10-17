@@ -3,7 +3,7 @@ import { View, JetComponent } from 'core';
 import { ButtonController } from './button.controller';
 import { ButtonInfernoView } from './button.inferno';
 
-class ButtonView extends View<ButtonModel> {
+export class ButtonView extends View<ButtonModel> {
     initialize() {
         this.setView(ButtonInfernoView);
     }

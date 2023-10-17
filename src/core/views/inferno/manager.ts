@@ -1,6 +1,7 @@
 import { createElement } from 'inferno-create-element';
 import { ComponentViewManager } from 'core/views/manager';
 import { render, VNode } from 'inferno';
+import { InfernoProps } from './component';
 
 export class InfernoViewManager extends ComponentViewManager {
     private element!: VNode;
@@ -8,7 +9,8 @@ export class InfernoViewManager extends ComponentViewManager {
     render(container: HTMLElement) {
         super.render(container);
 
-        const props = {
+        const props: InfernoProps = {
+            view: this.view,
             component: this.component,
             model: this.model,
         };

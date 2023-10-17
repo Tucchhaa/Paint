@@ -3,17 +3,18 @@ import { JetInfernoComponent, InfernoProps } from 'core/views/inferno';
 import { ListModel } from './list.model';
 import { ListController } from './list.controller';
 import { ListDataController } from './list.data_controller';
+import { ListView } from '.';
 
 class State {
     items: Array<any> = [];
 }
 
-export class ListInfernoView extends JetInfernoComponent<ListModel, State> {
+export class ListInfernoView extends JetInfernoComponent<ListView, ListModel, State> {
     private readonly listController: ListController;
 
     private readonly dataController: ListDataController;
 
-    constructor(props: InfernoProps<ListModel>) {
+    constructor(props: InfernoProps<ListView, ListModel>) {
         super(props);
 
         this.state = {

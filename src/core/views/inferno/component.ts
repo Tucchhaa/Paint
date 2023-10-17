@@ -1,18 +1,22 @@
-import { JetComponent } from 'core';
+import { JetComponent, View } from 'core';
 import { Model } from 'core/model';
 import { Component, RefObject, createRef } from 'inferno';
 
 const JET_CSS_CLASSES = ['component', 'no-select'];
 
-export type InfernoProps<TModel extends Model = any> = {
+export type InfernoProps<TView extends View = any, TModel extends Model = any> = {
+    view: TView,
+
     component: JetComponent<TModel>,
 
     model: TModel,
 };
 
 export abstract class JetInfernoComponent<
-    TModel extends Model = any, TState = {}
-> extends Component<InfernoProps<TModel>, TState> {
+    TView extends View = any, TModel extends Model = any, TState = {}
+> extends Component<InfernoProps<TView, TModel>, TState> {
+    protected readonly view: TView;
+
     protected readonly component: JetComponent<TModel>;
 
     protected readonly model: TModel;
@@ -24,13 +28,20 @@ export abstract class JetInfernoComponent<
      */
     protected rootRef = createRef<any>();
 
-    constructor(props: InfernoProps<TModel>) {
+    constructor(props: InfernoProps<TView, TModel>) {
         super(props);
 
+        this.view = props.view;
         this.component = props.component;
         this.model = props.model;
 
         this.componentName = Object.getPrototypeOf(this.component).constructor.componentName.toLowerCase();
+    }
+
+    componentDidMount(): void {
+        if(this.rootRef.current) {
+            this.setStateEventListeners(this.rootRef);
+        }
     }
 
     // ===
@@ -75,26 +86,27 @@ export abstract class JetInfernoComponent<
     // DOM events
     // ===
 
-    protected setStateEventListeners(ref: RefObject<HTMLElement>, classPrefix: string) {
+    private setStateEventListeners(ref: RefObject<HTMLElement>) {
+        const prefix = this.cssClass(this.componentName);
         const element = ref.current!;
 
-        const addPrefix = (tokens: string[]) => tokens.map(token => `${classPrefix}-${token}`);
+        const addPrefix = (tokens: string[]) => tokens.map(token => `${prefix}-${token}`);
         const add = (...tokens: string[]) => element.classList.add(...addPrefix(tokens));
         const remove = (...tokens: string[]) => element.classList.remove(...addPrefix(tokens));
 
-        element.addEventListener('focus', () => add('focused'));
-        element.addEventListener('blur', () => remove('focused'));
+        element.addEventListener('focusin', () => add('focused'));
+        element.addEventListener('focusout', () => remove('focused'));
 
-        element.addEventListener('mouseenter', () => add('hovered'));
-        element.addEventListener('mouseout', () => remove('hovered', 'clicked', 'focused'));
+        element.addEventListener('mouseover', () => add('hovered'));
+        element.addEventListener('mouseleave', () => remove('hovered', 'clicked'));
 
         element.addEventListener('mousedown', () => add('clicked'));
-        element.addEventListener('mouseup', () => remove('clicked', 'focused'));
+        element.addEventListener('mouseup', () => remove('clicked'));
     }
 
-    protected eventHandler<TEvent>(handler: (event: TEvent, root: HTMLElement) => void) {
+    protected eventHandler<TEvent>(handler: (event: TEvent) => void) {
         return (event: TEvent) => {
-            handler(event, this.rootRef.current!);
+            handler(event);
         };
     }
 }
