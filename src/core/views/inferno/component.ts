@@ -20,9 +20,13 @@ export abstract class JetInfernoComponent<
 
     protected readonly componentName;
 
-    protected width?: string;
+    protected get width(): string | undefined {
+        return toPixels(this.model.width);
+    }
 
-    protected height?: string;
+    protected get height(): string | undefined {
+        return toPixels(this.model.height);
+    }
 
     /**
      * Ref to root element of Inferno component. Passes to event handlers as second parameter
@@ -36,14 +40,6 @@ export abstract class JetInfernoComponent<
         this.model = props.model;
 
         this.componentName = Object.getPrototypeOf(this.component).constructor.componentName.toLowerCase();
-        
-        this.width = toPixels(this.model.width);
-        this.height = toPixels(this.model.height);
-    }
-
-    componentWillUpdate(prevProps: Readonly<InfernoProps<TModel>>, prevState: Readonly<TState>): void {
-        this.width = toPixels(this.model.width);
-        this.height = toPixels(this.model.height);
     }
 
     // ===
