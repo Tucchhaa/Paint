@@ -23,7 +23,9 @@ export class InfernoViewManager extends ComponentViewManager {
      * Render updated elements of inferno component
      */
     public onStateUpdate() {
+        // TODO maybe we can just update props?
         (this.element.children as any).forceUpdate();
+
         // render(this.element, this.container);
     }
 
@@ -31,6 +33,7 @@ export class InfernoViewManager extends ComponentViewManager {
      * Calls 'onDataChange' method of inferno component
      */
     public onDataChange(): void {
+        // TODO move onDataChange method to JetInfernoComponent
         (this.element.children as any).onDataChange?.();
     }
 }
