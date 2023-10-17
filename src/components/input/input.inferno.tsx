@@ -19,21 +19,32 @@ export class InputInfernoView extends JetInfernoComponent<InputView, InputModel>
         this.view.inputElement = this.inputRef.current!;
     }
 
+
+    protected containerCssClass(): string {
+        const classList: string[] = [this.model.style];
+
+        if (this.model.disabled) {
+            classList.push('disabled');
+        }
+
+        return super.containerCssClass(classList);
+    }
+
     render() {
         const { component, model } = this.props;
         const controller = component.getController(InputController) as InputController;
 
-        const { label, value, name, style } = model;
+        const { label, value, name, disabled } = model;
 
         return (
             <div 
                 ref={this.rootRef}
-                class={ this.containerCssClass(style) }
+                class={ this.containerCssClass() }
             >
                 {
                     label &&
                     <label 
-                        class={ this.cssClass(['label', 'no-select']) }
+                        class={ this.cssClass(['no-select']) }
                         for={name}
                     >{ label }</label>
                 }
@@ -42,6 +53,7 @@ export class InputInfernoView extends JetInfernoComponent<InputView, InputModel>
                     name={name} 
                     id={name}
                     value={value}
+                    disabled={disabled}
 
                     ref={this.inputRef}
                     onInput={controller.onValueChange.bind(controller)} />
