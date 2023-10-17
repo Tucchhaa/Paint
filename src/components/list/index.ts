@@ -27,7 +27,7 @@ export class List extends JetComponent<ListModel> {
         this.registerController(new ListDataController(this));
     }
 
-    public static render(container: HTMLElement, state?: ListState, dataSource?: DataSource): void {
-        (new List(state, dataSource)).render(container);
+    public static render(container: HTMLElement, state?: ListState, dataSource?: DataSource) {
+        return (new List(state, dataSource)).render(container);
     }
 }
