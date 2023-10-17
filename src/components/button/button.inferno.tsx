@@ -6,20 +6,17 @@ import { isDefined, toPixels } from 'utils/helpers';
 import { ButtonView } from '.';
 
 export class ButtonInfernoView extends JetInfernoComponent<ButtonView, ButtonModel> {
-    // ===
-    // Icon
-    // ===
+    get hasText() { return isDefined(this.model.text); }
+
     get hasIcon() { return isDefined(this.model.icon); }
+
+    // ===
 
     iconContainerRef = createRef<HTMLElement>();
 
-    // ===
-
-    get hasText() { return isDefined(this.model.text); }
-
-    // ===
-
     buttonController: ButtonController = this.component.getController(ButtonController);
+
+    // ===
 
     componentDidMount(): void {
         super.componentDidMount();
@@ -32,7 +29,7 @@ export class ButtonInfernoView extends JetInfernoComponent<ButtonView, ButtonMod
     }
 
     protected containerCssClass(): string {
-        const classList = ['no-select', `${this.model.style}`];
+        const classList = ['no-select', this.model.style];
 
         if (this.hasIcon) {
             classList.push(this.hasText ? 'with-icon' : 'only-icon');
