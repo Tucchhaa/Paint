@@ -61,10 +61,6 @@ export class ButtonInfernoView extends JetInfernoComponent<ButtonModel> {
                 tabIndex={0}
 
                 class={ this.containerCssClass() }
-                style={{ 
-                    height: this.height, 
-                    width: this.width,
-                }}
 
                 onClick={ this.eventHandler(this.buttonController.onClick) }
             >

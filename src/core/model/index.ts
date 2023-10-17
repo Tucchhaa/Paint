@@ -1,8 +1,8 @@
 export { Model } from './model';
 
 export {
-    BaseState,
     StateUpdate,
+    State,
 } from './types';
 
 export {
