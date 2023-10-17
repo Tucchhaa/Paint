@@ -13,7 +13,7 @@ export type ItemKey = number | string;
 export class DataSourceEvents<TItem> {
     public change = new JetEvent<DataChange<TItem>>();
 
-    public add = new JetEvent<DataChange<TItem>>();
+    public insert = new JetEvent<DataChange<TItem>>();
 
     public delete = new JetEvent<DataChange<TItem>>();
 
@@ -38,7 +38,7 @@ export type DataSourceConfig<TItem = any> = {
 
 
 export type DataChange<TItem = any> = {
-    type: 'full' | 'add' | 'delete' | 'update';
+    type: 'full' | 'insert' | 'delete' | 'update';
 
     item?: TItem;
 };

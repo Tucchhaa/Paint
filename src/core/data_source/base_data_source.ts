@@ -50,8 +50,8 @@ export abstract class BaseDataSource<TItem = any, TKey extends keyof TItem = any
         this.events.change.emit(change);
 
         switch(change.type) {
-        case 'add':
-            return this.events.add.emit(change);
+        case 'insert':
+            return this.events.insert.emit(change);
         case 'delete':
             return this.events.delete.emit(change);
         case 'update':
@@ -82,12 +82,12 @@ export abstract class BaseDataSource<TItem = any, TKey extends keyof TItem = any
         return await this.store.getAll();
     }
 
-    public async addItem(item: Optional<TItem, TKey>): Promise<void> {
+    public async insertItem(item: Optional<TItem, TKey>, atIndex?: number): Promise<void> {
         const key = this.keyOf(item as TItem) || this.generateKey();
 
         const preparedItem = {  ...item, [this.key]: key } as TItem; 
 
-        await this.store.add(key, preparedItem);
+        await this.store.insert(key, preparedItem, atIndex);
     }
 
     public async deleteItem(item: TItem | ItemKey): Promise<TItem> {
