@@ -11,7 +11,7 @@ export abstract class View<TModel extends Model = any> extends Module<TModel> {
 
     protected setView(view: ComponentViewType) {
         if(view.prototype instanceof JetInfernoComponent) {
-            this.componentViewManager = new InfernoViewManager(view, this.component);
+            this.componentViewManager = new InfernoViewManager(this, view);
         }
     }
 

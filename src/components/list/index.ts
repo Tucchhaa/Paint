@@ -5,7 +5,7 @@ import { ListInfernoView } from './list.inferno';
 import { ListDataController } from './list.data_controller';
 import { DataSource } from 'core/data_source';
 
-class ListView extends View<ListModel> {
+export class ListView extends View<ListModel> {
     initialize() {
         this.setView(ListInfernoView);
     }

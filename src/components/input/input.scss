@@ -1,7 +1,6 @@
 .jet-input {
     border-radius: 4px 4px 0 0;
     border-bottom: 1px solid $on-surface-variant;
-    padding: 20px 16px 6px;
 
     cursor: text;
     background-color: $surface-variant;
@@ -23,8 +22,9 @@
         border: none;
         background-color: transparent;
 
+        box-sizing: border-box;
         width: 100%;
-        padding: 0;
+        padding: 20px 16px 6px;
         display: block;
         
         line-height: 29px;
@@ -52,6 +52,17 @@
 
     &:hover::before {
         opacity: 0.08;
-        // z-index: -1;
+    }
+
+    &-focused {
+        border-bottom: 2px solid $primary;
+
+        & .jet-input-label {
+            color: $primary;
+        }
+
+        & input {
+            padding-bottom: 5px;
+        }
     }
 }

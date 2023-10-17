@@ -1,10 +1,11 @@
-import { JetInfernoComponent, InfernoProps } from 'core/views/inferno';
+import { JetInfernoComponent } from 'core/views/inferno';
 import { ButtonModel } from './button.model';
 import { ButtonController } from './button.controller';
 import { createRef } from 'inferno';
 import { isDefined, toPixels } from 'utils/helpers';
+import { ButtonView } from '.';
 
-export class ButtonInfernoView extends JetInfernoComponent<ButtonModel> {
+export class ButtonInfernoView extends JetInfernoComponent<ButtonView, ButtonModel> {
     // ===
     // Icon
     // ===
@@ -20,12 +21,8 @@ export class ButtonInfernoView extends JetInfernoComponent<ButtonModel> {
 
     buttonController: ButtonController = this.component.getController(ButtonController);
 
-    constructor(props: InfernoProps<ButtonModel>) {
-        super(props);
-    }
-
     componentDidMount(): void {
-        this.setStateEventListeners(this.rootRef, this.cssClass(this.componentName));
+        super.componentDidMount();
 
         if (this.hasIcon) {
             const { icon } = this.model;
