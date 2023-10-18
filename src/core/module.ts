@@ -40,7 +40,7 @@ export abstract class Module<TModel extends Model = any> {
         return this.component.getController(id);
     }
 
-    public getPublicComponent() {
+    public getPublicComponent(): JetPublicComponent {
         return this.component as JetPublicComponent;
     }
 }
