@@ -1,6 +1,6 @@
 import { Model, State, model, stateProperty } from 'core/model';
 
-export type IconStyle = 'outlined' | 'rounded' | 'sharp';
+export type IconStyle = 'outlined' | 'round' | 'sharp';
 
 export type IconWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
