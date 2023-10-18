@@ -152,6 +152,10 @@
     color: $on-surface-opacity-038;
 }
 
+.jet-button-disabled.jet-button-outlined {
+    border-color: $on-surface-opacity-012;
+}
+
 // more selectors to increase style priority
 .jet-component.jet-button.jet-button-disabled {
     @extend %shadow-level0;
